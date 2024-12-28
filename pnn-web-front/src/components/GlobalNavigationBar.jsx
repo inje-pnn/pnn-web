@@ -16,7 +16,7 @@ const Container = styled.div`
 const GlobalNavigationBar = () => {
   return (
     <Container>
-      test
+   
     </Container>
   );
 };
