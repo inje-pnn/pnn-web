@@ -6,6 +6,7 @@ const Container = styled.div`
   height: 10%;
   background-color: gray;
 
+
   @media (min-width: 768px) {
     height: 15%;
     background-color: lightgray;
@@ -15,7 +16,7 @@ const Container = styled.div`
 const GlobalNavigationBar = () => {
   return (
     <Container>
-      
+      test
     </Container>
   );
 };
