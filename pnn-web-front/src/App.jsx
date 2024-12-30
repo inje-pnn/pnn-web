@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import GlobalNavigationBar from "./components/GlobalNavigationBar";
+import { useAuth } from "./shared/auth/useAuth";
 
 const Container = styled.div`
   width: 100%;
@@ -9,6 +10,10 @@ const Container = styled.div`
 `;
 
 const App = () => {
+  const { checkAutoLogin } = useAuth();
+  useEffect(() => {
+    checkAutoLogin();
+  }, []);
   return (
     <Container>
       <GlobalNavigationBar />
