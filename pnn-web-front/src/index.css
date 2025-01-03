@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "NanumSquareNeo-aLt";
+  src: url("./assets/fonts/NanumSquareNeo-aLt.ttf") format("truetype");
+}
+
 * {
   margin: 0px;
   padding: 0px;
@@ -7,4 +12,5 @@
 body, html {
   width: 100%;
   min-height: 100vh;
+  font-family: "NanumSquareNeo-aLt";
 }
