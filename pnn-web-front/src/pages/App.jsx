@@ -1,25 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 import Layout from "../widgets/layout/Layout";
-import pnn1 from "../assets/images/pnn1.jpeg";
-import PnnLogo from "../shared/PnnLogo/PnnLogo";
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-  img {
-    width: 100%;
-    height: 100%;
-    opacity: 0.8;
+  width: 100vw;
+  height: 100vh;
+
+  @media (min-width: 768px) {
+    width: 1920px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
   }
 `;
 
 const MainContent = () => {
   return (
     <Container>
-      <img src={pnn1} />
-      <PnnLogo />
+      test
     </Container>
   );
 };

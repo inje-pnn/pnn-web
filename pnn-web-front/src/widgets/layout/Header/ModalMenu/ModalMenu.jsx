@@ -2,12 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 30%;
-  position: absolute;
-  background-color: black;
-  border-top: 1px solid lightgray;
-  opacity: 0.8;
+  position: fixed;
+  top: 8%;
+  left: 0;
   z-index: 1;
 
   @media (min-width: 768px) {
@@ -22,13 +21,13 @@ const MenuItem = styled.button`
   align-items: center;
   justify-content: center;
   border: none;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid lightgray;
   font-size: 15px;
-  color: white;
-  background-color: black;
+  color: black;
+  background-color: white;
 
   &:hover {
-    background-color: white;
+    background-color: lightgray;
     color: black;
   }
 `;

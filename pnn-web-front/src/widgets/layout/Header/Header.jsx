@@ -1,19 +1,29 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { IoIosMenu } from "react-icons/io";
+import pnnlogo from "../../../assets/images/pnnlogo.png";
 import ModalMenu from "../Header/ModalMenu/ModalMenu";
 import onClickMenuButton from "../../../features/onClickMenuButton/onClickMenuButton"
 
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 8%;
   display: flex;
-  background-color: black;
-  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white;
+  color: black;
+  border-bottom: 1px solid lightgray;
+  padding: 0 3% 0 3%;
 
   @media (min-width: 768px) {
-    height: 6%;
+    width: 1920px;
+    height: 8%;
+    position: relative;
     display: flex;
+    border: 1px solid lightgray;
+    border-bottom: none;
   }
 `;
 
@@ -30,8 +40,6 @@ const Frame = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 0 5% 0 5%;
-    color: white;
   }
 `;
 
@@ -41,18 +49,18 @@ const Ul = styled.ul`
   @media (min-width: 768px) {
     display: block;
     padding-left: 20px;
-    color: white;
+    color: black;
     cursor: pointer;
   }
 `;
 
-const Logo = styled.h1`
-  font-size: 25px;
-  margin-left: 5%;
+const Logo = styled.img`
+  width: 30%;
+  height: 100%;
 
   @media (min-width: 768px) {
-    font-size: 40px;  
-    padding-left: 0px;
+    width: 15%;
+    height: 100%;
   }
 `;
 
@@ -75,7 +83,7 @@ const Header = () => {
     <>
       <Container>
         <Frame style={{justifyContent:"flex-start"}}> {/* 좌측 로고프레임 */} 
-          <Logo>Logo</Logo>
+          <Logo src={pnnlogo} />
         </Frame>
         <Frame> {/* 우측 메뉴프레임 */} 
           <Ul>About Us</Ul>
