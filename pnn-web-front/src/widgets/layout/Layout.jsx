@@ -18,12 +18,10 @@ const Main = styled.div`
   height: 92dvh;
   border: 1px solid red;
   margin-top: 7vh;
-
   @media (min-width: 768px) {
     width: 1920px;
     height: 100vh;
     border: 1px solid lightgray;
-    margin-top: 15vh;
   }
 `;
 

@@ -19,7 +19,7 @@ const Container = styled.div`
 
   @media (min-width: 768px) {
     width: 1920px;
-    height: 8vh;
+
     position: fixed;
     display: flex;
     border: 1px solid lightgray;
