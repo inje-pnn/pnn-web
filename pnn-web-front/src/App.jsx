@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import Layout from "./widgets/layout/Layout";
+
+
+
+import GlobalNavigationBar from "./widgets/GlobalNavigationBar";
+import { useAuth } from "./shared/hooks/auth/useAuth";
+
 
 const Container = styled.div`
   width: 100vw;
@@ -19,22 +24,20 @@ const Container = styled.div`
   }
 `;
 
-const Span = styled.span`
-  font-size: 20px;
-  font-weight: bold;
-`;
 
-const MainContent = () => {
+
+const App = () => {
+  const { checkAutoLogin } = useAuth();
+  useEffect(() => {
+    checkAutoLogin();
+  }, []);
+
   return (
     <Container>
-      <Span>Programming & Network</Span>
-      <h1>P & N</h1>
+
     </Container>
   );
 };
 
-const App = () => {
-  return <Layout mainContent={<MainContent />} />
-};
-
 export default App;
+
