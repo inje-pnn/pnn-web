@@ -4,7 +4,11 @@ import Layout from "../widgets/layout/Layout";
 
 const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   @media (min-width: 768px) {
     width: 1920px;
@@ -15,10 +19,16 @@ const Container = styled.div`
   }
 `;
 
+const Span = styled.span`
+  font-size: 20px;
+  font-weight: bold;
+`;
+
 const MainContent = () => {
   return (
     <Container>
-      test
+      <Span>Programming & Network</Span>
+      <h1>P & N</h1>
     </Container>
   );
 };

@@ -3,6 +3,11 @@
   src: url("./assets/fonts/NanumSquareNeo-aLt.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Cafe24Ssurround-v2.0";
+  src: url("./assets//fonts//Cafe24Ssurround-v2.0.ttf") format("truetype");
+}
+
 * {
   margin: 0px;
   padding: 0px;
@@ -11,10 +16,14 @@
 
 body, html {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow-x: hidden;
-  font-family: "NanumSquareNeo-aLt";
+  font-family: "Cafe24Ssurround-v2.0";
+
+  @media (min-width: 768px) {
+    height: 100vh;
+  }
 }

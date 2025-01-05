@@ -7,7 +7,7 @@ import onClickMenuButton from "../../../features/onClickMenuButton/onClickMenuBu
 
 const Container = styled.div`
   width: 100vw;
-  height: 8%;
+  height: 8dvh;
   display: flex;
   position: fixed;
   top: 0;
@@ -19,7 +19,7 @@ const Container = styled.div`
 
   @media (min-width: 768px) {
     width: 1920px;
-    height: 8%;
+    height: 8vh;
     position: relative;
     display: flex;
     border: 1px solid lightgray;
@@ -51,6 +51,8 @@ const Ul = styled.ul`
     padding-left: 20px;
     color: black;
     cursor: pointer;
+    font-size: 18px;
+    font-weight: ;
   }
 `;
 

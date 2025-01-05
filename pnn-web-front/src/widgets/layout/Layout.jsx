@@ -4,7 +4,7 @@ import Header from "./Header/Header";
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   position: relative;
 
   @media (min-width: 768px) {
@@ -15,12 +15,13 @@ const Container = styled.div`
 
 const Main = styled.div`
   width: 100%;
-  height: 92vh;
+  height: 92dvh;
+  border: 1px solid red;
   margin-top: 7vh;
 
   @media (min-width: 768px) {
     width: 1920px;
-    height: 94vh;
+    height: 92vh;
     border: 1px solid lightgray;
     margin: 0px;
 `;
