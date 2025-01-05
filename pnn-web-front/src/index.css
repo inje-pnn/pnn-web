@@ -14,7 +14,8 @@
   box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
   width: 100%;
   min-height: 100dvh;
   display: flex;

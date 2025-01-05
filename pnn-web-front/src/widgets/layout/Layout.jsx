@@ -21,18 +21,17 @@ const Main = styled.div`
 
   @media (min-width: 768px) {
     width: 1920px;
-    height: 92vh;
+    height: 100vh;
     border: 1px solid lightgray;
-    margin: 0px;
+    margin-top: 15vh;
+  }
 `;
 
 const Layout = ({ mainContent }) => {
   return (
     <Container>
       <Header />
-      <Main>
-        {mainContent}
-      </Main>
+      <Main>{mainContent}</Main>
     </Container>
   );
 };

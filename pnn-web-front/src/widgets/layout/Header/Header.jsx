@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { IoIosMenu } from "react-icons/io";
+
 import pnnlogo from "../../../assets/images/pnnlogo.png";
 import ModalMenu from "../Header/ModalMenu/ModalMenu";
-import onClickMenuButton from "../../../features/onClickMenuButton/onClickMenuButton"
+import onClickMenuButton from "../../../features/onClickMenuButton/onClickMenuButton";
 
 const Container = styled.div`
   width: 100vw;
@@ -20,7 +20,7 @@ const Container = styled.div`
   @media (min-width: 768px) {
     width: 1920px;
     height: 8vh;
-    position: relative;
+    position: fixed;
     display: flex;
     border: 1px solid lightgray;
     border-bottom: none;
@@ -45,14 +45,13 @@ const Frame = styled.div`
 
 const Ul = styled.ul`
   display: none;
-  
+
   @media (min-width: 768px) {
     display: block;
     padding-left: 20px;
     color: black;
     cursor: pointer;
     font-size: 18px;
-    font-weight: ;
   }
 `;
 
@@ -67,7 +66,7 @@ const Logo = styled.img`
 `;
 
 const MenuIcon = styled.h1`
-  display: block;  
+  display: block;
   display: flex;
   align-items: center;
   height: 100%;
@@ -84,15 +83,19 @@ const Header = () => {
   return (
     <>
       <Container>
-        <Frame style={{justifyContent:"flex-start"}}> {/* 좌측 로고프레임 */} 
+        <Frame style={{ justifyContent: "flex-start" }}>
+          {" "}
+          {/* 좌측 로고프레임 */}
           <Logo src={pnnlogo} />
         </Frame>
-        <Frame> {/* 우측 메뉴프레임 */} 
+        <Frame>
+          {" "}
+          {/* 우측 메뉴프레임 */}
           <Ul>About Us</Ul>
           <Ul>프로젝트</Ul>
           <Ul>부원소개</Ul>
           <Ul>지원하기</Ul>
-          <MenuIcon><IoIosMenu onClick={() => onClickMenuButton(menuBarState, setMenuBarState)}/></MenuIcon>
+          <MenuIcon></MenuIcon>
         </Frame>
       </Container>
       {menuBarState && <ModalMenu />}

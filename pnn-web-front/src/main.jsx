@@ -1,4 +1,3 @@
-
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
@@ -9,10 +8,7 @@ import { RootRoutes } from "./app/router/rootRoutes.jsx";
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <StrictMode>
-      <RootRoutes>
-        <App />
-      </RootRoutes>
+      <App />
     </StrictMode>
   </BrowserRouter>
 );
-
