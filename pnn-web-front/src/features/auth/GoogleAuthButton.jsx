@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useAuth } from "../../shared/auth/useAuth";
-import userStore from "../../entities/user/model/userStore";
+import { useAuth } from "../../shared/hooks/auth/useAuth";
+
 import { useEffect } from "react";
 
 const Button = styled.button`
@@ -9,9 +9,6 @@ const Button = styled.button`
 `;
 export const GoogleAuthButton = () => {
   const { handleGoogleLogin } = useAuth();
-  const { user } = userStore();
-  useEffect(() => {
-    console.log(user);
-  }, []);
+
   return <Button onClick={handleGoogleLogin}>구글을 통한 계정 로그인</Button>;
 };
