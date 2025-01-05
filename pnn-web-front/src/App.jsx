@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import GlobalNavigationBar from "./components/GlobalNavigationBar";
-import { useAuth } from "./shared/auth/useAuth";
+import GlobalNavigationBar from "./widgets/GlobalNavigationBar";
+import { useAuth } from "./shared/hooks/auth/useAuth";
 
 const Container = styled.div`
   width: 100%;
