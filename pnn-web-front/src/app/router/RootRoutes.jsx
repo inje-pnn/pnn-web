@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { AuthPage } from "../../pages/auth/AuthPage";
 import { UserRegistPage } from "../../pages/auth/UserRegistPage";
 import Layout from "../../widgets/layout/Layout";
+import { AdminPage } from "../../pages/admin/AdminPage";
 
 export const RootRoutes = () => {
   return (
@@ -11,6 +12,7 @@ export const RootRoutes = () => {
         path="/auth/regist"
         element={<Layout mainContent={<UserRegistPage />} />}
       />
+      <Route path="/admin" element={<Layout mainContent={<AdminPage />} />} />
     </Routes>
   );
 };
