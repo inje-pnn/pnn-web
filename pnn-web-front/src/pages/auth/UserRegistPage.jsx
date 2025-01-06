@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import { LogoBox } from "../../features/regist/component/LogoBox";
 import styled from "styled-components";
+import { GoogleAuthButton } from "../../features/auth/GoogleAuthButton";
 
 const Container = styled.div`
   display: flex;
@@ -20,11 +21,10 @@ const FormContainer = styled.div`
   flex-direction: column;
   flex: 0.4;
   padding: 25px;
-  align-items: center;
 `;
 const TitleContainer = styled.div`
   margin-bottom: 50px;
-  margin-top: 20%;
+  margin-top: 10%;
   width: 70%;
 `;
 const CustomTextFeild = styled(TextField)`
@@ -50,9 +50,15 @@ export const UserRegistPage = () => {
 
       <FormContainer>
         <TitleContainer>
-          <Text>P&N은 인제대학교 컴퓨터공학부의 학술 동아리입니다.</Text>
+          <Text>
+            P&N은 <br />
+            인제대학교 컴퓨터공학부
+            <br /> 학술 동아리입니다.
+          </Text>
           <Text>가입하고 다양한 활동을 해보세요.</Text>
         </TitleContainer>
+
+        <GoogleAuthButton />
         <CustomTextFeild
           id="fullWidth"
           label="학년"
