@@ -84,18 +84,18 @@ const Header = () => {
     <>
       <Container>
         <Frame style={{ justifyContent: "flex-start" }}>
-          {" "}
           {/* 좌측 로고프레임 */}
           <Logo src={pnnlogo} />
         </Frame>
         <Frame>
-          {" "}
           {/* 우측 메뉴프레임 */}
           <Ul>About Us</Ul>
           <Ul>프로젝트</Ul>
           <Ul>부원소개</Ul>
           <Ul>지원하기</Ul>
-          <MenuIcon></MenuIcon>
+          <MenuIcon onClick={() => onClickMenuButton(menuBarState, setMenuBarState)}>
+            메뉴
+          </MenuIcon>
         </Frame>
       </Container>
       {menuBarState && <ModalMenu />}
@@ -104,3 +104,4 @@ const Header = () => {
 };
 
 export default Header;
+
