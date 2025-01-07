@@ -1,10 +1,13 @@
 import styled from "styled-components";
+import pnnlogo from "./../../assets/images/pnnlogo.png";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  height: 1000px;
+  height: auto;
   padding: 16px;
+  background-color: lightsalmon;
 `;
 
 const Frame = styled.div`
@@ -14,12 +17,17 @@ const Frame = styled.div`
   gap: 50px 28px;
 `;
 
+const HeaderFrame = styled.div`
+  width: 100%;
+  height: auto;
+  color: white;
+`;
+
 const CardFrame = styled.div`
   width: 352px;
   height: 345px;
-  border: solid 1px #333;
+  border: solid 1px rgb(46, 46, 53);
   border-radius: 20px;
-  background-color: #2c2c2c; 
   display: flex;
   flex-direction: column;
   padding: 14px 14px 11px;
@@ -28,7 +36,7 @@ const CardFrame = styled.div`
   cursor: pointer;
 `;
 
-const ImageFrame = styled.img` /* 'image' -> 'img'로 수정 */
+const ImageFrame = styled.img`
   width: 100%;
   height: 200px;
   border-radius: 8px;
@@ -41,7 +49,6 @@ const TitleFrame = styled.div`
   align-items: center;
   gap: 12px;
   padding: 5px 0px;
-  border: solid 1px;
 `;
 
 const PlatformContainer = styled.div`
@@ -49,9 +56,8 @@ const PlatformContainer = styled.div`
   font-size: 12px;
 `;
 
-const MiniTitleFrame = styled.div`
+const SubTitleFrame = styled.div`
   font-size: 12px;
-  border: solid 1px;
   height: 44px;
 `;
 
@@ -61,47 +67,52 @@ const projects = [
     title: "VirtuaLeaf",
     platform: "WEB",
     description: "3D로 식물을 키워볼까요??",
-    imageUrl: "image_url_1"
+    imageUrl: "image_url_1",
   },
   {
     id: 2,
     title: "Unknown Entity",
     platform: "APP",
     description: "무서운 3D 공포게임을 해보세요..",
-    imageUrl: "image_url_2"
+    imageUrl: "image_url_2",
   },
   {
     id: 3,
     title: "Reaction",
     platform: "WEB",
     description: "노래를 맞춰보세요!",
-    imageUrl: "image_url_3"
+    imageUrl: "image_url_3",
   },
   {
     id: 4,
     title: "Lime",
     platform: "WEB",
     description: "아프리카, 치지직 저리가라 !! 최고의 스트리밍 사이트",
-    imageUrl: "image_url_3"
-  }
+    imageUrl: "image_url_3",
+  },
 ];
 
 export const SharePage = () => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Frame>
-        {projects.map(project => (
-          <CardFrame key={project.id}>
-            <ImageFrame src={project.imageUrl} alt={project.title} />
+        <HeaderFrame>
+          <h1>P&N에서 진행된 프로젝트 둘러보기</h1>
+        </HeaderFrame>
+        {projects.map((project) => (
+          <CardFrame key={project.id} onClick={() => navigate("/share/detail")}>
+            <ImageFrame src={pnnlogo} alt={project.title} />
             <TitleFrame>
               <span>{project.title}</span>
               <PlatformContainer>
                 <span>{project.platform}</span>
               </PlatformContainer>
             </TitleFrame>
-            <MiniTitleFrame>
+            <SubTitleFrame>
               <span>{project.description}</span>
-            </MiniTitleFrame>
+            </SubTitleFrame>
           </CardFrame>
         ))}
       </Frame>
