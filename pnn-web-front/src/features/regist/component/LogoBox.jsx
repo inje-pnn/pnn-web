@@ -1,20 +1,26 @@
 import styled from "styled-components";
-
+import Lottie from "react-lottie";
+import lottieData from "../../../assets/lottie/authLottie.json";
 const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+
   flex-direction: row;
 `;
 const LogoContainer = styled.div`
   position: relative;
 
   display: flex;
-  flex: 0.6;
+  flex: 0.5;
 `;
 const ComentContainer = styled.div`
+  position: relative;
+
+  top: -102px;
   display: flex;
-  flex: 0.4;
+  flex: 0.5;
+
   flex-direction: column;
   justify-content: center;
 `;
@@ -22,7 +28,7 @@ const LogoImg = styled.img`
   position: absolute;
   z-index: 9999;
   left: 208px;
-  top: 242px;
+  top: 142px;
   border-radius: 15px;
   width: 400px;
   height: 300px;
@@ -65,23 +71,34 @@ const BackBox = styled.div`
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 `;
 
+const LottieContainer = styled.div`
+  position: absolute;
+  z-index: 9999;
+  left: 538px;
+  top: 292px;
+  transform: rotateX(25deg) rotateY(25deg);
+`;
 export const LogoBox = () => {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: lottieData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   return (
-    <>
-      <Container>
-        <LogoContainer>
-          <LogoImg src="/favicon_logo.png" />
-          {[...Array(20)].map((v, i) => (
-            <BackBox left={188 + i} index={i} top={222 + i} />
-          ))}
-        </LogoContainer>
-        <ComentContainer>
-          <p>P&N은 인제대학교 컴퓨터공학부의 학술 동아리입니다.</p>
-          <p>가입하고 다양한 활동을 해보세요.</p>
-        </ComentContainer>
-        {/* <LogoImg src="/favicon_logo.png"></LogoImg>
-        <BackBox /> */}
-      </Container>
-    </>
+    <Container>
+      <LogoContainer>
+        <LogoImg src="/favicon_logo.png" />
+        {[...Array(20)].map((v, i) => (
+          <BackBox left={188 + i} index={i} top={122 + i} />
+        ))}
+      </LogoContainer>
+      <LottieContainer>
+        <Lottie options={defaultOptions} height={400} width={400} />
+      </LottieContainer>
+    </Container>
   );
 };

@@ -5,6 +5,7 @@ import { SharePage } from "../../pages/share/SharePage";
 import { ShareUpload } from "../../pages/share/ShareUpload";
 import { ShareDetail } from "../../pages/share/ShareDetail";
 import Layout from "../../widgets/layout/Layout";
+import { AdminPage } from "../../pages/admin/AdminPage";
 
 export const RootRoutes = () => {
   return (
@@ -17,6 +18,7 @@ export const RootRoutes = () => {
         path="/auth/regist"
         element={<Layout mainContent={<UserRegistPage />} />}
       />
+      <Route path="/admin" element={<Layout mainContent={<AdminPage />} />} />
     </Routes>
   );
 };
