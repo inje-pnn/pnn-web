@@ -1,24 +1,20 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import GlobalNavigationBar from "./components/GlobalNavigationBar";
-import { useAuth } from "./shared/auth/useAuth";
 
-const Container = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: black;
-`;
+import GlobalNavigationBar from "./widgets/GlobalNavigationBar";
+import { useAuth } from "./shared/hooks/auth/useAuth";
+import Header from "./widgets/layout/Header/Header";
+import { RootRoutes } from "./app/router/rootRoutes";
 
 const App = () => {
   const { checkAutoLogin } = useAuth();
   useEffect(() => {
     checkAutoLogin();
   }, []);
-  return (
-    <Container>
-      <GlobalNavigationBar />
-    </Container>
-  );
+  useEffect(() => {
+    console.log("eqweqwew");
+  }, []);
+  return <RootRoutes />;
 };
 
 export default App;
