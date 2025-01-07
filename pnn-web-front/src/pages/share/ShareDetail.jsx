@@ -13,7 +13,6 @@ const Frame = styled.div`
   width: 80%;
   height: 100%;
   margin-top: 100px;
-  border: solid 1px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -43,7 +42,6 @@ const ImageFrame = styled.div`
   margin: 20px 20px;
   display: flex;
   justify-content: center;
-  border: solid 1px;
 `
 
 const ProjectImage = styled.img`
