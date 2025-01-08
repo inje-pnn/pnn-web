@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "./Header/Header";
+import ButtonAppBar from "./Header/Header2";
 
 const Container = styled.div`
   width: 100%;
@@ -10,25 +11,26 @@ const Container = styled.div`
   @media (min-width: 768px) {
     width: 1920px;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
 const Main = styled.div`
-  width: 100%;
+  width: 1920px;
   height: 92dvh;
-  border: 1px solid red;
   margin-top: 7vh;
   @media (min-width: 768px) {
     width: 1920px;
     height: 100vh;
-    border: 1px solid lightgray;
   }
 `;
 
 const Layout = ({ mainContent }) => {
   return (
     <Container>
-      <Header />
+      <ButtonAppBar />
       <Main>{mainContent}</Main>
     </Container>
   );

@@ -12,9 +12,11 @@
     "deploy": "vite build && firebase deploy"
   },
   "dependencies": {
+    "@mui/icons-material": "^6.3.1",
     "@mui/material": "^6.3.0",
     "@mui/styled-engine": "^6.3.0",
     "@mui/styled-engine-sc": "^6.3.0",
+    "core-js": "^3.40.0",
     "firebase": "^11.1.0",
     "js-cookie": "^3.0.5",
     "react": "^18.3.1",
