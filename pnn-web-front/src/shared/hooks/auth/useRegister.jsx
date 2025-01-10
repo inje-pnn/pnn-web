@@ -7,6 +7,21 @@ export const useRegister = () => {
     name: "",
     gitHub: "",
   });
-  const handleUserFormData = (data) => {};
-  return {};
+  const [hasError, setHasError] = useState(false);
+  const handleUserFormData = (field, value) => {
+    setUserFormData((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
+  const checkHasInvaildValue = () => {
+    if (
+      !(userFormData.grade && userFormData.studentNumber && userFormData.name)
+    ) {
+      setHasError(true);
+    } else {
+      setHasError(false);
+    }
+  };
+  return { userFormData, handleUserFormData, hasError, checkHasInvaildValue };
 };

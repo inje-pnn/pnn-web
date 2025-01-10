@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Lottie from "react-lottie";
-import lottieData from "../../../assets/lottie/authLottie.json";
+import lottieData from "../../assets/lottie/authLottie.json";
 const Container = styled.div`
   width: 100%;
   height: 100%;

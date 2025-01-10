@@ -12,22 +12,21 @@ export const useAuth = () => {
   const { updateUser } = useUserStore();
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider(); // provider를 구글로 설정
-    signInWithPopup(auth, provider) // popup을 이용한 signup
-      .then((res) => {
-        Cookies.set("user", encodeURI(res.user.accessToken));
-        setUser(res.user.email);
-
-        updateUser(res.user.email);
-        setIsLoggedUser(true);
-      })
-      .catch((err) => {
-        console.log("errr", err);
-      });
+    const res = await signInWithPopup(auth, provider); // popup을 이용한 signup
+    const idToken = await res.user.getIdToken();
+    console.log("auth Data ", res);
+    console.log("result", idToken);
+    Cookies.set("user", encodeURI(res.user.accessToken));
+    setUser(res.user.email);
+    updateUser(res.user.email);
+    setIsLoggedUser(true);
   };
 
   const checkAutoLogin = () => {
     if (Cookies.get("user")) {
       setIsLoggedUser(true);
+      updateUser(Cookies.get("user"));
+      // updateUser()
       // setStoreUser(user);
       // need zustand update
       // 서버에서 accessToken을 통한 데이터 받아오기

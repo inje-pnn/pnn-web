@@ -11,9 +11,7 @@ const App = () => {
   useEffect(() => {
     checkAutoLogin();
   }, []);
-  useEffect(() => {
-    console.log("eqweqwew");
-  }, []);
+
   return <RootRoutes />;
 };
 
