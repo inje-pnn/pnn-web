@@ -6,21 +6,32 @@ import useUserStore from "../../shared/store/useUserStroe";
 import { useState } from "react";
 
 const Container = styled.div`
-  display: flex;
   height: 100dvh;
-  flex-direction: row;
+  display: flex;
+  flex-direction: column;
   position: relative;
+  @media (min-width: 768px) {
+    height: 100vh;
+    flex-direction: row;
+  }
 `;
 const LogoContainer = styled.div`
   display: flex;
-  flex: 0.6;
+  flex: 0.4;
+
+  @media (min-width: 768px) {
+    flex: 0.6;
+  }
 `;
 
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 0.4;
+  flex: 0.6;
   padding: 25px;
+  @media (min-width: 768px) {
+    flex: 0.4;
+  }
 `;
 
 export const UserRegistPage = () => {

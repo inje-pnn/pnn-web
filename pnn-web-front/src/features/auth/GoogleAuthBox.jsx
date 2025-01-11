@@ -2,7 +2,15 @@ import Button from "@mui/material/Button";
 import { styled as muiStyled } from "@mui/material/styles";
 import styled from "styled-components";
 import { useAuth } from "../../shared/hooks/auth/useAuth";
-
+const Container = styled.div`
+  width: 100%;
+  align-items: center;
+  @media (min-width: 768px) {
+    margin-bottom: 50px;
+    margin-top: 30%;
+    width: 70%;
+  }
+`;
 const CustomButton = muiStyled(Button)(({ theme }) => ({
   width: "100%",
   height: "45px",
@@ -15,11 +23,6 @@ const CustomButton = muiStyled(Button)(({ theme }) => ({
   },
 }));
 
-const Container = styled.div`
-  margin-bottom: 50px;
-  margin-top: 30%;
-  width: 70%;
-`;
 const Text = styled.p`
   font-size: 28px;
 `;
