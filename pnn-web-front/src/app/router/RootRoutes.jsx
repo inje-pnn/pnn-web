@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { AuthPage } from "../../pages/auth/AuthPage";
 import { UserRegistPage } from "../../pages/auth/UserRegistPage";
-import { SharePage } from "../../pages/share/SharePage";
-import { ShareUpload } from "../../pages/share/ShareUpload";
-import { ShareDetail } from "../../pages/share/ShareDetail";
+import { SharePage } from "../../pages/project/SharePage";
+import { ShareUpload } from "../../pages/project/ShareUpload";
+import { ShareDetail } from "../../pages/project/ShareDetail";
 import Layout from "../../widgets/layout/Layout";
 import { AdminPage } from "../../pages/admin/AdminPage";
 
