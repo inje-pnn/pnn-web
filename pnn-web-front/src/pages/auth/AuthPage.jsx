@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { GoogleAuthButton } from "../../features/auth/GoogleAuthButton";
+import GoogleLogin from "../test";
+
 const Contaniner = styled.div`
   width: 100%;
   height: 100dvh;
@@ -9,7 +10,7 @@ const Contaniner = styled.div`
 export const AuthPage = () => {
   return (
     <Contaniner>
-      <GoogleAuthButton />
+      <GoogleLogin />
     </Contaniner>
   );
 };
