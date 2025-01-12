@@ -4,13 +4,13 @@ import pnnlogo from "./../../assets/images/pnnlogo.png";
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  height: 1200px;
+  height: auto;
   padding: 16px;
   background-color: lightsalmon;
 `
 
 const Frame = styled.div`
-  width: 80%;
+  width: 1400px;
   height: 100%;
   margin-top: 100px;
   display: flex;
@@ -50,6 +50,60 @@ const ProjectImage = styled.img`
   border: solid 1px;
 `
 
+const UploadMainFrame = styled.div`
+  width: 100%;
+  height: 800px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 240px;
+`
+
+const ProjectSummaryFrame = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin-right: 30px;
+  border-radius: 10px;
+  padding: 40px;
+  border: solid 1px;
+`
+
+const SummaryText = styled.div`
+  width: 100%;
+  color: white;
+  font-size: 24px;
+  margin-bottom: 20px;
+`
+
+const SummaryFrame = styled.div`
+  width: 100%;
+  height: 500px;
+  display: flex;
+`
+
+const SummaryLeftFrame = styled.div`
+  margin-right: 32px;
+  h3 {
+    margin-bottom: 48px;
+  }
+`
+
+const SummaryRighttFrame = styled.div`
+  margin-right: 32px;
+  h1 {
+    margin-bottom: 48px;
+  }
+`
+
+const ProjectExplainFrame = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 890px;
+  border: solid 2px rgb(62,62,62);
+  border-radius: 10px;
+  padding: 40px;
+`
+
 export const ShareDetail = () => {
   return (
     <Container>
@@ -61,6 +115,23 @@ export const ShareDetail = () => {
       <ImageFrame>
         <ProjectImage src={pnnlogo}/>
         </ImageFrame>
+
+        <UploadMainFrame>
+        <ProjectSummaryFrame>
+          <SummaryText>프로젝트 요약</SummaryText>
+          <SummaryFrame>
+            <SummaryLeftFrame>
+              <h3>프로젝트 기간</h3>
+              <h3>프로젝트 형태</h3>
+            </SummaryLeftFrame>
+            <SummaryRighttFrame>
+            </SummaryRighttFrame>
+          </SummaryFrame>
+        </ProjectSummaryFrame>
+        <ProjectExplainFrame>
+            <h2>프로젝트 설명</h2>
+        </ProjectExplainFrame>
+        </UploadMainFrame>
       </Frame>
     </Container>
   );

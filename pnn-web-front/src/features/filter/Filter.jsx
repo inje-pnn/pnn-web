@@ -16,7 +16,6 @@ const DropdownContainer = styled.div`
 const DropdownButton = styled.button`
   display: flex;
   align-items: center;
-  gap: 8px;
   width: 110px;
   height: 45px;
   padding: 8px 16px;
@@ -69,7 +68,7 @@ const Filter = ({ setSelectedPlatform }) => {
 
   return (
     <FilterFrame>
-      <DropdownContainer>
+      
         <DropdownButton onClick={() => setIsOpen(!isOpen)}>
           플랫폼 {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
         </DropdownButton>
@@ -79,7 +78,7 @@ const Filter = ({ setSelectedPlatform }) => {
           <MenuItem onClick={() => handleMenuItemClick("Mobile")}>앱</MenuItem>
           <MenuItem onClick={() => handleMenuItemClick("Web")}>웹</MenuItem>
         </MenuContainer>
-      </DropdownContainer>
+      
     </FilterFrame>
   );
 };

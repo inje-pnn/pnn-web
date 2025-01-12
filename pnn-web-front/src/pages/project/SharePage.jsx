@@ -1,6 +1,7 @@
 // app/pages/SharePage/SharePage.tsx
 import styled from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CardFrame from "../../features/Card/CardFrame";
 import Filter from "../../features/filter/Filter";
 
@@ -45,6 +46,12 @@ const CardContainer = styled.div`
 export const SharePage = () => {
   const [selectedPlatform, setSelectedPlatform] = useState("전체");
 
+  const navigate = useNavigate();
+
+  const handleUploadClick = () => {
+    navigate("/share/upload");
+  }
+
   const projects = [
     { id: 1, title: "Project 1", platform: "Web", description: "간단한 프로젝트 설명 1" },
     { id: 2, title: "Project 2", platform: "Mobile", description: "간단한 프로젝트 설명 2" },
@@ -66,7 +73,7 @@ export const SharePage = () => {
         </HeaderFrame>
         
         <Filter selectedPlatform={selectedPlatform} setSelectedPlatform={setSelectedPlatform} />
-        
+        <h3 style={{cursor:"pointer"}} onClick={handleUploadClick}>임시 업로드 버튼</h3>
         <ProjectNumber>{filteredProjects.length}개의 프로젝트</ProjectNumber>
         <CardContainer>
           {filteredProjects.map((project) => (
