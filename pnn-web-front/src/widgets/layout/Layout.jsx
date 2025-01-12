@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "./Header/Header";
+import { AdminPage } from "../../pages/admin/AdminPage";
 
 const Container = styled.div`
   width: 100%;
@@ -28,7 +29,7 @@ const Main = styled.div`
 const Layout = ({ mainContent }) => {
   return (
     <Container>
-      <Header />
+      {mainContent?.type === AdminPage ? null : <Header />}
       <Main>{mainContent}</Main>
     </Container>
   );
