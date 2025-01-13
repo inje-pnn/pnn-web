@@ -1,27 +1,29 @@
 import { Card, CardActionArea } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 import { CardHeader } from "./components/CardHeader";
-
 const CustomCard = muiStyled(Card)(({ theme }) => ({
   width: "100%",
   height: "60%",
   justifyItems: "center",
   justifyContent: "flex-start",
-  marginTop: 15,
+  marginTop: "15px",
   borderRadius: "10px",
-  border: "1px solid #ddd",
-}));
+  backgroundColor: "#ddd",
 
-export const MembershipPeriodCard = () => {
+  "&:hover": {
+    backgroundColor: "#677EE5",
+  },
+}));
+export const LectureListCard = () => {
   return (
     <CustomCard>
-      <CardHeader title={"신청 기간"} />
+      <CardHeader title={"계정 관리"} />
       <CardActionArea
         sx={{
-          height: "85%",
+          height: "100%",
         }}
       >
-        <p>현재 신청 기간으로 설정 되어 있지 않습니다.</p>
+        <p>계정 리스트입니다.</p>
       </CardActionArea>
     </CustomCard>
   );

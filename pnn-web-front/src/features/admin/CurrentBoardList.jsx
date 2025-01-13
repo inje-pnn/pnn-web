@@ -11,17 +11,16 @@ const CustomCard = muiStyled(Card)(({ theme }) => ({
   borderRadius: "10px",
   border: "1px solid #ddd",
 }));
-
-export const MembershipPeriodCard = () => {
+export const CurrentBoardList = () => {
   return (
     <CustomCard>
-      <CardHeader title={"신청 기간"} />
+      <CardHeader title={"최근 생성된 게시글"} />
       <CardActionArea
         sx={{
-          height: "85%",
+          height: "100%",
         }}
       >
-        <p>현재 신청 기간으로 설정 되어 있지 않습니다.</p>
+        최근 생성된 게시글
       </CardActionArea>
     </CustomCard>
   );

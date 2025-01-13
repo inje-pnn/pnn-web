@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { UserInfoCard } from "../../features/admin/UserInfoCard";
 import { MembershipPeriodCard } from "../../features/admin/\bMembershipPeriodCard";
 import { ApprovalMemberList } from "../../features/admin/ApprovalMemberList";
+import { LectureListCard } from "../../features/admin/LectureListCard";
+import { CurrentBoardList } from "../../features/admin/CurrentBoardList";
+import { AdminSideNavBar } from "../../widgets/layout/sideBar/AdminSideNavBar";
 
 const Container = styled.div`
   display: flex;
@@ -10,20 +13,18 @@ const Container = styled.div`
 `;
 const LeftSection = styled.div`
   display: flex;
-  flex: 0.45;
+  flex: 0.5;
 
   flex-direction: column;
   padding: 25px;
 `;
 const RightSection = styled.div`
   display: flex;
-  flex: 0.45;
+  flex-direction: column;
+  flex: 0.5;
+  padding: 25px;
 `;
-const NavBar = styled.div`
-  display: flex;
-  flex: 0.1;
-  background-color: #f1f1f1;
-`;
+
 const DashBoardContainer = styled.div`
   display: flex;
   flex: 1;
@@ -37,16 +38,18 @@ const DashBoardContainer = styled.div`
 export const AdminPage = () => {
   return (
     <Container>
-      <NavBar />
+      <AdminSideNavBar />
+
       <DashBoardContainer>
         <LeftSection>
-          <h1>P&N 홈페이지 관리자 전용 페이지입니다.</h1>
           <UserInfoCard />
-          <UserInfoCard />
+
           <MembershipPeriodCard />
+          <CurrentBoardList />
         </LeftSection>
         <RightSection>
           <ApprovalMemberList />
+          <LectureListCard />
         </RightSection>
       </DashBoardContainer>
     </Container>
