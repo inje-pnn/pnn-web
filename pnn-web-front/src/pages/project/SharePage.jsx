@@ -84,13 +84,13 @@ export const SharePage = () => {
     {
       id: 4,
       title: "Project 4",
-      platform: "WEB",
+      platform: "GAME",
       description: "간단한 프로젝트 설명 4 (서브 타이틀)",
     },
     {
       id: 5,
       title: "Project 5",
-      platform: "APP",
+      platform: "AI",
       description: "간단한 프로젝트 설명 5 (서브 타이틀)",
     },
   ];

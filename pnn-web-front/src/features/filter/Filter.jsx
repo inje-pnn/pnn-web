@@ -6,6 +6,7 @@ const FilterFrame = styled.div`
   width: 100%;
   height: 60px;
   display: flex;
+  z-index: 10;
 `;
 
 const DropdownButton = styled.button`
@@ -76,6 +77,16 @@ const Filter = ({ setSelectedPlatform }) => {
     setIsOpen(false);
   };
 
+  const selectPlatformGame = () => {
+    setSelectedPlatform("GAME");
+    setIsOpen(false);
+  };
+
+  const selectPlatformAI = () => {
+    setSelectedPlatform("AI");
+    setIsOpen(false);
+  };
+
   return (
     <FilterFrame>
       <DropdownButton onClick={toggleDropdown}>
@@ -86,6 +97,8 @@ const Filter = ({ setSelectedPlatform }) => {
         <MenuItem onClick={selectPlatformAll}>전체</MenuItem>
         <MenuItem onClick={selectPlatformApp}>앱</MenuItem>
         <MenuItem onClick={selectPlatformWeb}>웹</MenuItem>
+        <MenuItem onClick={selectPlatformGame}>게임</MenuItem>
+        <MenuItem onClick={selectPlatformAI}>인공지능</MenuItem>
       </MenuContainer>
     </FilterFrame>
   );
