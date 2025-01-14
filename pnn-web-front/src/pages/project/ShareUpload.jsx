@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import CardFrame from "../../features/Card/CardFrame";
 
 const Container = styled.div`
   display: flex;

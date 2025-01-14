@@ -6,7 +6,6 @@ const FilterFrame = styled.div`
   width: 100%;
   height: 60px;
   display: flex;
-  position: relative;
 `;
 
 const DropdownButton = styled.button`
@@ -25,7 +24,7 @@ const DropdownButton = styled.button`
 
 const MenuContainer = styled.div`
   position: absolute;
-  top: 60px;
+  top: 21%;
   margin-top: -8px;
   width: 110px;
   background-color: #1f2937;
@@ -36,10 +35,9 @@ const MenuContainer = styled.div`
   opacity: ${(props) => (props.isOpen ? 1 : 0)};
   transform: ${(props) =>
     props.isOpen ? "translateY(0)" : "translateY(-10px)"};
-  pointer-events: ${(props) => (props.isOpen ? "auto" : "none")}; /* 클릭 가능 여부 */
+  pointer-events: ${(props) => (props.isOpen ? "auto" : "none")};
   transition: opacity 0.3s ease, transform 0.3s ease;
 `;
-
 
 const MenuItem = styled.button`
   width: 100%;

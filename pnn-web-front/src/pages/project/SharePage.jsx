@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CardFrame from "../../features/Card/CardFrame";
 import Filter from "../../features/filter/Filter";
+import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
 
 const Container = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const Container = styled.div`
 const Frame = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 1145px;
+  width: 1238px;
 `;
 
 const HeaderFrame = styled.div`
@@ -38,7 +39,7 @@ const CardContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
-  gap: 50px 43px;
+  gap: 50px 42px;
 `;
 
 export const SharePage = () => {
@@ -111,13 +112,6 @@ export const SharePage = () => {
           setSelectedPlatform={setSelectedPlatform}
         />
 
-        {/*{isLogin && (
-          <h3 onClick={handleUploadClick}>
-            임시 업로드 버튼
-          </h3>
-        )}
-        */}
-
         <h3 onClick={handleUploadClick}>임시 업로드 버튼</h3>
 
         <ProjectNumber>{filteredProjects.length}개의 프로젝트</ProjectNumber>
@@ -128,6 +122,7 @@ export const SharePage = () => {
           ))}
         </CardContainer>
       </Frame>
+      <ScrollToTopButton />
     </Container>
   );
 };
