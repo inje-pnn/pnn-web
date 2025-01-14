@@ -1,4 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+const Container = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 export const MainPage = () => {
   const navigate = useNavigate();
@@ -25,12 +35,14 @@ export const MainPage = () => {
   };
   return (
     <div>
-      <h1>메인페이지입니다.</h1>
-      <p>개발 과정에서 잠시 사용될 라우팅 버튼입니다.</p>
-      <p>메인작업 시작시 삭제해도 됩니다.</p>
-      <RoutingButton title={"관리자"} route={"admin"} />
-      <RoutingButton title={"로그인"} route={"auth"} />
-      <RoutingButton title={"프로젝트 공유"} route={"share"} />
+      <Container>
+        <h1>메인페이지입니다.</h1>
+        <p>개발 과정에서 잠시 사용될 라우팅 버튼입니다.</p>
+        <p>메인작업 시작시 삭제해도 됩니다.</p>
+        <RoutingButton title={"관리자"} route={"admin"} />
+        <RoutingButton title={"로그인"} route={"auth"} />
+        <RoutingButton title={"프로젝트 공유"} route={"share"} />
+      </Container>
     </div>
   );
 };

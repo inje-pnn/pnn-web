@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "./Header/Header";
 import { AdminPage } from "../../pages/admin/AdminPage";
+import ButtonAppBar from "./Header/Header2";
 
 const Container = styled.div`
   width: 100%;
@@ -29,7 +29,7 @@ const Main = styled.div`
 const Layout = ({ mainContent }) => {
   return (
     <Container>
-      {mainContent?.type === AdminPage ? null : <Header />}
+      {mainContent?.type === AdminPage ? null : <ButtonAppBar />}
       <Main>{mainContent}</Main>
     </Container>
   );

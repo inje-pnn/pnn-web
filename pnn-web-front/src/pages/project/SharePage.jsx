@@ -9,9 +9,9 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   height: auto;
+  min-height: 100%;
   padding: 16px;
   background-color: lightgreen;
-  margin-top: 50px;
 `;
 
 const Frame = styled.div`

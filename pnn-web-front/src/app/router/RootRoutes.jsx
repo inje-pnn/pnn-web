@@ -7,11 +7,13 @@ import { ShareDetail } from "../../pages/project/ShareDetail";
 import Layout from "../../widgets/layout/Layout";
 import { AdminPage } from "../../pages/admin/AdminPage";
 import { MainPage } from "../../pages/main/MainPage";
+import AboutUs from "../../pages/AboutUs";
 
 export const RootRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout mainContent={<MainPage />} />} />
+      <Route path="/aboutus" element={<Layout mainContent={<AboutUs />} />} />
       <Route path="/auth" element={<Layout mainContent={<AuthPage />} />} />
       <Route path="/share" element={<Layout mainContent={<SharePage />} />} />
       <Route
