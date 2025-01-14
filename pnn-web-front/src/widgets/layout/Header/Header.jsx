@@ -16,6 +16,7 @@ const Container = styled.div`
   color: black;
   border-bottom: 1px solid lightgray;
   padding: 0 3% 0 3%;
+  z-index: 100;
 
   @media (min-width: 768px) {
     width: 1920px;
