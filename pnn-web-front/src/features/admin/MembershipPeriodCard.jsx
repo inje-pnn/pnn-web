@@ -21,7 +21,7 @@ export const MembershipPeriodCard = () => {
           height: "85%",
         }}
       >
-        <p>현재 신청 기간으로 설정 되어 있지 않습니다.</p>
+        <p>현재 신청 기간으로 설정 되어 있지 않습니다..</p>
       </CardActionArea>
     </CustomCard>
   );
