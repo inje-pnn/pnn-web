@@ -9,7 +9,7 @@ const Container = styled.div`
   position: relative;
 
   @media (min-width: 768px) {
-    width: 1920px;
+    width: 100%;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -18,12 +18,13 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
-  width: 1920px;
-  height: 92dvh;
-  margin-top: 7vh;
   @media (min-width: 768px) {
-    width: 1920px;
-    height: 100vh;
+    width: 100%;
+    min-height: 95vh;
+    height: 95vh;
+    display: flex;
+    align-items: center;
+    margin-top: 5vh;
   }
 `;
 

@@ -26,5 +26,6 @@ html {
 
   @media (min-width: 768px) {
     height: 100vh;
+    width: 100%;
   }
 }
