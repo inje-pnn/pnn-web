@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import CardFrame from "../../features/Card/CardFrame";
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   height: 100dvh;
-  padding: 16px;
   background-color: lightsalmon;
+  margin-top: 50px;
 `
 
 export const ShareUpload = () => {

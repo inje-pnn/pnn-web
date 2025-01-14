@@ -10,9 +10,8 @@ const CardWrapper = styled.div`
   height: 345px;
   cursor: pointer;
   border: solid 1px;
-  border-radius: 8px;
+  border-radius: 20px;
   padding: 16px;
-  margin: 8px;
 `;
 
 const ImageFrame = styled.img`

@@ -1,6 +1,5 @@
-// app/pages/SharePage/SharePage.tsx
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CardFrame from "../../features/Card/CardFrame";
 import Filter from "../../features/filter/Filter";
@@ -36,34 +35,69 @@ const ProjectNumber = styled.div`
 `;
 
 const CardContainer = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
-  gap: 50px 18px;
-  flex-wrap: wrap;
+  gap: 50px 43px;
 `;
 
 export const SharePage = () => {
   const [selectedPlatform, setSelectedPlatform] = useState("전체");
+  const [isLogin, setIsLogin] = useState(false);
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
+
   const handleUploadClick = () => {
     navigate("/share/upload");
-  }
+  };
 
+  // 임시 더미 데이터
   const projects = [
-    { id: 1, title: "Project 1", platform: "Web", description: "간단한 프로젝트 설명 1" },
-    { id: 2, title: "Project 2", platform: "Mobile", description: "간단한 프로젝트 설명 2" },
-    { id: 3, title: "Project 3", platform: "Web", description: "간단한 프로젝트 설명 3" },
-    { id: 4, title: "Project 4", platform: "Web", description: "간단한 프로젝트 설명 4" },
-    { id: 5, title: "Project 5", platform: "Mobile", description: "간단한 프로젝트 설명 5" },
+    {
+      id: 1,
+      title: "Project 1",
+      platform: "WEB",
+      description: "간단한 프로젝트 설명 1 (서브 타이틀)",
+    },
+    {
+      id: 2,
+      title: "Project 2",
+      platform: "APP",
+      description: "간단한 프로젝트 설명 2 (서브 타이틀)",
+    },
+    {
+      id: 3,
+      title: "Project 3",
+      platform: "WEB",
+      description: "간단한 프로젝트 설명 3 (서브 타이틀)",
+    },
+    {
+      id: 4,
+      title: "Project 4",
+      platform: "WEB",
+      description: "간단한 프로젝트 설명 4 (서브 타이틀)",
+    },
+    {
+      id: 5,
+      title: "Project 5",
+      platform: "APP",
+      description: "간단한 프로젝트 설명 5 (서브 타이틀)",
+    },
   ];
 
-  // 플랫폼에 맞게 프로젝트 필터링
-  const filteredProjects = selectedPlatform === "전체" 
-    ? projects 
-    : projects.filter(project => project.platform === selectedPlatform);
+  const filteredProjects =
+    selectedPlatform === "전체"
+      ? projects
+      : projects.filter((project) => project.platform === selectedPlatform);
 
   return (
     <Container>
@@ -71,10 +105,23 @@ export const SharePage = () => {
         <HeaderFrame>
           <h1>P&N에서 진행된 프로젝트 둘러보기</h1>
         </HeaderFrame>
-        
-        <Filter selectedPlatform={selectedPlatform} setSelectedPlatform={setSelectedPlatform} />
-        <h3 style={{cursor:"pointer"}} onClick={handleUploadClick}>임시 업로드 버튼</h3>
+
+        <Filter
+          selectedPlatform={selectedPlatform}
+          setSelectedPlatform={setSelectedPlatform}
+        />
+
+        {/*{isLogin && (
+          <h3 onClick={handleUploadClick}>
+            임시 업로드 버튼
+          </h3>
+        )}
+        */}
+
+        <h3 onClick={handleUploadClick}>임시 업로드 버튼</h3>
+
         <ProjectNumber>{filteredProjects.length}개의 프로젝트</ProjectNumber>
+
         <CardContainer>
           {filteredProjects.map((project) => (
             <CardFrame key={project.id} project={project} />

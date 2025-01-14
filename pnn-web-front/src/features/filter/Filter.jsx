@@ -1,4 +1,3 @@
-// features/filter/Filter.tsx
 import styled from "styled-components";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
@@ -7,9 +6,6 @@ const FilterFrame = styled.div`
   width: 100%;
   height: 60px;
   display: flex;
-`;
-
-const DropdownContainer = styled.div`
   position: relative;
 `;
 
@@ -29,7 +25,7 @@ const DropdownButton = styled.button`
 
 const MenuContainer = styled.div`
   position: absolute;
-  top: 100%;
+  top: 60px;
   margin-top: -8px;
   width: 110px;
   background-color: #1f2937;
@@ -40,8 +36,10 @@ const MenuContainer = styled.div`
   opacity: ${(props) => (props.isOpen ? 1 : 0)};
   transform: ${(props) =>
     props.isOpen ? "translateY(0)" : "translateY(-10px)"};
+  pointer-events: ${(props) => (props.isOpen ? "auto" : "none")}; /* 클릭 가능 여부 */
   transition: opacity 0.3s ease, transform 0.3s ease;
 `;
+
 
 const MenuItem = styled.button`
   width: 100%;
@@ -61,24 +59,36 @@ const MenuItem = styled.button`
 const Filter = ({ setSelectedPlatform }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleMenuItemClick = (platform) => {
-    setSelectedPlatform(platform);
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const selectPlatformAll = () => {
+    setSelectedPlatform("전체");
+    setIsOpen(false);
+  };
+
+  const selectPlatformApp = () => {
+    setSelectedPlatform("APP");
+    setIsOpen(false);
+  };
+
+  const selectPlatformWeb = () => {
+    setSelectedPlatform("WEB");
     setIsOpen(false);
   };
 
   return (
     <FilterFrame>
-      
-        <DropdownButton onClick={() => setIsOpen(!isOpen)}>
-          플랫폼 {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
-        </DropdownButton>
+      <DropdownButton onClick={toggleDropdown}>
+        플랫폼 {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+      </DropdownButton>
 
-        <MenuContainer isOpen={isOpen}>
-          <MenuItem onClick={() => handleMenuItemClick("전체")}>전체</MenuItem>
-          <MenuItem onClick={() => handleMenuItemClick("Mobile")}>앱</MenuItem>
-          <MenuItem onClick={() => handleMenuItemClick("Web")}>웹</MenuItem>
-        </MenuContainer>
-      
+      <MenuContainer isOpen={isOpen}>
+        <MenuItem onClick={selectPlatformAll}>전체</MenuItem>
+        <MenuItem onClick={selectPlatformApp}>앱</MenuItem>
+        <MenuItem onClick={selectPlatformWeb}>웹</MenuItem>
+      </MenuContainer>
     </FilterFrame>
   );
 };
