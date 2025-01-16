@@ -9,8 +9,11 @@ const Container = styled.div`
   position: relative;
 
   @media (min-width: 768px) {
-    width: 1920px;
+    width: 100%;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
