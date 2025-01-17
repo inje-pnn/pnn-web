@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { UserInfoCard } from "../../features/admin/UserInfoCard";
-import { MembershipPeriodCard } from "../../features/admin/\bMembershipPeriodCard";
+import { MembershipPeriodCard } from "../../features/admin/MembershipPeriodCard";
 import { ApprovalMemberList } from "../../features/admin/ApprovalMemberList";
 import { LectureListCard } from "../../features/admin/LectureListCard";
 import { CurrentBoardList } from "../../features/admin/CurrentBoardList";

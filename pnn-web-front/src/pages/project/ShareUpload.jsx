@@ -8,8 +8,6 @@ const Container = styled.div`
   justify-content: center;
   width: 100%;
   height: 100dvh;
-  background-color: lightsalmon;
-  margin-top: 50px;
 `;
 
 const TitleFrame = styled.div`

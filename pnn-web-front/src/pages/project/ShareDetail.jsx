@@ -6,7 +6,6 @@ const Container = styled.div`
   justify-content: center;
   height: auto;
   padding: 16px;
-  background-color: lightsalmon;
 `
 
 const Frame = styled.div`
@@ -70,7 +69,6 @@ const ProjectSummaryFrame = styled.div`
 
 const SummaryText = styled.div`
   width: 100%;
-  color: white;
   font-size: 24px;
   margin-bottom: 20px;
 `
