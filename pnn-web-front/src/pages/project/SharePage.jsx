@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CardFrame from "../../features/Card/CardFrame";
-import Filter from "../../features/platform/Filter";
+import { Filter } from "../../features/platform/components/Filter";
 import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
+import { UploadButton } from "../../features/platform/UploadButton";
 
 const Container = styled.div`
   display: flex;
@@ -24,7 +25,6 @@ const HeaderFrame = styled.div`
   width: 100%;
   height: 70px;
   display: flex;
-  justify-content: center;
 `;
 
 const ProjectNumber = styled.div`
@@ -43,28 +43,6 @@ const CardContainer = styled.div`
   gap: 50px 60px;
 `;
 
-const UploadCardWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 374px;
-  height: 405px;
-  cursor: pointer;
-  border-radius: 20px;
-  position: relative;
-  background-color: #f4f4f4;
-  border: 2px dashed #667eea;
-  color: #667eea;
-`;
-
-
-const UploadText = styled.div`
-  font-size: 34px;
-  font-weight: bold;
-  color: #667eea;
-`;
-
 export const SharePage = () => {
   const [selectedPlatform, setSelectedPlatform] = useState("ALL");
   const [isLogin, setIsLogin] = useState(false);
@@ -79,10 +57,6 @@ export const SharePage = () => {
       setIsLogin(false);
     }
   }, []);
-
-  const handleUploadClick = () => {
-    navigate("/share/upload");
-  };
 
   const projects = [
     { id: 1, title: "Project 1", platform: "WEB", description: "설명 1" },
@@ -112,22 +86,13 @@ export const SharePage = () => {
         <ProjectNumber>{filteredProjects.length}개의 프로젝트</ProjectNumber>
 
         <CardContainer>
-          {/*{isLogin && (
-                <UploadCardWrapper onClick={handleUploadClick}>
-                  <UploadText>프로젝트 업로드</UploadText>
-                </UploadCardWrapper>
-              )}*/}
-
-          <UploadCardWrapper onClick={handleUploadClick}>
-            <UploadText>+</UploadText>
-          </UploadCardWrapper>
-
           {filteredProjects.map((project) => (
             <CardFrame key={project.id} project={project} />
           ))}
         </CardContainer>
       </Frame>
       <ScrollToTopButton />
+      <UploadButton />
     </Container>
   );
 };

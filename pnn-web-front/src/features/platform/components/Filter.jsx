@@ -1,23 +1,24 @@
 import React from "react";
-import { ButtonGroup, Button } from "@mui/material";
+import { Chip } from "@mui/material";
 import { styled } from "@mui/system";
 
-const StyledButton = styled(Button)(({ selected }) => ({
-  marginTop: "50px",
-  marginBottom: "50px",
+const StyledChip = styled(Chip)(({ selected }) => ({
+  margin: "10px",
   textTransform: "none",
-  padding: "10px 0",
-  width: "158px",
-  height: "58px",
+  padding: "10px",
   borderRadius: "30px",
   transition: "all 0.3s ease",
   backgroundColor: selected ? "#667eea" : "#fff",
   color: selected ? "#fff" : "#000",
-  fontSize: "21px",
+  fontSize: "16px",
   fontWeight: "600",
+  border: selected ? "none" : "1px solid #ccc",
+  "&:hover": {
+    backgroundColor: selected ? "#5a67d8" : "#f5f5f5",
+  },
 }));
 
-const Filter = ({ selectedPlatform, setSelectedPlatform }) => {
+export const Filter = ({ selectedPlatform, setSelectedPlatform }) => {
   const platformOptions = [
     { platform: "ALL", value: "ALL" },
     { platform: "WEB", value: "WEB" },
@@ -27,24 +28,24 @@ const Filter = ({ selectedPlatform, setSelectedPlatform }) => {
   ];
 
   return (
-    <ButtonGroup
-      sx={{
-        overflow: "hidden",
+    <div
+      style={{
         display: "flex",
         justifyContent: "center",
+        flexWrap: "wrap",
+        marginTop: "50px",
+        marginBottom: "50px",
       }}
     >
       {platformOptions.map((option) => (
-        <StyledButton
+        <StyledChip
           key={option.value}
+          label={option.platform}
+          clickable
           selected={selectedPlatform === option.value}
           onClick={() => setSelectedPlatform(option.value)}
-        >
-          {option.platform}
-        </StyledButton>
+        />
       ))}
-    </ButtonGroup>
+    </div>
   );
 };
-
-export default Filter;

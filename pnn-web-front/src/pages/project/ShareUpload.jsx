@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
+import { Dropdown } from "../../features/platform/OptionDropdown";
+import { ImageUpload } from "../../features/platform/ImageUpload";
 
 const Container = styled.div`
   display: flex;
@@ -65,55 +67,10 @@ const CharacterCounter = styled.span`
   color: ${(props) => (props.isOverLimit ? "#ff0000" : "#666")};
 `;
 
-const FileInput = styled.input`
-  margin-top: 8px;
-`;
-
 const TagListFrame = styled.div`
   display: flex;
   gap: 20px;
 `;
-
-const DropdownContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-
-  h4 {
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
-
-  select {
-    padding-left: 20px;
-    padding-right: 40px;
-    font-size: 14px;
-    width: 100%;
-    height: 50px;
-    border: solid 1px #dbdbdb;
-    border-radius: 4px;
-
-    &:hover {
-      border: solid 0.5px #dbdbdb;
-    }
-
-    &:focus {
-      border: solid 1.5px #222222;
-      outline: none;
-    }
-  }
-`;
-
-const ImagePreviewFrame = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 400px;
-    height: 300px;
-    color: #656573;
-    border: solid 2px #ededed;
-    background-color: #fcfcfc;
-`
 
 const ReadMeFrame = styled.div`
   display: flex;
@@ -126,7 +83,6 @@ const ReadMeFrame = styled.div`
   margin-top: 20px;
 `;
 
-// 여기부터 임시 프레임
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -171,6 +127,9 @@ const SubInputFrame = styled.div`
 export const ShareUpload = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
+  const [platform, setPlatform] = useState("");
+  const [techStack, setTechStack] = useState("");
+  const [image, setImage] = useState(null);
 
   const TITLE_LIMIT = 20;
   const SUBTITLE_LIMIT = 30;
@@ -188,6 +147,17 @@ export const ShareUpload = () => {
       setSubtitle(input);
     }
   };
+
+  const handlePlatformChange = (e) => {
+    setPlatform(e.target.value);
+  };
+
+  const handleTechStackChange = (e) => {
+    setTechStack(e.target.value);
+  };
+
+  const platformOptions = ["Web", "Mobile", "AI", "Game"];
+  const techStackOptions = ["React", "Fast API", "Spring Boot"];
 
   return (
     <Container>
@@ -240,30 +210,16 @@ export const ShareUpload = () => {
             <InputFrame>플랫폼</InputFrame>
             <SubInputFrame>
               <TagListFrame>
-                <DropdownContainer>
-                  <h4>플랫폼 선택</h4>
-                  <select defaultValue="">
-                    <option value="" disabled>
-                      선택
-                    </option>
-                    <option value="WEB">Web</option>
-                    <option value="APP">Mobile</option>
-                    <option value="AI(인공지능)">AI</option>
-                    <option value="GAME">Game</option>
-                  </select>
-                </DropdownContainer>
-
-                <DropdownContainer>
-                  <h4>기술 스택 선택</h4>
-                  <select defaultValue="">
-                    <option value="" disabled>
-                      선택
-                    </option>
-                    <option value="react">React</option>
-                    <option value="python">Fast API</option>
-                    <option value="java">Spring Boot</option>
-                  </select>
-                </DropdownContainer>
+                <Dropdown
+                  label="플랫폼 선택"
+                  options={platformOptions}
+                  onChange={handlePlatformChange}
+                />
+                <Dropdown
+                  label="기술 스택 선택"
+                  options={techStackOptions}
+                  onChange={handleTechStackChange}
+                />
               </TagListFrame>
             </SubInputFrame>
           </WrapperFrame>
@@ -276,10 +232,11 @@ export const ShareUpload = () => {
               <h4>대표 사진</h4>
             </InputFrame>
             <SubInputFrame>
-              <FileInput type="file" id="image" />
-              <ImagePreviewFrame>
-              사진 미리보기
-            </ImagePreviewFrame>
+              <ImageUpload
+                image={image}
+                onImageChange={setImage}
+                onImageRemove={() => setImage(null)}
+              />
             </SubInputFrame>
           </WrapperFrame>
         </InputContainer>
@@ -291,16 +248,12 @@ export const ShareUpload = () => {
               <h4>GitHub 링크</h4>
             </InputFrame>
             <SubInputFrame>
-              <GlobalInput
-                type="text"
-                id="github"
-                placeholder="GitHub 링크를 입력하세요"
-              />
+              <GlobalInput type="text" id="github" />
             </SubInputFrame>
           </WrapperFrame>
         </InputContainer>
 
-        <ReadMeFrame>ReadMe 파일이 띄워질 프레임</ReadMeFrame>
+        <ReadMeFrame>README</ReadMeFrame>
       </ContentContainer>
     </Container>
   );
