@@ -1,11 +1,17 @@
+import {
+  List,
+  ListItemButton,
+  ListItemText,
+  ListSubheader,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const NavBar = styled.div`
   display: flex;
-  flex: 0.1;
-  background-color: #f1f1f1;
+  width: 170px;
+  height: 100%;
   flex-direction: column;
-
   align-items: center;
 `;
 const Logo = styled.img`
@@ -26,15 +32,40 @@ const LinkText = styled.p`
 `;
 
 export const AdminSideNavBar = () => {
-  const linkText = ["메인", "가입신청", "게시글 관리", "멤버관리", "강의정보"];
+  const linkText = [
+    { title: "메인", path: "/admin" },
+    { title: "멤버관리", path: "/admin/member" },
+    { title: "가입신청", path: "/admin/membership" },
+    { title: "게시글 관리", path: "/admin/board" },
+    { title: "계정정보", path: "/admin/account" },
+  ];
+  const navigate = useNavigate();
+  const onClickLinkButton = (path) => {
+    navigate(path);
+  };
+  const ListButton = ({ title, path }) => {
+    return (
+      <ListItemButton onClick={() => onClickLinkButton(path)}>
+        <ListItemText primary={title} />
+      </ListItemButton>
+    );
+  };
   return (
     <NavBar>
-      <Logo src="/favicon_logo.png" />
-      <LinkContainer>
+      <List
+        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        component="nav"
+        aria-labelledby="nested-list-subheader"
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            <Logo src="/favicon_logo.png" />
+          </ListSubheader>
+        }
+      >
         {linkText.map((v) => (
-          <LinkText>{v}</LinkText>
+          <ListButton title={v.title} path={v.path} />
         ))}
-      </LinkContainer>
+      </List>
     </NavBar>
   );
 };

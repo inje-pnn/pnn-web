@@ -4,9 +4,10 @@ import lottieData from "../../assets/lottie/authLottie.json";
 import { agent } from "../../shared/util/agent";
 const Container = styled.div`
   width: 100%;
-  height: 100%;
-  display: flex;
   flex-direction: row;
+
+  @media (min-width: 768px) {
+  }
 `;
 const LogoContainer = styled.div`
   position: relative;
@@ -17,8 +18,7 @@ const LogoContainer = styled.div`
 
 const LogoImg = styled.img`
   position: absolute;
-  z-index: 9999;
-
+  z-index: 3000;
   border-radius: 15px;
   width: 200px;
   height: 150px;
@@ -30,7 +30,7 @@ const LogoImg = styled.img`
   font-size: 1.5rem;
   font-weight: bold;
   color: #555;
-  left: 30%;
+  left: 20%;
   top: 60px;
   /* 3D 효과 */
   box-shadow: -35px 20px 30px rgba(0, 0, 0, 0.2),
@@ -60,13 +60,13 @@ const BackBox = styled.div`
   position: absolute;
   /* 3D 효과 */
   transform: rotateX(25deg) rotateY(-25deg);
-  left: calc(30% + 20px);
+
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   z-index: ${(props) => {
     props.index;
   }};
 
-  left: ${({ left }) => `calc(21% + ${left}px)`};
+  left: ${({ left }) => `calc(16% + ${left}px)`};
   top: ${(props) => `${40 + props.top}px`};
   @media (min-width: 768px) {
     left: ${(props) => `${188 + props.left}px`};
@@ -79,9 +79,9 @@ const BackBox = styled.div`
 const LottieContainer = styled.div`
   position: absolute;
   z-index: 9999;
-  left: 35%;
-  top: 13%;
-  transform: rotateX(25deg) rotateY(25deg);
+  left: 40%;
+  top: 15%;
+  transform: rotateX(35deg) rotateY(25deg);
   @media (min-width: 768px) {
     left: 538px;
     top: 292px;
