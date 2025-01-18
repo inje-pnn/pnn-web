@@ -38,8 +38,6 @@ const DashBoardContainer = styled.div`
 export const AdminPage = () => {
   return (
     <Container>
-      <AdminSideNavBar />
-
       <DashBoardContainer>
         <LeftSection>
           <UserInfoCard />

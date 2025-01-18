@@ -7,7 +7,10 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../../../assets/images/pnnlogo.png";
+import { AccountCircle } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { Badge } from "@mui/material";
+import DropPofileList from "./components/DropPofileList";
 
 export default function Header() {
   const [menuBarState, setMenuBarState] = useState(false);
@@ -15,7 +18,10 @@ export default function Header() {
   const onClickMenuButton = (menuBarState, setMenuBarState) => {
     setMenuBarState(!menuBarState);
   };
-
+  const onClickUserButton = () => {};
+  const UserProfile = () => {
+    return <div>hi</div>;
+  };
   return (
     <Box
       sx={{
@@ -94,30 +100,7 @@ export default function Header() {
           </Box>
 
           {/* 우측 로그인/가입 버튼 */}
-          <Box sx={{ display: "flex", gap: "1rem" }}>
-            <Link to="/auth" style={{ textDecoration: "none", color: "white" }}>
-              <Button color="inherit">로그인</Button>
-            </Link>
-            <Link
-              to="/auth/regist"
-              style={{ textDecoration: "none", color: "white" }}
-            >
-              <Button
-                color="inherit"
-                variant="outlined"
-                sx={{ borderColor: "white" }}
-              >
-                가입하기
-              </Button>
-            </Link>
-            {/* <IconButton
-              size="large"
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton> */}
-          </Box>
+          <DropPofileList />
         </Toolbar>
       </AppBar>
     </Box>

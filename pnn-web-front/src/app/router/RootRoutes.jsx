@@ -8,6 +8,7 @@ import Layout from "../../widgets/layout/Layout";
 import { AdminPage } from "../../pages/admin/AdminPage";
 import { MainPage } from "../../pages/main/MainPage";
 import AboutUs from "../../pages/AboutUs";
+import { AdminMemberControlPage } from "../../pages/admin/AdminMemberControlPage";
 
 export const RootRoutes = () => {
   return (
@@ -28,7 +29,25 @@ export const RootRoutes = () => {
         path="/auth/regist"
         element={<Layout mainContent={<UserRegistPage />} />}
       />
+      {/* 관리자 페이지 라우트 */}
       <Route path="/admin" element={<Layout mainContent={<AdminPage />} />} />
+
+      <Route
+        path="/admin/member"
+        element={<Layout mainContent={<AdminMemberControlPage />} />}
+      />
+      <Route
+        path="/admin/membership"
+        element={<Layout mainContent={<AdminPage />} />}
+      />
+      <Route
+        path="/admin/board"
+        element={<Layout mainContent={<AdminPage />} />}
+      />
+      <Route
+        path="/admin/account"
+        element={<Layout mainContent={<AdminPage />} />}
+      />
     </Routes>
   );
 };
