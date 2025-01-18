@@ -3,6 +3,8 @@ import { useState } from "react";
 import { auth } from "../../../firebase";
 import Cookies from "js-cookie";
 import useUserStore from "../../store/useUserStroe";
+import { authApi } from "../../api/authApi";
+import { useNavigate } from "react-router-dom";
 // import userStore from "../../entities/user/model/userStore";
 
 export const useAuth = () => {
@@ -10,26 +12,30 @@ export const useAuth = () => {
   const [user, setUser] = useState();
 
   const { updateUser } = useUserStore();
+  const { getAllMembers, postAuthLoginUser } = authApi();
+  const navigate = useNavigate();
+
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider(); // provider를 구글로 설정
     const res = await signInWithPopup(auth, provider); // popup을 이용한 signup
-    const idToken = await res.user.getIdToken();
-    console.log("auth Data ", res);
-    console.log("result", idToken);
-    Cookies.set("user", encodeURI(res.user.accessToken));
-    setUser(res.user.email);
-    updateUser(res.user.email);
+
+    Cookies.set("user", encodeURI(res.user.email));
+
+    const userInfo = postAuthLoginUser(res.user.email);
+
+    updateUser(userInfo);
+    setUser(userInfo);
     setIsLoggedUser(true);
+    navigate("/");
   };
 
   const checkAutoLogin = () => {
-    if (Cookies.get("user")) {
+    const userCookie = Cookies.get("user");
+    if (userCookie) {
+      const userInfo = postAuthLoginUser(userCookie);
+      updateUser(userCookie);
+      setUser(userInfo);
       setIsLoggedUser(true);
-      updateUser(Cookies.get("user"));
-      // updateUser()
-      // setStoreUser(user);
-      // need zustand update
-      // 서버에서 accessToken을 통한 데이터 받아오기
     }
   };
   return { handleGoogleLogin, checkAutoLogin };
