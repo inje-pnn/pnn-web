@@ -63,7 +63,7 @@ export const AdminSideNavBar = () => {
         }
       >
         {linkText.map((v) => (
-          <ListButton title={v.title} path={v.path} />
+          <ListButton key={`card-${v.title}`} title={v.title} path={v.path} />
         ))}
       </List>
     </NavBar>

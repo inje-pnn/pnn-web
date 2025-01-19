@@ -8,6 +8,7 @@ const useUserStore = create((set) => ({
         user: { id: Date.now(), data, completed: false },
       };
     }),
+  clearUser: () => set(() => ({ user: null })),
 }));
 
 export default useUserStore;
