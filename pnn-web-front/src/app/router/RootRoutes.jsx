@@ -14,7 +14,6 @@ import ProtectedRoute from "./ProtectedRoute";
 
 export const RootRoutes = () => {
   const user = useUserStore((state) => state.user);
-  console.log(user.data);
   // const isAdmin = user.
   return (
     <Routes>

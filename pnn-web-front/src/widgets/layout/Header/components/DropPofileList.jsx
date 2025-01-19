@@ -13,6 +13,7 @@ import { AccountCircle } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import useUserStore from "../../../../shared/store/useUserStroe";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../../shared/hooks/auth/useAuth";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -61,7 +62,7 @@ export default function DropPofileList() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-
+  const { userLogout } = useAuth();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -69,11 +70,16 @@ export default function DropPofileList() {
     setAnchorEl(null);
   };
   const user = useUserStore((state) => state.user);
-
-  const onClickLoginButton = () => {
-    navigate("auth");
+  console.log("userInfo", !!user);
+  const onClickAuthButton = () => {
+    if (!user) {
+      navigate("auth");
+    } else {
+      userLogout();
+    }
     setAnchorEl(null);
   };
+
   return (
     <div>
       <IconButton
@@ -98,12 +104,12 @@ export default function DropPofileList() {
         onClose={handleClose}
       >
         {user && (
-          <MenuItem onClick={onClickLoginButton} disableRipple>
+          <MenuItem disableRipple>
             <EditIcon />내 정보
           </MenuItem>
         )}
 
-        <MenuItem onClick={onClickLoginButton} disableRipple>
+        <MenuItem onClick={onClickAuthButton} disableRipple>
           <EditIcon />
           {user ? "로그아웃" : "로그인"}
         </MenuItem>

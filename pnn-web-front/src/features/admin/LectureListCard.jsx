@@ -1,6 +1,6 @@
 import { Card, CardActionArea } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
-import { CardHeader } from "./components/CardHeader";
+import { CardHeader } from "../../shared/components/admin/CardHeader";
 const CustomCard = muiStyled(Card)(({ theme }) => ({
   width: "100%",
   height: "60%",

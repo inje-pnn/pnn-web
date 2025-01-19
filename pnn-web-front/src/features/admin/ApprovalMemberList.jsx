@@ -1,6 +1,6 @@
 import { Card, CardActionArea, ListItemButton } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
-import { CardHeader } from "./components/CardHeader";
+import { CardHeader } from "../../shared/components/admin/CardHeader";
 import { useEffect } from "react";
 import { filterMemberAuthority } from "../../shared/util/memberUtil";
 import styled from "styled-components";
@@ -55,8 +55,8 @@ export const ApprovalMemberList = ({ pendingUsersList }) => {
     <CustomCard>
       <CardHeader title={"가입 대기 명단"} />
       <CardContent>
-        {pendingUsersList.map((v) => (
-          <CustomListItem>{v.email}</CustomListItem>
+        {pendingUsersList?.map((v) => (
+          <CustomListItem key={`card-${v.id}`}>{v.email}</CustomListItem>
         ))}
       </CardContent>
       {/* <CardActionArea
