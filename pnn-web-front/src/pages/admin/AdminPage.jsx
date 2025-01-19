@@ -5,6 +5,7 @@ import { ApprovalMemberList } from "../../features/admin/ApprovalMemberList";
 import { LectureListCard } from "../../features/admin/LectureListCard";
 import { CurrentBoardList } from "../../features/admin/CurrentBoardList";
 import { AdminSideNavBar } from "../../widgets/layout/sideBar/AdminSideNavBar";
+import { useAdmin } from "../../shared/hooks/admin/useAdmin";
 
 const Container = styled.div`
   display: flex;
@@ -36,17 +37,17 @@ const DashBoardContainer = styled.div`
   background-color: #d1d1d1;
 `;
 export const AdminPage = () => {
+  const { pendingUsersList } = useAdmin();
   return (
     <Container>
       <DashBoardContainer>
         <LeftSection>
           <UserInfoCard />
-
           <MembershipPeriodCard />
           <CurrentBoardList />
         </LeftSection>
         <RightSection>
-          <ApprovalMemberList />
+          <ApprovalMemberList pendingUsersList={pendingUsersList} />
           <LectureListCard />
         </RightSection>
       </DashBoardContainer>

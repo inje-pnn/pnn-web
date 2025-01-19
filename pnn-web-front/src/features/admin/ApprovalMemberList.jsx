@@ -1,6 +1,9 @@
-import { Card, CardActionArea } from "@mui/material";
+import { Card, CardActionArea, ListItemButton } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 import { CardHeader } from "./components/CardHeader";
+import { useEffect } from "react";
+import { filterMemberAuthority } from "../../shared/util/memberUtil";
+import styled from "styled-components";
 
 const CustomCard = muiStyled(Card)(({ theme }) => ({
   width: "100%",
@@ -8,11 +11,23 @@ const CustomCard = muiStyled(Card)(({ theme }) => ({
   justifyItems: "center",
   justifyContent: "flex-start",
   borderRadius: "10px",
-  "&:hover": {
-    backgroundColor: "#677EE5",
-  },
+  // "&:hover": {
+  //   backgroundColor: "#677EE5",
+  // },
 }));
-export const ApprovalMemberList = () => {
+const CustomListItem = muiStyled(ListItemButton)(() => ({
+  border: "1px solid #ddd",
+  borderRadius: "5px",
+  height: "55px",
+  fontSize: "14px",
+}));
+const CardContent = styled.div`
+  width: 100%;
+  height: 100%;
+
+  padding: 5px;
+`;
+export const ApprovalMemberList = ({ pendingUsersList }) => {
   const testData = [
     {
       id: "testman1",
@@ -33,16 +48,25 @@ export const ApprovalMemberList = () => {
       studentNumber: "20192618",
     },
   ];
+  const onClickMemberApprovebutton = () => {
+    //멤버 가입 승인 함수
+  };
   return (
     <CustomCard>
       <CardHeader title={"가입 대기 명단"} />
-      <CardActionArea
+      <CardContent>
+        {pendingUsersList.map((v) => (
+          <CustomListItem>{v.email}</CustomListItem>
+        ))}
+      </CardContent>
+      {/* <CardActionArea
         sx={{
           height: "100%",
         }}
       >
         <p>현재 가입 대기중인 멤버 리스트입니다.</p>
-      </CardActionArea>
+       
+      </CardActionArea> */}
     </CustomCard>
   );
 };

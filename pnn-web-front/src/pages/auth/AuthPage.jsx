@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { GoogleAuthBox } from "../../features/auth/GoogleAuthBox";
 import { RegistFormBox } from "../../features/auth/RegistFormBox";
 import useUserStore from "../../shared/store/useUserStroe";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -41,9 +42,9 @@ const FormContainer = styled.div`
 `;
 
 export const AuthPage = () => {
-  const data = useUserStore((state) => state.user);
-  console.log("user", data);
+  const user = useUserStore((state) => state.user);
   const [tData, setTdata] = useState(true);
+
   // 분기 처리 필요
   return (
     <Container>

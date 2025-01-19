@@ -3,7 +3,7 @@ import { useState } from "react";
 import { auth } from "../../../firebase";
 import Cookies from "js-cookie";
 import useUserStore from "../../store/useUserStroe";
-import { authApi } from "../../api/authApi";
+import { memberApi } from "../../api/memberApi";
 import { useNavigate } from "react-router-dom";
 // import userStore from "../../entities/user/model/userStore";
 
@@ -12,7 +12,7 @@ export const useAuth = () => {
   const [user, setUser] = useState();
 
   const { updateUser } = useUserStore();
-  const { getAllMembers, postAuthLoginUser } = authApi();
+  const { getAllMembers, postAuthLoginUser } = memberApi();
   const navigate = useNavigate();
 
   const handleGoogleLogin = async () => {
