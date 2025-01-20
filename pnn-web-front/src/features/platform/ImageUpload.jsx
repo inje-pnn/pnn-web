@@ -17,35 +17,12 @@ const DropZone = styled.div`
   
   &:hover {
     border-color: #4a90e2;
-    background-color: #f0f8ff;
   }
 
   ${props => props.isDragging && `
     transform: scale(1.02);
     border-width: 3px;
     box-shadow: 0 0 10px rgba(74, 144, 226, 0.3);
-  `}
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: ${props => props.isDragging ? '0' : '-100%'};
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
-    );
-    transition: left 0.5s ease;
-  }
-
-  ${props => props.isDragging && `
-    &::after {
-      left: 100%;
-    }
   `}
 `;
 
@@ -94,6 +71,22 @@ const RemoveButton = styled.button`
   ${props => props.show && `
     opacity: 1;
   `}
+`;
+
+const HiddenFileInput = styled.input`
+  display: none;
+`;
+
+const MainText = styled.p`
+  margin: 0;
+  padding: 0;
+`;
+
+const SubText = styled.p`
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  color: #666;
 `;
 
 export const ImageUpload = ({ image, onImageChange, onImageRemove }) => {
@@ -156,12 +149,11 @@ export const ImageUpload = ({ image, onImageChange, onImageRemove }) => {
 
   return (
     <>
-      <input
+      <HiddenFileInput
         type="file"
         ref={fileInputRef}
         onChange={handleFileInput}
         accept="image/*"
-        style={{ display: 'none' }}
       />
       <DropZone
         onClick={handleClick}
@@ -183,10 +175,8 @@ export const ImageUpload = ({ image, onImageChange, onImageRemove }) => {
           </>
         )}
         <DropzoneContent hasImage={!!image}>
-          <p>이미지를 드래그하여 업로드하거나 클릭하여 선택하세요</p>
-          <p style={{ fontSize: '12px', color: '#666' }}>
-            (지원 형식: JPG, PNG, GIF)
-          </p>
+          <MainText>이미지를 드래그하여 업로드하거나 클릭하여 선택하세요</MainText>
+          <SubText>(지원 형식: JPG, PNG, GIF)</SubText>
         </DropzoneContent>
       </DropZone>
     </>

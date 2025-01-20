@@ -4,7 +4,6 @@ import axios from "axios";
 import { Dropdown } from "../../features/platform/OptionDropdown";
 import { ImageUpload } from "../../features/platform/ImageUpload";
 import ReactMarkdown from "react-markdown";
-import remarkBreaks from "remark-breaks";
 
 const Container = styled.div`
   display: flex;
@@ -77,6 +76,7 @@ const TagListFrame = styled.div`
 
 const ReadMeFrame = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: auto;
   background-color: #f5f5f5;
@@ -84,12 +84,7 @@ const ReadMeFrame = styled.div`
   margin-top: 20px;
   padding: 20px;
   overflow: auto;
-  line-height: 1.5;
-
-  p {
-    margin: 1em 0;
-    white-space: pre-wrap; /* 줄바꿈 처리 */
-  }
+  line-height: 2.5;
 `;
 
 const InputContainer = styled.div`
@@ -131,6 +126,10 @@ const SubInputFrame = styled.div`
   height: auto;
   padding: 20px;
   border-bottom: solid 1px #e0e0e0;
+`;
+
+const StyledImage = styled.img`
+  max-width: 100%;
 `;
 
 const FetchButton = styled.button`
@@ -219,7 +218,6 @@ export const ShareUpload = () => {
     <Container>
       <TitleFrame>프로젝트 작성하기</TitleFrame>
       <ContentContainer>
-        {/* 프로젝트 타이틀 */}
         <SubTitleFrame>프로젝트 타이틀</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
@@ -258,7 +256,6 @@ export const ShareUpload = () => {
           </WrapperFrame>
         </InputContainer>
 
-        {/* 태그 선택 */}
         <SubTitleFrame>태그 선택</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
@@ -280,7 +277,6 @@ export const ShareUpload = () => {
           </WrapperFrame>
         </InputContainer>
 
-        {/* 사진 등록 */}
         <SubTitleFrame>사진 등록</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
@@ -297,7 +293,6 @@ export const ShareUpload = () => {
           </WrapperFrame>
         </InputContainer>
 
-        {/* GitHub 링크 */}
         <SubTitleFrame>프로젝트</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
@@ -319,22 +314,20 @@ export const ShareUpload = () => {
         </InputContainer>
 
         <ReadMeFrame>
-        {error ? (
-          <span style={{ color: "red" }}>{error}</span>
-        ) : readmeContent ? (
-          <ReactMarkdown
-            children={readmeContent}
-            remarkPlugins={[remarkBreaks]} // 줄바꿈 처리 활성화
-            components={{
-              p: ({ node, ...props }) => (
-                <p style={{ whiteSpace: "pre-wrap" }} {...props} />
-              ),
-            }}
-          />
-        ) : (
-          "README가 여기에 표시됩니다."
-        )}
-      </ReadMeFrame>
+          {error ? (
+            <span style={{ color: "red" }}>{error}</span>
+          ) : readmeContent ? (
+            <ReactMarkdown
+              components={{
+                img: ({ node, ...props }) => <StyledImage {...props} />
+              }}
+            >
+              {readmeContent}
+            </ReactMarkdown>
+          ) : (
+            "README가 여기에 표시됩니다."
+          )}
+        </ReadMeFrame>
       </ContentContainer>
     </Container>
   );
