@@ -1,48 +1,62 @@
 import React from "react";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import styled from "styled-components";
 
-const DropdownContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+const StyledFormControl = styled(FormControl)`
+  width: 100%;
+  margin-bottom: 16px;
 
-  h4 {
+  .MuiInputLabel-root {
     font-weight: bold;
-    margin-bottom: 8px;
   }
 
-  select {
+  .MuiSelect-root {
     padding-left: 20px;
     padding-right: 40px;
     font-size: 14px;
-    width: 100%;
     height: 50px;
-    border: solid 1px #dbdbdb;
-    border-radius: 4px;
+  }
 
-    &:hover {
-      border: solid 0.5px #dbdbdb;
-    }
+  .MuiOutlinedInput-notchedOutline {
+    border: 1px solid #dbdbdb;
+  }
 
-    &:focus {
-      border: solid 1.5px #222222;
-      outline: none;
-    }
+  .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border: 1px solid #dbdbdb;
+  }
+
+  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border: 1.5px solid #222222;
   }
 `;
 
+const menuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: 48 * 4.5 + 8, // 드롭다운의 최대 높이 조정
+      overflowY: "auto", // 드롭다운 스크롤 설정
+    },
+  },
+  disableScrollLock: true, // body 스크롤 잠금 비활성화
+};
+
 export const Dropdown = ({ label, options, onChange }) => (
-  <DropdownContainer>
-    <h4>{label}</h4>
-    <select onChange={onChange} defaultValue="">
-      <option value="" disabled>
+  <StyledFormControl variant="outlined">
+    <InputLabel>{label}</InputLabel>
+    <Select
+      defaultValue=""
+      onChange={onChange}
+      label={label}
+      MenuProps={menuProps} // MenuProps 적용
+    >
+      <MenuItem value="" disabled>
         선택
-      </option>
+      </MenuItem>
       {options.map((option, index) => (
-        <option key={index} value={option}>
+        <MenuItem key={index} value={option}>
           {option}
-        </option>
+        </MenuItem>
       ))}
-    </select>
-  </DropdownContainer>
+    </Select>
+  </StyledFormControl>
 );

@@ -1,7 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import { Dropdown } from "../../features/platform/OptionDropdown";
 import { ImageUpload } from "../../features/platform/ImageUpload";
+import ReactMarkdown from "react-markdown";
+import remarkBreaks from "remark-breaks";
 
 const Container = styled.div`
   display: flex;
@@ -74,13 +77,19 @@ const TagListFrame = styled.div`
 
 const ReadMeFrame = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  height: 400px;
+  height: auto;
   background-color: #f5f5f5;
   border-radius: 8px;
   margin-top: 20px;
+  padding: 20px;
+  overflow: auto;
+  line-height: 1.5;
+
+  p {
+    margin: 1em 0;
+    white-space: pre-wrap; /* 줄바꿈 처리 */
+  }
 `;
 
 const InputContainer = styled.div`
@@ -124,12 +133,35 @@ const SubInputFrame = styled.div`
   border-bottom: solid 1px #e0e0e0;
 `;
 
+const FetchButton = styled.button`
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+`;
+
 export const ShareUpload = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [platform, setPlatform] = useState("");
   const [techStack, setTechStack] = useState("");
   const [image, setImage] = useState(null);
+  const [githubUrl, setGithubUrl] = useState("");
+  const [readmeContent, setReadmeContent] = useState("");
+  const [error, setError] = useState(null);
 
   const TITLE_LIMIT = 20;
   const SUBTITLE_LIMIT = 30;
@@ -156,6 +188,30 @@ export const ShareUpload = () => {
     setTechStack(e.target.value);
   };
 
+  const fetchReadme = async () => {
+    setError(null);
+    setReadmeContent("");
+
+    try {
+      const match = githubUrl.match(/github\.com\/([\w-]+)\/([\w-]+)/);
+      if (!match) {
+        throw new Error("유효한 GitHub URL을 입력하세요.");
+      }
+
+      const [_, owner, repo] = match;
+      const response = await axios.get(
+        `https://api.github.com/repos/${owner}/${repo}/contents/README.md`
+      );
+
+      const decodedContent = decodeURIComponent(
+        escape(atob(response.data.content))
+      );
+      setReadmeContent(decodedContent);
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+    }
+  };
+
   const platformOptions = ["Web", "Mobile", "AI", "Game"];
   const techStackOptions = ["React", "Fast API", "Spring Boot"];
 
@@ -163,6 +219,7 @@ export const ShareUpload = () => {
     <Container>
       <TitleFrame>프로젝트 작성하기</TitleFrame>
       <ContentContainer>
+        {/* 프로젝트 타이틀 */}
         <SubTitleFrame>프로젝트 타이틀</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
@@ -172,7 +229,6 @@ export const ShareUpload = () => {
             <SubInputFrame>
               <GlobalInput
                 type="text"
-                id="title"
                 placeholder="프로젝트 이름을 입력하세요"
                 value={title}
                 onChange={handleTitleChange}
@@ -183,7 +239,6 @@ export const ShareUpload = () => {
               </CharacterCounter>
             </SubInputFrame>
           </WrapperFrame>
-
           <WrapperFrame>
             <InputFrame>
               <h4>상세설명</h4>
@@ -191,7 +246,6 @@ export const ShareUpload = () => {
             <SubInputFrame>
               <GlobalInput
                 type="text"
-                id="subtitle"
                 placeholder="프로젝트에 대한 상세설명을 입력하세요"
                 value={subtitle}
                 onChange={handleSubtitleChange}
@@ -204,6 +258,7 @@ export const ShareUpload = () => {
           </WrapperFrame>
         </InputContainer>
 
+        {/* 태그 선택 */}
         <SubTitleFrame>태그 선택</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
@@ -225,6 +280,7 @@ export const ShareUpload = () => {
           </WrapperFrame>
         </InputContainer>
 
+        {/* 사진 등록 */}
         <SubTitleFrame>사진 등록</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
@@ -241,6 +297,7 @@ export const ShareUpload = () => {
           </WrapperFrame>
         </InputContainer>
 
+        {/* GitHub 링크 */}
         <SubTitleFrame>프로젝트</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
@@ -248,12 +305,36 @@ export const ShareUpload = () => {
               <h4>GitHub 링크</h4>
             </InputFrame>
             <SubInputFrame>
-              <GlobalInput type="text" id="github" />
+              <GlobalInput
+                type="text"
+                placeholder="GitHub 레포지토리 URL을 입력하세요"
+                value={githubUrl}
+                onChange={(e) => setGithubUrl(e.target.value)}
+              />
+              <FetchButton onClick={fetchReadme} disabled={!githubUrl}>
+                README 가져오기
+              </FetchButton>
             </SubInputFrame>
           </WrapperFrame>
         </InputContainer>
 
-        <ReadMeFrame>README</ReadMeFrame>
+        <ReadMeFrame>
+        {error ? (
+          <span style={{ color: "red" }}>{error}</span>
+        ) : readmeContent ? (
+          <ReactMarkdown
+            children={readmeContent}
+            remarkPlugins={[remarkBreaks]} // 줄바꿈 처리 활성화
+            components={{
+              p: ({ node, ...props }) => (
+                <p style={{ whiteSpace: "pre-wrap" }} {...props} />
+              ),
+            }}
+          />
+        ) : (
+          "README가 여기에 표시됩니다."
+        )}
+      </ReadMeFrame>
       </ContentContainer>
     </Container>
   );
