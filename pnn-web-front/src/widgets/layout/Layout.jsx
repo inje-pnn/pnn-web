@@ -20,12 +20,10 @@ const Container = styled.div`
 const Main = styled.div`
   width: 100%;
   height: 92dvh;
-  margin-top: 7vh;
 
   @media (min-width: 768px) {
     width: 1920px;
     height: 100vh;
-    border: 1px solid lightgray;
   }
 `;
 

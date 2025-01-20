@@ -7,6 +7,7 @@ import Tab from '@mui/material/Tab';
 import Introduce from "../features/about/component/Introuduce";
 import TechStack from "../features/about/component/TechStack";
 import History from "../features/about/component/History";
+import Member from "../features/about/component/Member";
 
 const Contaniner = styled.div`
   width: 100%;
@@ -93,6 +94,7 @@ function CenteredTabs({ value, handleChange }) {
         <Tab label="인사말" />
         <Tab label="기술스택" />
         <Tab label="연혁" />
+        <Tab label="팀원소개" />
       </Tabs>
     </Box>
   );
@@ -113,6 +115,8 @@ const AboutUs = () => {
         return <TechStack />;
       case 2:
         return <History />; 
+      case 3:
+        return <Member />; 
       default:
         return <Introduce />;
     }
