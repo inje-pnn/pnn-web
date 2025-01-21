@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { Dropdown } from "../../features/platform/OptionDropdown";
 import { ImageUpload } from "../../features/platform/ImageUpload";
+import { fetchGitHubReadme } from "../../shared/api/githubApi";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 const Container = styled.div`
   display: flex;
@@ -82,9 +84,44 @@ const ReadMeFrame = styled.div`
   background-color: #f5f5f5;
   border-radius: 8px;
   margin-top: 20px;
-  padding: 20px;
+  padding: 60px;
   overflow: auto;
   line-height: 2.5;
+`;
+
+const StyledImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  margin: 8px auto;
+  border-radius: 4px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
+`;
+
+const TableStyles = styled.div`
+  table {
+    width: auto;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 4px;
+  }
+
+  th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -128,10 +165,6 @@ const SubInputFrame = styled.div`
   border-bottom: solid 1px #e0e0e0;
 `;
 
-const StyledImage = styled.img`
-  max-width: 100%;
-`;
-
 const FetchButton = styled.button`
   margin-top: 10px;
   padding: 8px 16px;
@@ -152,15 +185,22 @@ const FetchButton = styled.button`
   }
 `;
 
+const ErrorMessage = styled.span`
+  color: red;
+  margin-top: 8px;
+  font-size: 14px;
+`;
+
 export const ShareUpload = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [platform, setPlatform] = useState("");
-  const [techStack, setTechStack] = useState("");
+  const [projectType, setprojectType] = useState("");
   const [image, setImage] = useState(null);
   const [githubUrl, setGithubUrl] = useState("");
   const [readmeContent, setReadmeContent] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const TITLE_LIMIT = 20;
   const SUBTITLE_LIMIT = 30;
@@ -183,36 +223,27 @@ export const ShareUpload = () => {
     setPlatform(e.target.value);
   };
 
-  const handleTechStackChange = (e) => {
-    setTechStack(e.target.value);
+  const handleProjectTypeChange = (e) => {
+    setprojectType(e.target.value);
   };
 
   const fetchReadme = async () => {
     setError(null);
     setReadmeContent("");
+    setIsLoading(true);
 
     try {
-      const match = githubUrl.match(/github\.com\/([\w-]+)\/([\w-]+)/);
-      if (!match) {
-        throw new Error("유효한 GitHub URL을 입력하세요.");
-      }
-
-      const [_, owner, repo] = match;
-      const response = await axios.get(
-        `https://api.github.com/repos/${owner}/${repo}/contents/README.md`
-      );
-
-      const decodedContent = decodeURIComponent(
-        escape(atob(response.data.content))
-      );
-      setReadmeContent(decodedContent);
+      const content = await fetchGitHubReadme(githubUrl);
+      setReadmeContent(content);
     } catch (err) {
-      setError(err.response?.data?.message || err.message);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const platformOptions = ["Web", "Mobile", "AI", "Game"];
-  const techStackOptions = ["React", "Fast API", "Spring Boot"];
+  const typeOptions= ["해커톤", "경진 대회", "캡스톤 다지인", "졸업 작품"];
 
   return (
     <Container>
@@ -268,9 +299,9 @@ export const ShareUpload = () => {
                   onChange={handlePlatformChange}
                 />
                 <Dropdown
-                  label="기술 스택 선택"
-                  options={techStackOptions}
-                  onChange={handleTechStackChange}
+                  label="프로젝트 유형"
+                  options={typeOptions}
+                  onChange={handleProjectTypeChange}
                 />
               </TagListFrame>
             </SubInputFrame>
@@ -306,27 +337,35 @@ export const ShareUpload = () => {
                 value={githubUrl}
                 onChange={(e) => setGithubUrl(e.target.value)}
               />
-              <FetchButton onClick={fetchReadme} disabled={!githubUrl}>
-                README 가져오기
+              <FetchButton
+                onClick={fetchReadme}
+                disabled={!githubUrl || isLoading}
+              >
+                {isLoading ? "가져오는 중..." : "README 가져오기"}
               </FetchButton>
+              {error && <ErrorMessage>{error}</ErrorMessage>}
             </SubInputFrame>
           </WrapperFrame>
         </InputContainer>
 
         <ReadMeFrame>
-          {error ? (
-            <span style={{ color: "red" }}>{error}</span>
-          ) : readmeContent ? (
-            <ReactMarkdown
-              components={{
-                img: ({ node, ...props }) => <StyledImage {...props} />
-              }}
-            >
-              {readmeContent}
-            </ReactMarkdown>
-          ) : (
-            "README가 여기에 표시됩니다."
-          )}
+          <TableStyles>
+            {error ? (
+              <span style={{ color: "red" }}>{error}</span>
+            ) : readmeContent ? (
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  img: ({ node, ...props }) => <StyledImage {...props} />,
+                }}
+              >
+                {readmeContent}
+              </ReactMarkdown>
+            ) : (
+              "README가 여기에 표시됩니다."
+            )}
+          </TableStyles>
         </ReadMeFrame>
       </ContentContainer>
     </Container>

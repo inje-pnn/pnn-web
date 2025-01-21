@@ -12,6 +12,11 @@ const Container = styled.div`
   height: auto;
   padding: 16px;
   margin-top: 50px;
+
+  @media (max-width: 768px) {
+    margin-top: 30px;
+    padding: 8px;
+  }
 `;
 
 const Frame = styled.div`
@@ -19,12 +24,22 @@ const Frame = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   width: 1238px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const HeaderFrame = styled.div`
   width: 100%;
   height: 70px;
   display: flex;
+
+  @media (max-width: 768px) {
+    height: auto;
+    justify-content: center;
+    text-align: center;
+  }
 `;
 
 const ProjectNumber = styled.div`
@@ -34,6 +49,11 @@ const ProjectNumber = styled.div`
   flex-direction: column;
   align-items: flex-end;
   color: #bebec1;
+
+  @media (max-width: 768px) {
+    align-items: center;
+    font-size: 14px;
+  }
 `;
 
 const CardContainer = styled.div`
@@ -41,6 +61,12 @@ const CardContainer = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   gap: 50px 60px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 50px 30px;
+    margin-bottom: 50px;
+  }
 `;
 
 export const SharePage = () => {

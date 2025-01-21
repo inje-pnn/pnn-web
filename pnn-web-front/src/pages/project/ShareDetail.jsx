@@ -1,24 +1,22 @@
 import styled from "styled-components";
-import pnnlogo from "./../../assets/images/pnnlogo.png";
+import testimage from "./../../assets/images/test.png";
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   height: auto;
-  padding: 16px;
 `
 
 const Frame = styled.div`
-  width: 1400px;
+  width: 100%;
   height: 100%;
-  margin-top: 100px;
   display: flex;
   align-items: center;
   flex-direction: column;
 `
 
 const TitleFrame = styled.div`
-  width: 80%;
+  width: 50%;
   height: 150px;
   display: flex;
   flex-direction: column;
@@ -44,8 +42,8 @@ const ImageFrame = styled.div`
 `
 
 const ProjectImage = styled.img`
-  width: 786px;
-  height: 100%;
+  width: 100%;
+  height: 647px;
   border: solid 1px;
 `
 
@@ -106,13 +104,16 @@ export const ShareDetail = () => {
   return (
     <Container>
       <Frame>
+
+      <ImageFrame>
+        <ProjectImage src={testimage}/>
+        </ImageFrame>
+
       <TitleFrame>
         <h1>프로젝트 이름</h1>
         <SubTitleFrame>프로젝트 소제목</SubTitleFrame>
       </TitleFrame>
-      <ImageFrame>
-        <ProjectImage src={pnnlogo}/>
-        </ImageFrame>
+     
 
         <UploadMainFrame>
         <ProjectSummaryFrame>
