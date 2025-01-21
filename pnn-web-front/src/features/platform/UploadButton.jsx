@@ -27,6 +27,7 @@ export const UploadButton = () => {
   const onClickUpload = () => {
     navigate("/share/upload");
   }
+  
   return (
     <StyledButton onClick={onClickUpload}>
       <UploadFileIcon />

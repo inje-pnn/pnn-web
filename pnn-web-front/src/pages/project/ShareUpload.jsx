@@ -58,7 +58,7 @@ const GlobalInput = styled.input`
     props.isOverLimit &&
     `
     border-color: #ff0000;
-    
+
     &:focus {
       border-color: #ff0000;
     }
@@ -165,32 +165,20 @@ const SubInputFrame = styled.div`
   border-bottom: solid 1px #e0e0e0;
 `;
 
-const FetchButton = styled.button`
-  margin-top: 10px;
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
+const UploadButton = styled.button`
+  margin-top: 40px;
+  background-color: ${(props) => (props.disabled ? "#e0e0e0" : "#007bff")};
+  color: ${(props) => (props.disabled ? "#9e9e9e" : "#ffffff")};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  padding: 10px 20px;
+  font-size: 16px;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
 
   &:hover {
-    background-color: #0056b3;
-  }
-
-  &:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
+    background-color: ${(props) => (props.disabled ? "#e0e0e0" : "#0056b3")};
   }
 `;
-
-const ErrorMessage = styled.span`
-  color: red;
-  margin-top: 8px;
-  font-size: 14px;
-`;
-
 export const ShareUpload = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -200,7 +188,7 @@ export const ShareUpload = () => {
   const [githubUrl, setGithubUrl] = useState("");
   const [readmeContent, setReadmeContent] = useState("");
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const TITLE_LIMIT = 20;
   const SUBTITLE_LIMIT = 30;
@@ -227,23 +215,35 @@ export const ShareUpload = () => {
     setprojectType(e.target.value);
   };
 
-  const fetchReadme = async () => {
+  const fetchReadme = async (url) => {
     setError(null);
     setReadmeContent("");
-    setIsLoading(true);
 
     try {
-      const content = await fetchGitHubReadme(githubUrl);
+      const content = await fetchGitHubReadme(url);
       setReadmeContent(content);
     } catch (err) {
       setError(err.message);
-    } finally {
-      setIsLoading(false);
     }
   };
 
+  const handleGithubUrlChange = (e) => {
+    const url = e.target.value;
+    setGithubUrl(url);
+    if (url) {
+      fetchReadme(url);
+    }
+  };
+
+  const handlePostUpload = () => {
+    setIsUploading(true);
+  };
+
+  const isUploadDisabled =
+    !title || !subtitle || !platform || !projectType || !image || !githubUrl || isUploading;
+
   const platformOptions = ["Web", "Mobile", "AI", "Game"];
-  const typeOptions= ["해커톤", "경진 대회", "캡스톤 다지인", "졸업 작품"];
+  const typeOptions = ["해커톤", "경진 대회", "캡스톤 다지인", "졸업 작품"];
 
   return (
     <Container>
@@ -295,11 +295,13 @@ export const ShareUpload = () => {
               <TagListFrame>
                 <Dropdown
                   label="플랫폼 선택"
+                  value={platform}
                   options={platformOptions}
                   onChange={handlePlatformChange}
                 />
                 <Dropdown
                   label="프로젝트 유형"
+                  value={projectType}
                   options={typeOptions}
                   onChange={handleProjectTypeChange}
                 />
@@ -335,15 +337,8 @@ export const ShareUpload = () => {
                 type="text"
                 placeholder="GitHub 레포지토리 URL을 입력하세요"
                 value={githubUrl}
-                onChange={(e) => setGithubUrl(e.target.value)}
-              />
-              <FetchButton
-                onClick={fetchReadme}
-                disabled={!githubUrl || isLoading}
-              >
-                {isLoading ? "가져오는 중..." : "README 가져오기"}
-              </FetchButton>
-              {error && <ErrorMessage>{error}</ErrorMessage>}
+                onChange={handleGithubUrlChange}
+              />              
             </SubInputFrame>
           </WrapperFrame>
         </InputContainer>
@@ -367,6 +362,13 @@ export const ShareUpload = () => {
             )}
           </TableStyles>
         </ReadMeFrame>
+
+        <UploadButton
+          onClick={handlePostUpload}
+          disabled={isUploadDisabled}
+        >
+          업로드 하기
+        </UploadButton>
       </ContentContainer>
     </Container>
   );

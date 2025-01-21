@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import CardFrame from "../../features/Card/CardFrame";
 import { Filter } from "../../features/platform/components/Filter";
 import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
@@ -69,17 +68,9 @@ const CardContainer = styled.div`
   }
 `;
 
-const HideOnMobile = styled.div`
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
 export const SharePage = () => {
   const [selectedPlatform, setSelectedPlatform] = useState("ALL");
   const [isLogin, setIsLogin] = useState(false);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -123,10 +114,8 @@ export const SharePage = () => {
           ))}
         </CardContainer>
       </Frame>
-      <HideOnMobile>
-        <ScrollToTopButton />
-        <UploadButton />
-      </HideOnMobile>
+      <ScrollToTopButton />
+      <UploadButton />
     </Container>
   );
 };
