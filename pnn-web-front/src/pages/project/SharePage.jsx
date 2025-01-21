@@ -14,7 +14,7 @@ const Container = styled.div`
   margin-top: 50px;
 
   @media (max-width: 768px) {
-    margin-top: 30px;
+    margin-top: 20px;
     padding: 8px;
   }
 `;
@@ -65,7 +65,13 @@ const CardContainer = styled.div`
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 50px 30px;
-    margin-bottom: 50px;
+    margin: 20px 0 50px 0px;
+  }
+`;
+
+const HideOnMobile = styled.div`
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
@@ -117,8 +123,10 @@ export const SharePage = () => {
           ))}
         </CardContainer>
       </Frame>
-      <ScrollToTopButton />
-      <UploadButton />
+      <HideOnMobile>
+        <ScrollToTopButton />
+        <UploadButton />
+      </HideOnMobile>
     </Container>
   );
 };

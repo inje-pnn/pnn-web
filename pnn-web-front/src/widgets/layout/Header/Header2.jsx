@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <Box sx={{ 
         width: '101%',
-        height: '5vh',
+        height: '6vh',
         position: 'fixed',
         top: '0',
         zIndex: '2',
