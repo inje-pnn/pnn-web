@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -51,18 +51,15 @@ const ErrorText = styled.p`
   color: red;
   font-size: 16px;
 `;
-export const RegistFormBox = () => {
+export const RegistFormBox = ({ user }) => {
   const { userFormData, handleUserFormData, hasError, checkHasInvaildValue } =
-    useRegister();
-  const onClickSubmiBtn = () => {
-    //요청이 끝난후 정상적으로 처리시?
-    if (grade && studentNumber && name && gitHub) {
-    }
-  };
+    useRegister(user);
+
   const onChangeInputValue = (e) => {
     const { name, value } = e.target;
     handleUserFormData(name, value);
   };
+
   return (
     <Container>
       <Text>{"P&N에 가입하고\n 다양한 활동을 해보세요."}</Text>
@@ -71,7 +68,7 @@ export const RegistFormBox = () => {
         name="grade"
         id="fullWidth"
         label="학년"
-        error={hasError}
+        error={hasError.grade}
         value={userFormData.grade}
         onChange={onChangeInputValue}
       />
@@ -79,7 +76,7 @@ export const RegistFormBox = () => {
         name="studentNumber"
         id="fullWidth"
         label="학번"
-        error={hasError}
+        error={hasError.name}
         value={userFormData.studentNumber}
         onChange={onChangeInputValue}
       />
@@ -87,7 +84,7 @@ export const RegistFormBox = () => {
         name="name"
         id="fullWidth"
         label="이름"
-        error={hasError}
+        error={hasError.studentNumber}
         value={userFormData.name}
         onChange={onChangeInputValue}
       />

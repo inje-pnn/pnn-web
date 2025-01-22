@@ -10,14 +10,19 @@ const Container = styled.div`
   height: 10%;
   color: white;
 `;
+
 export const RegistBanner = () => {
   const user = useUserStore((state) => state.user);
-  const navigate = useNavigate();
+  console.log(user.authority);
 
-  if (user?.data?.authority === 2) {
+  if (user?.authority === 2) {
     return (
       <Container>
-        배너 입니다.<a href="/auth">이동하기</a>
+        <div></div>
+        <div>
+          동아리 페이지 거시기 없다 배너 입니다.<a href="/auth">이동하기</a>
+          지원하기 오늘 하루 보지 않기
+        </div>
       </Container>
     );
   }

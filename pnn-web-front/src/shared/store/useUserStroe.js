@@ -5,7 +5,7 @@ const useUserStore = create((set) => ({
   updateUser: (data) =>
     set((state) => {
       return {
-        user: { id: Date.now(), data, completed: false },
+        user: data,
       };
     }),
   clearUser: () => set(() => ({ user: null })),
