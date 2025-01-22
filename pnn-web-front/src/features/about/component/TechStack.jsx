@@ -94,7 +94,7 @@ const TechStack = () => {
     <Container>
       <h1>FrameWork & TechStack</h1>
       <h2>
-        저희는 능력 향상을 위해 프로젝트를 진행할때마다 늘 새로운 프레임워크와 기술을 도입하려 노력합니다.
+        저희는 능력 향상을 위해 프로젝트를 진행할때마다 늘 새로운 프레임워크와 기술을 도입하려 노력합니다..
       </h2>
       <StyledSlider {...settings}>
         {techStack.map((tech, index) => (
