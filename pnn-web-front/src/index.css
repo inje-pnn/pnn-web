@@ -22,8 +22,15 @@ html {
   justify-content: center;
   overflow-x: hidden;
   font-family: "Cafe24Ssurround-v2.0";
-
+  overflow-y: scroll;
+  /* 보기싫어서 스크롤바 지워봤는데 의견 받습니다. */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
   @media (min-width: 768px) {
     height: 100vh;
   }
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
