@@ -3,34 +3,43 @@ import { useState } from "react";
 import { auth } from "../../../firebase";
 import Cookies from "js-cookie";
 import useUserStore from "../../store/useUserStroe";
+import { memberApi } from "../../api/memberApi";
+import { useNavigate } from "react-router-dom";
 // import userStore from "../../entities/user/model/userStore";
 
 export const useAuth = () => {
-  const [isLoggedUser, setIsLoggedUser] = useState(false);
-  const [user, setUser] = useState();
+  //   0 오너 관리자
 
-  const { updateUser } = useUserStore();
+  // 1 일반 멤버 게시글 작성, 강의 공유 페이지 접근 가능
+
+  // 2 로그인만 한 녀석들
+
+  // 3 가입 신청한 녀석들
+  const { updateUser, clearUser } = useUserStore();
+  const { getAllMembers, postAuthLoginUser } = memberApi();
+  const navigate = useNavigate();
+
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider(); // provider를 구글로 설정
     const res = await signInWithPopup(auth, provider); // popup을 이용한 signup
-    const idToken = await res.user.getIdToken();
-    console.log("auth Data ", res);
-    console.log("result", idToken);
-    Cookies.set("user", encodeURI(res.user.accessToken));
-    setUser(res.user.email);
-    updateUser(res.user.email);
-    setIsLoggedUser(true);
+    const userInfo = await postAuthLoginUser(res.user.email);
+    Cookies.set("user", encodeURI(res.user.email));
+    updateUser(userInfo);
+    navigate("/");
   };
 
-  const checkAutoLogin = () => {
-    if (Cookies.get("user")) {
-      setIsLoggedUser(true);
-      updateUser(Cookies.get("user"));
-      // updateUser()
-      // setStoreUser(user);
-      // need zustand update
-      // 서버에서 accessToken을 통한 데이터 받아오기
+  const checkAutoLogin = async () => {
+    const userCookie = Cookies.get("user");
+    if (userCookie) {
+      const userInfo = await postAuthLoginUser(userCookie);
+      updateUser(userInfo);
     }
   };
-  return { handleGoogleLogin, checkAutoLogin };
+
+  const userLogout = () => {
+    Cookies.remove("user");
+
+    clearUser();
+  };
+  return { handleGoogleLogin, checkAutoLogin, userLogout };
 };

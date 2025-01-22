@@ -5,6 +5,12 @@ import { useAuth } from "../../shared/hooks/auth/useAuth";
 const Container = styled.div`
   width: 100%;
   align-items: center;
+  margin-top: 25px;
+  white-space: pre-line;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   @media (min-width: 768px) {
     margin-bottom: 50px;
     margin-top: 30%;
@@ -12,14 +18,16 @@ const Container = styled.div`
   }
 `;
 const CustomButton = muiStyled(Button)(({ theme }) => ({
-  width: "100%",
+  width: "80%",
   height: "45px",
   justifyItems: "center",
   justifyContent: "flex-start",
   marginTop: "25px",
-  backgroundColor: "#677EE5",
-  "&:hover": {
-    backgroundColor: "#677EE5",
+
+  [theme.breakpoints.down("sm")]: {
+    width: "70%", // 작은 화면에서 너비 변경
+    height: "40px", // 버튼 높이 변경
+    marginTop: "15px", // 위쪽 여백 조정
   },
 }));
 
@@ -38,11 +46,9 @@ export const GoogleAuthBox = () => {
   return (
     <Container>
       <Text>
-        P&N은 <br />
-        인제대학교 컴퓨터공학부
-        <br /> 학술 동아리입니다.
+        {"P&N에 오신 것을 환영합니다!\n 구글 계정으로\n 간단하게 가입해보세요."}
       </Text>
-      <Text>가입하고 다양한 활동을 해보세요.</Text>
+
       <CustomButton onClick={handleGoogleLogin} variant="contained">
         <GoogleLogoIcon
           src="https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA"
