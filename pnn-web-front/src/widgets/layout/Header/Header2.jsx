@@ -42,6 +42,7 @@ export default function Header() {
           }}
         >
           <Typography variant="h6" component="div">
+            <Link to="/">
             <Box
               component="img"
               sx={{
@@ -55,6 +56,7 @@ export default function Header() {
               src={Logo}
               alt="P&N Logo"
             />
+            </Link>
           </Typography>
 
           {/* 중앙 메뉴 아이템들 */}

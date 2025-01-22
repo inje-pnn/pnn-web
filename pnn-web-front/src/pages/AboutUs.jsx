@@ -93,7 +93,7 @@ function CenteredTabs({ value, handleChange }) {
       >
         <Tab label="인사말" />
         <Tab label="기술스택" />
-        <Tab label="연혁" />
+        <Tab label="활동" />
         <Tab label="팀원소개" />
       </Tabs>
     </Box>
