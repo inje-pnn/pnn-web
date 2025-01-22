@@ -43,7 +43,6 @@ const FormContainer = styled.div`
 
 export const AuthPage = () => {
   const user = useUserStore((state) => state.user);
-  const [tData, setTdata] = useState(true);
 
   // 분기 처리 필요
   return (
@@ -52,7 +51,7 @@ export const AuthPage = () => {
         <LogoBox />
       </LogoContainer>
       <FormContainer>
-        {tData ? <GoogleAuthBox /> : <RegistFormBox />}
+        <GoogleAuthBox />
       </FormContainer>
     </Container>
   );
