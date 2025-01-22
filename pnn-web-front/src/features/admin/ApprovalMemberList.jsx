@@ -1,8 +1,8 @@
 import { Card, CardActionArea, ListItemButton } from "@mui/material";
 import { styled as muiStyled } from "@mui/material/styles";
 import { CardHeader } from "../../shared/components/admin/CardHeader";
-import { useEffect } from "react";
-import { filterMemberAuthority } from "../../shared/util/memberUtil";
+import CheckIcon from "@mui/icons-material/Check";
+
 import styled from "styled-components";
 
 const CustomCard = muiStyled(Card)(({ theme }) => ({
@@ -56,7 +56,10 @@ export const ApprovalMemberList = ({ pendingUsersList }) => {
       <CardHeader title={"가입 대기 명단"} />
       <CardContent>
         {pendingUsersList?.map((v) => (
-          <CustomListItem key={`card-${v.id}`}>{v.email}</CustomListItem>
+          <CustomListItem key={`card-${v.id}`}>
+            {v.email}
+            <CheckIcon />
+          </CustomListItem>
         ))}
       </CardContent>
       {/* <CardActionArea
