@@ -21,14 +21,23 @@ export const memberApi = () => {
     } catch {}
   };
 
-  const putApprovemUser = async (userId) => {
+  const putApprovemUser = async (userId, value) => {
     try {
-      const res = await axios.put(path + `user/approve/${userId}`);
+      const res = await axios.put(path + `user/approve/${userId}`, value);
+      return res;
+    } catch {}
+  };
+
+  const putUserUpdate = async (userId, data) => {
+    try {
+      const res = await axios.put(path + `user/update/${999}`, data);
+      return res.status;
     } catch {}
   };
   return {
     postAuthLoginUser,
     putApprovemUser,
     getAllMembers,
+    putUserUpdate,
   };
 };

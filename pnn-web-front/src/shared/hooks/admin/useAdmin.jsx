@@ -15,9 +15,14 @@ export const useAdmin = () => {
   }, []);
 
   const handlerSetIsOwner = () => {};
+  const handlePendingUserList = (v) => {
+    const newArr = pendingUsersList.filter((list) => list.id !== v.id);
+    setPendingUsersList(newArr);
+  };
   return {
     isOwner,
     pendingUsersList,
     handlerSetIsOwner,
+    handlePendingUserList,
   };
 };
