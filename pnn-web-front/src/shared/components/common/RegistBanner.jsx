@@ -13,9 +13,9 @@ const Container = styled.div`
 
 export const RegistBanner = () => {
   const user = useUserStore((state) => state.user);
-  console.log(user.authority);
+  console.log(user?.authority);
 
-  if (user?.authority === 2) {
+  if (user?.authority === 3) {
     return (
       <Container>
         <div></div>
