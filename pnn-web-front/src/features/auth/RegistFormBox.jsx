@@ -52,14 +52,26 @@ const ErrorText = styled.p`
   font-size: 16px;
 `;
 export const RegistFormBox = ({ user }) => {
-  const { userFormData, handleUserFormData, hasError, checkHasInvaildValue } =
-    useRegister(user);
+  const {
+    userFormData,
+    handleUserFormData,
+    hasError,
+    checkHasInvaildValue,
+    fetchUserData,
+  } = useRegister(user);
 
   const onChangeInputValue = (e) => {
     const { name, value } = e.target;
     handleUserFormData(name, value);
   };
 
+  const onClickSubmitButton = () => {
+    const res = checkHasInvaildValue();
+    console.log(res);
+    if (!res) {
+      fetchUserData();
+    }
+  };
   return (
     <Container>
       <Text>{"P&N에 가입하고\n 다양한 활동을 해보세요."}</Text>
@@ -76,7 +88,7 @@ export const RegistFormBox = ({ user }) => {
         name="studentNumber"
         id="fullWidth"
         label="학번"
-        error={hasError.name}
+        error={hasError.studentNumber}
         value={userFormData.studentNumber}
         onChange={onChangeInputValue}
       />
@@ -84,7 +96,7 @@ export const RegistFormBox = ({ user }) => {
         name="name"
         id="fullWidth"
         label="이름"
-        error={hasError.studentNumber}
+        error={hasError.name}
         value={userFormData.name}
         onChange={onChangeInputValue}
       />
@@ -92,13 +104,14 @@ export const RegistFormBox = ({ user }) => {
         name="gitHub"
         id="fullWidth"
         label="깃허브 주소"
+        error={hasError.gitHub}
         value={userFormData.gitHub}
         onChange={onChangeInputValue}
       />
-      <CustomButton variant="contained" onClick={checkHasInvaildValue}>
+      <CustomButton variant="contained" onClick={onClickSubmitButton}>
         등록
       </CustomButton>
-      {hasError && <ErrorText>빈 칸을 입력해주세요.</ErrorText>}
+      {hasError.message && <ErrorText>{hasError.message}.</ErrorText>}
       <InfoText>관리자에게 권한을 받은 이후 자유롭게 이용가능합니다.</InfoText>
     </Container>
   );

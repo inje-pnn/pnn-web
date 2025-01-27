@@ -43,7 +43,6 @@ const FormContainer = styled.div`
 
 export const UserRegistPage = () => {
   const user = useUserStore((state) => state.user);
-  const [tData, setTdata] = useState(true);
 
   // 분기 처리 필요
   return (

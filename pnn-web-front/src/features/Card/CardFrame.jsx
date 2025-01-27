@@ -1,15 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import pnnlogo from "./../../assets/images/pnnlogo.png";
+import testimage from "../../assets/images/test.png";
 
 const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 384px;
+  width: 374px;
   height: 405px;
   cursor: pointer;
-  border: solid 1px;
   border-radius: 20px;
   position: relative;
 `;
@@ -69,7 +68,7 @@ const CardFrame = ({ project }) => {
 
   return (
     <CardWrapper onClick={handleDetailClick}>
-      <ImageFrame src={pnnlogo} alt={project.title} />
+      <ImageFrame src={testimage} alt={project.title} />
 
       <ExplainFrame>
         <TitleFrame>

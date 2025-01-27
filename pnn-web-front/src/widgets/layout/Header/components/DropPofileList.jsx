@@ -4,10 +4,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
-import Divider from "@mui/material/Divider";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { AccountCircle } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
@@ -70,12 +67,11 @@ export default function DropPofileList() {
     setAnchorEl(null);
   };
   const user = useUserStore((state) => state.user);
-  console.log("userInfo", !!user);
   const onClickAuthButton = () => {
-    if (!user) {
-      navigate("auth");
-    } else {
+    if (user?.email) {
       userLogout();
+    } else {
+      navigate("/auth");
     }
     setAnchorEl(null);
   };
@@ -88,9 +84,8 @@ export default function DropPofileList() {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         variant="contained"
-        disableElevation
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
+        endicon={<KeyboardArrowDownIcon />}
       >
         <AccountCircle color="action" />
       </IconButton>
@@ -103,7 +98,7 @@ export default function DropPofileList() {
         open={open}
         onClose={handleClose}
       >
-        {user && (
+        {user?.email && (
           <MenuItem disableRipple>
             <EditIcon />내 정보
           </MenuItem>
@@ -111,7 +106,7 @@ export default function DropPofileList() {
 
         <MenuItem onClick={onClickAuthButton} disableRipple>
           <EditIcon />
-          {user ? "로그아웃" : "로그인"}
+          {user?.email ? "로그아웃" : "로그인"}
         </MenuItem>
       </StyledMenu>
     </div>

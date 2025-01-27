@@ -9,8 +9,7 @@ import { useAdmin } from "../../shared/hooks/admin/useAdmin";
 
 const Container = styled.div`
   display: flex;
-  height: 90vh;
-  border-radius: 25px;
+  height: 100vh;
 `;
 const LeftSection = styled.div`
   display: flex;
@@ -30,14 +29,11 @@ const DashBoardContainer = styled.div`
   display: flex;
   flex: 1;
   margin: 55px;
-  border: 2px solid #ddd;
   border-radius: 25px;
   padding: 25px;
-  border: 2px solid #ddd;
-  background-color: #d1d1d1;
 `;
 export const AdminPage = () => {
-  const { pendingUsersList } = useAdmin();
+  const { pendingUsersList, handlePendingUserList } = useAdmin();
   return (
     <Container>
       <DashBoardContainer>
@@ -47,7 +43,10 @@ export const AdminPage = () => {
           <CurrentBoardList />
         </LeftSection>
         <RightSection>
-          <ApprovalMemberList pendingUsersList={pendingUsersList} />
+          <ApprovalMemberList
+            pendingUsersList={pendingUsersList}
+            handlePendingUserList={handlePendingUserList}
+          />
           <LectureListCard />
         </RightSection>
       </DashBoardContainer>

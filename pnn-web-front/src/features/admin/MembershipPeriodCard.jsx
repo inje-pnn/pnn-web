@@ -4,7 +4,7 @@ import { CardHeader } from "../../shared/components/admin/CardHeader";
 
 const CustomCard = muiStyled(Card)(({ theme }) => ({
   width: "100%",
-  height: "60%",
+  height: "20%",
   justifyItems: "center",
   justifyContent: "flex-start",
   marginTop: 15,
