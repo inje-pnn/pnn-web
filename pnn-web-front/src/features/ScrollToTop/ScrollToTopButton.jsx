@@ -1,19 +1,20 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Fab } from '@mui/material';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { styled } from '@mui/system';
 
-const Button = styled.button`
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  bottom: 80px;
-  right: 60px;
-  color: black;
-  border: solid 1px lightgray;
-  border-radius: 28px;
-  padding: 15px;
-  font-size: 18px;
-  cursor: pointer;
-`;
+const ScrollToTopFab = styled(Fab)(({ theme }) => ({
+  position: 'fixed',
+  bottom: '80px',
+  right: '60px',
+  width: '60px',
+  height: '60px',
+  backgroundColor: '#667eea',
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: '#556cd6',
+  },
+}));
 
 export const ScrollToTopButton = () => {
   const scrollToTop = () => {
@@ -21,8 +22,8 @@ export const ScrollToTopButton = () => {
   };
 
   return (
-    <Button onClick={scrollToTop}>
-      ↑
-    </Button>
+    <ScrollToTopFab onClick={scrollToTop}>
+      <KeyboardArrowUpIcon />
+    </ScrollToTopFab>
   );
 };

@@ -28,7 +28,10 @@ export const RootRoutes = () => {
           </ProtectedRoute>
         }
       />
-
+      <Route
+        path="/auth/regist"
+        element={<Layout mainContent={<UserRegistPage />} />}
+      />
       <Route path="/share" element={<Layout mainContent={<SharePage />} />} />
       <Route
         path="/share/upload"
