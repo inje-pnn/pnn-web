@@ -5,6 +5,7 @@ import { useAuth } from "./shared/hooks/auth/useAuth";
 const App = () => {
   const { checkAutoLogin } = useAuth();
   useEffect(() => {
+    console.log("???");
     checkAutoLogin();
   }, []);
 
