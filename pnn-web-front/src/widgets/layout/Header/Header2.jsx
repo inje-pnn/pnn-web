@@ -32,7 +32,14 @@ export default function Header() {
         zIndex: "9999",
       }}
     >
-      <AppBar position="static" sx={{ height: "100%" }}>
+      <AppBar 
+        position="static" 
+        sx={{ 
+          height: "100%", 
+          backgroundColor: 'rgba(211, 211, 211, 0.5)', // lightGray를 rgba로 변경
+          backdropFilter: 'blur(10px)', // 블러 효과 추가
+          WebkitBackdropFilter: 'blur(10px)', // Safari 지원을 위한 prefix
+        }}>
         <Toolbar
           sx={{
             height: "100%",
@@ -71,31 +78,31 @@ export default function Header() {
           >
             <Link
               to="/aboutus"
-              style={{ textDecoration: "none", color: "white" }}
+              style={{ textDecoration: "none", color: "black" }}
             >
               <Button color="inherit">About Us</Button>
             </Link>
             <Link
               to="/share"
-              style={{ textDecoration: "none", color: "white" }}
+              style={{ textDecoration: "none", color: "black" }}
             >
               <Button color="inherit">프로젝트</Button>
             </Link>
             <Link
               to="/aboutus"
-              style={{ textDecoration: "none", color: "white" }}
+              style={{ textDecoration: "none", color: "black" }}
             >
               <Button color="inherit">팀원소개</Button>
             </Link>
             <Link
               to="/community"
-              style={{ textDecoration: "none", color: "white" }}
+              style={{ textDecoration: "none", color: "black" }}
             >
               <Button color="inherit">커뮤니티</Button>
             </Link>
             <Link
               to="/aboutus"
-              style={{ textDecoration: "none", color: "white" }}
+              style={{ textDecoration: "none", color: "black" }}
             >
               <Button color="inherit">지원하기</Button>
             </Link>

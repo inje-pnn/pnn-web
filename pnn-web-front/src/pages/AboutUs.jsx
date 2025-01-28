@@ -34,7 +34,7 @@ const ImgFrame = styled.div`
 
   img {
     width: 100%;
-    height: 100%;
+    height: 300px;
     position: relative;
     object-fit: cover;
     object-position: bottom;
