@@ -50,19 +50,19 @@ export default function Header() {
         >
           <Typography variant="h6" component="div">
             <Link to="/">
-            <Box
-              component="img"
-              sx={{
-                height: "70px",
-                width: "100px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                objectFit: "contain",
-              }}
-              src={Logo}
-              alt="P&N Logo"
-            />
+              <Box
+                component="img"
+                sx={{
+                  height: "70px",
+                  width: "100px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  objectFit: "contain",
+                }}
+                src={Logo}
+                alt="P&N Logo"
+              />
             </Link>
           </Typography>
 
@@ -95,10 +95,10 @@ export default function Header() {
               <Button color="inherit">팀원소개</Button>
             </Link>
             <Link
-              to="/aboutus"
+              to="/community"
               style={{ textDecoration: "none", color: "black" }}
             >
-              <Button color="inherit">Contact</Button>
+              <Button color="inherit">커뮤니티</Button>
             </Link>
             <Link
               to="/aboutus"
