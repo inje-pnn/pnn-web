@@ -8,10 +8,8 @@
   src: url("./assets//fonts//Cafe24Ssurround-v2.0.ttf") format("truetype");
 }
 :root {
-  --admin-background: #1a1a1a;
-  --admin-cardBackground: #242731;
-  --admin-fontTitle: #ffffff;
-  --admin-fontSubTitle: #7e7f8e;
+  --default-background: #ffffff;
+  --default-card-border: 0.2px solid #ddd;
 }
 
 * {
