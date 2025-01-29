@@ -2,70 +2,74 @@ import useUserStore from "../../shared/store/useUserStroe";
 import { useEffect } from "react";
 import styled from "styled-components";
 import { boardData } from "../../shared/data/boardData";
-import CardFrame from "../../features/Card/CardFrame";
 import { CardBoardItem } from "../../features/Card/CardBoardItem";
+import { FloatingMenuBar } from "../../features/community/FloatingMenuBar";
+import { CommunityFilter } from "../../features/community/CommunityFilter";
 
 const Container = styled.div`
   display: flex;
-  flex: 1;
-  height: 100%;
+  position: relative;
   width: 100%;
   flex-direction: column;
 `;
 const BoardTitleContainer = styled.div`
   display: flex;
-  flex: 0.2;
-  height: 100%;
+  height: 420px;
   width: 100%;
   border: 1px solid black;
-  justify-content: center;
+  padding-left: 20%;
+  padding-right: 20%;
   align-items: center;
+  justify-content: space-between;
 `;
 const BoardContainer = styled.div`
   display: flex;
-  flex: 0.8;
+  padding-top: 35px;
   height: 100%;
   width: 100%;
   justify-content: center;
   align-items: center;
-
+  flex-direction: column;
   .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개씩 */
     gap: 16px; /* 카드 간격 */
-    width: 90%; /* 내부 그리드 컨테이너 너비 */
+    width: 60%; /* 내부 그리드 컨테이너 너비 */
     height: auto; /* 높이는 카드 내용에 따라 자동 조절 */
-  }
-
-  .card-item {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    justify-items: center;
   }
 `;
-const GridContainer = styled.div``;
+const FilterContainer = styled.div`
+  width: 60%;
+  height: 100px;
+`;
+const TitleImg = styled.img`
+  width: 250px;
+  height: 250px;
+`;
 
 export const CommunityPage = () => {
   const user = useUserStore((state) => state.user);
   useEffect(() => {
     console.log(user);
   }, []);
-  function CardBoardItem({ item }) {
-    return (
-      <div className="card-item">
-        <h3>{item.title}</h3>
-      </div>
-    );
-  }
+
   return (
     <Container>
+      <FloatingMenuBar />
       <BoardTitleContainer>
-        <h1>커뮤니티 페이지입니다.</h1>
+        <h1>
+          커뮤니티 페이지입니다.
+          <br />
+          개발 이야기를 공유해보세요.
+        </h1>
+        <TitleImg src="src/assets/images/community_test.png" />
       </BoardTitleContainer>
       <BoardContainer>
+        <FilterContainer>
+          <CommunityFilter />
+        </FilterContainer>
+
         <div className="grid-container">
           {boardData.map((v) => (
             <CardBoardItem item={v} />
