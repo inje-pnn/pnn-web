@@ -5,6 +5,8 @@ import { boardData } from "../../shared/data/boardData";
 import { CardBoardItem } from "../../features/Card/CardBoardItem";
 import { FloatingMenuBar } from "../../features/community/FloatingMenuBar";
 import { CommunityFilter } from "../../features/community/CommunityFilter";
+import { UploadButton } from "../../features/platform/UploadButton";
+import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
 
 const Container = styled.div`
   display: flex;
@@ -16,7 +18,7 @@ const BoardTitleContainer = styled.div`
   display: flex;
   height: 420px;
   width: 100%;
-  border: 1px solid black;
+
   padding-left: 20%;
   padding-right: 20%;
   align-items: center;
@@ -40,8 +42,11 @@ const BoardContainer = styled.div`
   }
 `;
 const FilterContainer = styled.div`
+  display: flex;
   width: 60%;
-  height: 100px;
+  height: auto;
+
+  align-self: center;
 `;
 const TitleImg = styled.img`
   width: 250px;
@@ -57,6 +62,8 @@ export const CommunityPage = () => {
   return (
     <Container>
       <FloatingMenuBar />
+      <UploadButton />
+      <ScrollToTopButton />
       <BoardTitleContainer>
         <h1>
           커뮤니티 페이지입니다.
@@ -65,11 +72,10 @@ export const CommunityPage = () => {
         </h1>
         <TitleImg src="src/assets/images/community_test.png" />
       </BoardTitleContainer>
+      <FilterContainer>
+        <CommunityFilter />
+      </FilterContainer>
       <BoardContainer>
-        <FilterContainer>
-          <CommunityFilter />
-        </FilterContainer>
-
         <div className="grid-container">
           {boardData.map((v) => (
             <CardBoardItem item={v} />

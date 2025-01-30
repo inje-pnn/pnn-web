@@ -1,7 +1,9 @@
 import { Search } from "@mui/icons-material";
 import { styled as muiStyled } from "@mui/material/styles";
 import {
+  Avatar,
   Box,
+  Button,
   Chip,
   IconButton,
   Input,
@@ -13,10 +15,13 @@ import {
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { categoryData } from "../../shared/data/categoryData";
+import { Filter } from "../../features/platform/components/Filter";
+import { useCategoryFilter } from "../../shared/hooks/useCategoryFilter";
+import { getImage } from "../../shared/util/image";
 
 const Container = styled.div`
   width: 100%;
+  height: 100%;
 `;
 const SearchBoxContainer = muiStyled(Box)(({ top, left }) => ({
   position: "absolute",
@@ -48,57 +53,127 @@ const CustomSearchInput = muiStyled(Input)(({}) => ({
   borderRadius: "15px",
   width: "90%",
 }));
-const CustomChip = muiStyled(Chip)(({}) => ({
+const CustomChip = muiStyled(Chip)(({ color }) => ({
   width: "auto",
+  height: 25,
+  backgroundColor: `${color}`,
+  marginRight: "5px",
 }));
+
+const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const FliterChipContainer = styled.div`
+  height: 40%;
+`;
+const FramworkIcon = styled.img``;
 export const CommunityFilter = () => {
-  const [isSearchBoxOpen, setIsSearchBoxOpen] = useState(true);
+  const [isSearchBoxOpen, setIsSearchBoxOpen] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
-  const [selectedItems, setSelectedItems] = useState([]);
+
+  const {
+    searchText,
+    categoryList,
+    selectedPlatform,
+    selectedItemList,
+    onChangeSearchText,
+    addSelectedItemList,
+    removeSelectedItemList,
+    handleSelectedPlatform,
+  } = useCategoryFilter();
+
   const buttonRef = useRef(null);
+  const listRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (
+      buttonRef.current &&
+      !buttonRef.current.contains(event.target) &&
+      !listRef.current.contains(event.target)
+    ) {
+      setIsSearchBoxOpen(false);
+    }
+  };
+
   useEffect(() => {
-    console.log("seleceted Items", selectedItems);
-  }, [selectedItems]);
+    if (isSearchBoxOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isSearchBoxOpen]);
+
   const onClickOpenButton = () => {
     if (buttonRef.current) {
       setIsSearchBoxOpen(!isSearchBoxOpen);
       const rect = buttonRef.current.getBoundingClientRect();
-      console.log(rect);
       setPopupPosition({
         top: rect.height, // 버튼 아래쪽에 위치
         left: rect.left + window.scrollX,
       });
     }
   };
-  const handleClose = () => {
-    setIsSearchBoxOpen(false);
-  };
+
   const onClickInput = (e) => {
     e.stopPropagation();
   };
+
+  // 리스트에서 아이템 선택시
   const onClickListItem = (e) => {
-    setSelectedItems((prev) => [...prev, e.target.textContent]);
+    e.preventDefault();
+    e.stopPropagation();
+    addSelectedItemList(e.target.textContent);
     setIsSearchBoxOpen(false);
   };
+
+  // 칩 아이템 삭제 버튼 클릭시
+  const onClickDeleteChipItem = (v, i) => {
+    removeSelectedItemList(v);
+  };
+
   return (
     <Container>
-      <div>
-        <h3>프로젝트</h3>
-      </div>
-      <div>
-        {selectedItems.map((v) => (
-          <CustomChip label={v} onDelete={() => {}} />
-        ))}
+      <TitleContainer>
+        <h1>스터디</h1>
+        <Filter
+          selectedPlatform={selectedPlatform}
+          handleSelectedPlatform={handleSelectedPlatform}
+        />
+      </TitleContainer>
+      <FliterChipContainer>
+        {selectedItemList.map((v, i) => {
+          const image = getImage(v);
+          return (
+            <CustomChip
+              avatar={
+                v !== "All" ? (
+                  <FramworkIcon alt="Natacha" src={image.path} />
+                ) : null
+              }
+              label={v}
+              color={v !== "All" ? image.color : ""}
+              onDelete={() => onClickDeleteChipItem(v, i)}
+            />
+          );
+        })}
         <CustomSearchButton ref={buttonRef} onClick={onClickOpenButton}>
-          <Search />
+          {<Search />}
         </CustomSearchButton>
         {isSearchBoxOpen && (
-          <SearchBoxContainer top={popupPosition.y} left={popupPosition.left}>
+          <SearchBoxContainer
+            ref={listRef}
+            top={popupPosition.y}
+            left={popupPosition.left}
+          >
             <SearchBoxHeader>
               <CustomSearchInput
-                onClick={onClickInput}
                 placeholder="Search"
                 id="input-with-icon-adornment"
+                value={searchText}
+                onChange={(e) => onChangeSearchText(e)}
+                onClick={onClickInput}
                 startAdornment={
                   <InputAdornment position="start">
                     <Search />
@@ -107,7 +182,7 @@ export const CommunityFilter = () => {
               />
             </SearchBoxHeader>
             <List onClick={onClickListItem}>
-              {categoryData.framwork.map((v) => (
+              {categoryList.map((v) => (
                 <ListItem disablePadding>
                   <ListItemButton>
                     <ListItemText className="list-text" primary={v.title} />
@@ -115,10 +190,9 @@ export const CommunityFilter = () => {
                 </ListItem>
               ))}
             </List>
-            <div></div>
           </SearchBoxContainer>
         )}
-      </div>
+      </FliterChipContainer>
     </Container>
   );
 };

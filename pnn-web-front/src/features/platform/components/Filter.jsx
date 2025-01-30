@@ -4,13 +4,14 @@ import { styled } from "@mui/system";
 
 const StyledChip = styled(Chip)(({ selected }) => ({
   margin: "10px",
+  marginLeft: 0,
   textTransform: "none",
-  padding: "10px",
+  padding: "5px",
   borderRadius: "30px",
   transition: "all 0.3s ease",
   backgroundColor: selected ? "#667eea" : "#fff",
   color: selected ? "#fff" : "#000",
-  fontSize: "16px",
+  fontSize: "15px",
   fontWeight: "600",
   border: selected ? "none" : "1px solid #ccc",
   "&:hover": {
@@ -18,7 +19,7 @@ const StyledChip = styled(Chip)(({ selected }) => ({
   },
 }));
 
-export const Filter = ({ selectedPlatform, setSelectedPlatform }) => {
+export const Filter = ({ selectedPlatform, handleSelectedPlatform }) => {
   const platformOptions = [
     { platform: "ALL", value: "ALL" },
     { platform: "WEB", value: "WEB" },
@@ -31,10 +32,10 @@ export const Filter = ({ selectedPlatform, setSelectedPlatform }) => {
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
         flexWrap: "wrap",
-        marginTop: "50px",
-        marginBottom: "50px",
+        marginTop: "10px",
+        marginBottom: "10px",
+        width: "100%",
       }}
     >
       {platformOptions.map((option) => (
@@ -43,7 +44,7 @@ export const Filter = ({ selectedPlatform, setSelectedPlatform }) => {
           label={option.platform}
           clickable
           selected={selectedPlatform === option.value}
-          onClick={() => setSelectedPlatform(option.value)}
+          onClick={() => handleSelectedPlatform(option.value)}
         />
       ))}
     </div>
