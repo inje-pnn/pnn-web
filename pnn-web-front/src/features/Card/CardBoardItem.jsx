@@ -1,83 +1,46 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import testimage from "../../assets/images/test.png";
 
-const CardWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 374px;
-  height: 405px;
+const Container = styled.div`
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  width: 350px;
+  height: 200px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  border-radius: 20px;
-  position: relative;
 `;
-
-const ImageFrame = styled.img`
+const CardContainer = styled.div`
+  width: 100%;
+  height: 70%;
+  overflow: hidden;
+`;
+const CardImage = styled.img`
   width: 100%;
   height: 100%;
-  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+  position: relative;
+  &:hover {
+    transform: scale(1.1); /* 이미지 확대 */
+  }
 `;
-
-const ExplainFrame = styled.div`
-  position: absolute;
+const CardContent = styled.div`
   width: 100%;
-  height: 134px;
-  bottom: 0px;
-  background: rgba(0, 0, 0, 0.68);
-  box-shadow: rgba(0, 0, 0, 0.05) 0px -1px 1px 0px;
-  backdrop-filter: blur(5px);
-  border-radius: 0px 0px 14px 14px;
-  transition: 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  z-index: 1;
-`;
-
-const TitleFrame = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 8px;
-  gap: 8px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-`;
-
-const SubTitleFrame = styled.div`
-  color: white;
-  margin-top: 4px;
-  font-size: 14px;
-`;
-
-const PlatformContainer = styled.div`
-  position: absolute;
-  bottom: 12px;
-  right: 16px;
-  font-size: 12px;
-  color: white;
+  height: 30%;
+  background-color: #c1c1c1;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 `;
 export const CardBoardItem = ({ item }) => {
-  const navigate = useNavigate();
-
+  console.log(item);
   return (
-    <CardWrapper>
-      <ImageFrame src={testimage} alt={item.title} />
-
-      <ExplainFrame>
-        <TitleFrame>
-          <h2>{item.title}</h2>
-        </TitleFrame>
-
-        <SubTitleFrame>
-          <span>{item.description}</span>
-        </SubTitleFrame>
-
-        <PlatformContainer>
-          <span>{item.platform}</span>
-        </PlatformContainer>
-      </ExplainFrame>
-    </CardWrapper>
+    <Container className="card-item">
+      <CardContainer>
+        <CardImage src="src/assets/images/community_test.png" />
+      </CardContainer>
+      <CardContent>
+        <h3>{item.title}</h3>
+      </CardContent>
+    </Container>
   );
 };
