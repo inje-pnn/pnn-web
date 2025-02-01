@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Cookies from "js-cookie";
 import { Dropdown } from "../../features/platform/OptionDropdown";
 import { ImageUpload } from "../../features/platform/ImageUpload";
 import { fetchGitHubReadme } from "../../shared/api/githubApi";
+import { uploadImageToFirebase  } from "../../shared/util/firebaseImg";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -179,7 +181,9 @@ const UploadButton = styled.button`
     background-color: ${(props) => (props.disabled ? "#e0e0e0" : "#0056b3")};
   }
 `;
+
 export const ShareUpload = () => {
+  const [memberId, setMemberId] = useState("");
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [platform, setPlatform] = useState("");
@@ -192,6 +196,13 @@ export const ShareUpload = () => {
 
   const TITLE_LIMIT = 20;
   const SUBTITLE_LIMIT = 30;
+
+  useEffect(() => {
+    const storedMemberId = Cookies.get("user");
+    if (storedMemberId) {
+      setMemberId(storedMemberId);
+    }
+  }, []);
 
   const handleTitleChange = (e) => {
     const input = e.target.value;
@@ -235,15 +246,83 @@ export const ShareUpload = () => {
     }
   };
 
-  const handlePostUpload = () => {
+  const handlePostUpload = async () => {
+    if (!image) {
+      alert("이미지를 선택해주세요.");
+      return;
+    }
+  
     setIsUploading(true);
+  
+    try {
+      console.log("이미지 업로드 시작:", image);
+      const imageUrl = await uploadImageToFirebase(image);
+      console.log("이미지 업로드 완료:", imageUrl);
+  
+      // DTO 방식이 아닌 스크립트 형식(객체)으로 데이터 전달
+      const response = await axios.post("https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/project/create", {
+        memberid: memberId,
+        title: title,
+        sub_title: subtitle,
+        project_type: projectType,
+        project_category: platform,
+        link: githubUrl,
+        image: imageUrl, // Firebase에서 받은 이미지 URL
+      });
+  
+      if (response.status === 200) {
+        alert("프로젝트가 성공적으로 업로드되었습니다!");
+  
+        // 입력 필드 초기화
+        setTitle("");
+        setSubtitle("");
+        setPlatform("");
+        setprojectType("");
+        setImage(null);
+        setGithubUrl("");
+        setReadmeContent("");
+      }
+    } catch (error) {
+      console.error("업로드 오류:", error);
+  
+      if (error.response) {
+        console.error("Error response:", error.response);
+      } else if (error.request) {
+        console.error("Error request:", error.request);
+      } else {
+        console.error("Error message:", error.message);
+      }
+  
+      alert("업로드에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsUploading(false);
+    }
   };
+  
 
   const isUploadDisabled =
-    !title || !subtitle || !platform || !projectType || !image || !githubUrl || isUploading;
+    !title ||
+    !subtitle ||
+    !platform ||
+    !projectType ||
+    !image ||
+    !githubUrl ||
+    isUploading;
 
   const platformOptions = ["Web", "Mobile", "AI", "Game"];
-  const typeOptions = ["해커톤", "경진 대회", "캡스톤 다지인", "졸업 작품"];
+  const frameworkOptions = [
+    "Java Script",
+    "Java",
+    "Python",
+    "C",
+    "C++",
+    "Spring",
+    "React",
+    "Vue",
+    "React Native",
+    "Unity",
+    "Flutter",
+  ];
 
   return (
     <Container>
@@ -300,9 +379,9 @@ export const ShareUpload = () => {
                   onChange={handlePlatformChange}
                 />
                 <Dropdown
-                  label="프로젝트 유형"
+                  label="프레임워크 선택"
                   value={projectType}
-                  options={typeOptions}
+                  options={frameworkOptions}
                   onChange={handleProjectTypeChange}
                 />
               </TagListFrame>
@@ -338,7 +417,7 @@ export const ShareUpload = () => {
                 placeholder="GitHub 레포지토리 URL을 입력하세요"
                 value={githubUrl}
                 onChange={handleGithubUrlChange}
-              />              
+              />
             </SubInputFrame>
           </WrapperFrame>
         </InputContainer>
@@ -363,10 +442,7 @@ export const ShareUpload = () => {
           </TableStyles>
         </ReadMeFrame>
 
-        <UploadButton
-          onClick={handlePostUpload}
-          disabled={isUploadDisabled}
-        >
+        <UploadButton onClick={handlePostUpload} disabled={isUploadDisabled}>
           업로드 하기
         </UploadButton>
       </ContentContainer>

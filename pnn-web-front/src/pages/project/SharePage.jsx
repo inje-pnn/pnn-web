@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import CardFrame from "../../features/Card/CardFrame";
 import { Filter } from "../../features/platform/components/Filter";
 import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
@@ -11,6 +12,7 @@ const Container = styled.div`
   height: auto;
   padding: 16px;
   margin-top: 50px;
+  background-color: #f2f5f8;
 
   @media (max-width: 768px) {
     margin-top: 20px;
@@ -73,7 +75,7 @@ export const SharePage = () => {
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("user");
     if (token) {
       setIsLogin(true);
     } else {
@@ -115,7 +117,11 @@ export const SharePage = () => {
         </CardContainer>
       </Frame>
       <ScrollToTopButton />
-      <UploadButton />
+      
+      {isLogin &&
+        <UploadButton />
+      }
+      
     </Container>
   );
 };
