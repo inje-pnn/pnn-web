@@ -247,6 +247,8 @@ export const ShareUpload = () => {
   };
 
   const handlePostUpload = async () => {
+    console.log("handlePostUpload 실행");
+  
     if (!image) {
       alert("이미지를 선택해주세요.");
       return;
@@ -255,25 +257,31 @@ export const ShareUpload = () => {
     setIsUploading(true);
   
     try {
-      console.log("이미지 업로드 시작:", image);
+      console.log("이미지 업로드 시작");
       const imageUrl = await uploadImageToFirebase(image);
-      console.log("이미지 업로드 완료:", imageUrl);
+      console.log("Firebase 이미지 URL:", imageUrl);
   
-      // DTO 방식이 아닌 스크립트 형식(객체)으로 데이터 전달
-      const response = await axios.post("https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/project/create", {
-        memberid: memberId,
-        title: title,
-        sub_title: subtitle,
-        project_type: projectType,
-        project_category: platform,
-        link: githubUrl,
-        image: imageUrl, // Firebase에서 받은 이미지 URL
-      });
+      console.log("백엔드로 요청 보내기 시작");
+      const response = await axios.post(
+        "https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/project/create",
+        {
+          memberid: memberId,
+          title: title,
+          sub_title: subtitle,
+          project_type: projectType,
+          project_category: platform,
+          link: githubUrl,
+          image: imageUrl,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+  
+      console.log("백엔드 응답:", response);
   
       if (response.status === 200) {
         alert("프로젝트가 성공적으로 업로드되었습니다!");
-  
-        // 입력 필드 초기화
         setTitle("");
         setSubtitle("");
         setPlatform("");
@@ -299,7 +307,6 @@ export const ShareUpload = () => {
     }
   };
   
-
   const isUploadDisabled =
     !title ||
     !subtitle ||

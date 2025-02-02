@@ -32,6 +32,7 @@ const PreviewImage = styled.img`
   position: absolute;
   top: 0;
   left: 0;
+  object-fit: cover;
 `;
 
 const DropzoneContent = styled.div`
@@ -91,6 +92,7 @@ const SubText = styled.p`
 
 export const ImageUpload = ({ image, onImageChange, onImageRemove }) => {
   const [isDragging, setIsDragging] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
 
   const handleDragEnter = (e) => {
@@ -123,9 +125,13 @@ export const ImageUpload = ({ image, onImageChange, onImageRemove }) => {
     if (files && files[0]) {
       const file = files[0];
       if (file.type.startsWith('image/')) {
+        // File 객체 자체를 저장
+        onImageChange(file);
+        
+        // 미리보기를 위한 URL 생성
         const reader = new FileReader();
         reader.onload = (e) => {
-          onImageChange(e.target.result);
+          setPreviewUrl(e.target.result);
         };
         reader.readAsDataURL(file);
       } else {
@@ -144,6 +150,7 @@ export const ImageUpload = ({ image, onImageChange, onImageRemove }) => {
 
   const handleRemoveImage = (e) => {
     e.stopPropagation();
+    setPreviewUrl(null);
     onImageRemove();
   };
 
@@ -163,9 +170,9 @@ export const ImageUpload = ({ image, onImageChange, onImageRemove }) => {
         onDrop={handleDrop}
         isDragging={isDragging}
       >
-        {image && (
+        {previewUrl && (
           <>
-            <PreviewImage src={image} alt="Preview" />
+            <PreviewImage src={previewUrl} alt="Preview" />
             <RemoveButton 
               onClick={handleRemoveImage}
               show={true}
@@ -174,7 +181,7 @@ export const ImageUpload = ({ image, onImageChange, onImageRemove }) => {
             </RemoveButton>
           </>
         )}
-        <DropzoneContent hasImage={!!image}>
+        <DropzoneContent hasImage={!!previewUrl}>
           <MainText>이미지를 드래그하여 업로드하거나 클릭하여 선택하세요</MainText>
           <SubText>(지원 형식: JPG, PNG, GIF)</SubText>
         </DropzoneContent>
