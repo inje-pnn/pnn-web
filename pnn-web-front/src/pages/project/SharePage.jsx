@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import Cookies from "js-cookie";
 import CardFrame from "../../features/Card/CardFrame";
 import { Filter } from "../../features/platform/components/Filter";
@@ -73,6 +74,7 @@ const CardContainer = styled.div`
 export const SharePage = () => {
   const [selectedPlatform, setSelectedPlatform] = useState("ALL");
   const [isLogin, setIsLogin] = useState(false);
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     const token = Cookies.get("user");
@@ -83,13 +85,33 @@ export const SharePage = () => {
     }
   }, []);
 
-  const projects = [
-    { id: 1, title: "Project 1", platform: "WEB", description: "설명 1" },
-    { id: 2, title: "Project 2", platform: "APP", description: "설명 2" },
-    { id: 3, title: "Project 3", platform: "WEB", description: "설명 3" },
-    { id: 4, title: "Project 4", platform: "GAME", description: "설명 4" },
-    { id: 5, title: "Project 5", platform: "AI", description: "설명 5" },
-  ];
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.post(
+          "https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/project/get",
+          {}
+        );
+
+        if (response.status === 200) {
+          const projectData = response.data.map((project) => ({
+            id: project.id,
+            title: project.title,
+            subTitle: project.sub_title,
+            category: project.project_category,
+            type: project.project_type,
+            imageUrl: project.image,
+          }));
+
+          setProjects(projectData);
+        }
+      } catch (error) {
+        console.error("프로젝트 데이터를 가져오는 중 오류 발생:", error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   const filteredProjects =
     selectedPlatform === "ALL"
@@ -108,7 +130,9 @@ export const SharePage = () => {
           setSelectedPlatform={setSelectedPlatform}
         />
 
-        <ProjectNumber>{filteredProjects.length}개의 프로젝트</ProjectNumber>
+        <ProjectNumber>
+          {filteredProjects.length}개의 프로젝트
+        </ProjectNumber>
 
         <CardContainer>
           {filteredProjects.map((project) => (
@@ -117,11 +141,8 @@ export const SharePage = () => {
         </CardContainer>
       </Frame>
       <ScrollToTopButton />
-      
-      {isLogin &&
-        <UploadButton />
-      }
-      
+
+      {isLogin && <UploadButton />}
     </Container>
   );
 };

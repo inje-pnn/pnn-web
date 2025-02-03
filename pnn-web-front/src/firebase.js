@@ -7,7 +7,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDh3D7B5tpXYwC5t2KjAc1LPLkUppAt0-Y",
   authDomain: "pnn-web-4bad4.firebaseapp.com",
   projectId: "pnn-web-4bad4",
-  storageBucket: "pnn-web-4bad4.appspot.com",
+  storageBucket: "pnn-web-4bad4.firebasestorage.app",
   appId: "1:961986237709:web:a1dd841e35a7a340700c44",
   measurementId: "G-XF6SJJXFX8",
 };

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 import Cookies from "js-cookie";
 import { Dropdown } from "../../features/platform/OptionDropdown";
@@ -167,6 +169,27 @@ const SubInputFrame = styled.div`
   border-bottom: solid 1px #e0e0e0;
 `;
 
+const Spinner = styled.div`
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
+const ButtonContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const UploadButton = styled.button`
   margin-top: 40px;
   background-color: ${(props) => (props.disabled ? "#e0e0e0" : "#007bff")};
@@ -176,6 +199,9 @@ const UploadButton = styled.button`
   font-size: 16px;
   border: none;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background-color: ${(props) => (props.disabled ? "#e0e0e0" : "#0056b3")};
@@ -187,12 +213,14 @@ export const ShareUpload = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [platform, setPlatform] = useState("");
-  const [projectType, setprojectType] = useState("");
+  const [projectType, setProjectType] = useState("");
   const [image, setImage] = useState(null);
   const [githubUrl, setGithubUrl] = useState("");
   const [readmeContent, setReadmeContent] = useState("");
   const [error, setError] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+
+  const navigate = useNavigate();
 
   const TITLE_LIMIT = 20;
   const SUBTITLE_LIMIT = 30;
@@ -223,7 +251,7 @@ export const ShareUpload = () => {
   };
 
   const handleProjectTypeChange = (e) => {
-    setprojectType(e.target.value);
+    setProjectType(e.target.value);
   };
 
   const fetchReadme = async (url) => {
@@ -247,21 +275,11 @@ export const ShareUpload = () => {
   };
 
   const handlePostUpload = async () => {
-    console.log("handlePostUpload 실행");
-  
-    if (!image) {
-      alert("이미지를 선택해주세요.");
-      return;
-    }
-  
     setIsUploading(true);
-  
+
     try {
-      console.log("이미지 업로드 시작");
       const imageUrl = await uploadImageToFirebase(image);
-      console.log("Firebase 이미지 URL:", imageUrl);
-  
-      console.log("백엔드로 요청 보내기 시작");
+
       const response = await axios.post(
         "https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/project/create",
         {
@@ -272,37 +290,25 @@ export const ShareUpload = () => {
           project_category: platform,
           link: githubUrl,
           image: imageUrl,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
         }
       );
-  
-      console.log("백엔드 응답:", response);
-  
-      if (response.status === 200) {
+
+      if (response.status === 200 && response.data) {
         alert("프로젝트가 성공적으로 업로드되었습니다!");
         setTitle("");
         setSubtitle("");
         setPlatform("");
-        setprojectType("");
+        setProjectType("");
         setImage(null);
         setGithubUrl("");
         setReadmeContent("");
+
+        navigate("/share");
+      }else {
+        throw new Error("업로드 실패");
       }
     } catch (error) {
-      console.error("업로드 오류:", error);
-  
-      if (error.response) {
-        console.error("Error response:", error.response);
-      } else if (error.request) {
-        console.error("Error request:", error.request);
-      } else {
-        console.error("Error message:", error.message);
-      }
-  
-      alert("업로드에 실패했습니다. 다시 시도해주세요.");
-    } finally {
+      alert(`업로드에 실패했습니다: ${error.message}`);
       setIsUploading(false);
     }
   };
@@ -449,9 +455,12 @@ export const ShareUpload = () => {
           </TableStyles>
         </ReadMeFrame>
 
-        <UploadButton onClick={handlePostUpload} disabled={isUploadDisabled}>
+        <UploadButton onClick={handlePostUpload} disabled={isUploading || isUploadDisabled}>
+        <ButtonContent>
+          {isUploading && <Spinner />}
           업로드 하기
-        </UploadButton>
+        </ButtonContent>
+      </UploadButton>
       </ContentContainer>
     </Container>
   );

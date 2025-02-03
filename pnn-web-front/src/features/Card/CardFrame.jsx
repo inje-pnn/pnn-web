@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import testimage from "../../assets/images/test.png";
 
 const CardWrapper = styled.div`
   display: flex;
@@ -12,11 +11,13 @@ const CardWrapper = styled.div`
   position: relative;
   border-radius: 20px;
   overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const ImageFrame = styled.img`
   width: 100%;
   height: 226px;
+  object-fit: cover;
   transition: transform 0.3s ease;
 
   ${CardWrapper}:hover & {
@@ -38,14 +39,15 @@ const TitleFrame = styled.div`
   margin-bottom: 8px;
 
   h2 {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: bold;
     margin: 0;
   }
 `;
 
 const SubTitleFrame = styled.div`
   font-size: 14px;
+  color: #666;
   line-height: 1.4;
   margin-top: 4px;
 `;
@@ -58,27 +60,31 @@ const TagContainer = styled.div`
   font-size: 13px;
 `;
 
+const Tag = styled.span`
+  font-size: 14px;
+  font-weight: bold;
+`;
+
 const CardFrame = ({ project }) => {
   const navigate = useNavigate();
 
   const handleDetailClick = () => {
-    navigate("/share/detail");
+    navigate(`/share/detail/${project.id}`);
   };
 
   return (
     <CardWrapper onClick={handleDetailClick}>
-      <ImageFrame src={testimage} alt={project.title} />
+      <ImageFrame src={project.imageUrl} alt={project.title} />
       <ExplainFrame>
         <TitleFrame>
           <h2>{project.title}</h2>
         </TitleFrame>
 
-        <SubTitleFrame>
-          <span>{project.description}</span>
-        </SubTitleFrame>
+        <SubTitleFrame>{project.subTitle}</SubTitleFrame>
 
         <TagContainer>
-          <span>{project.platform}</span>
+          <Tag>#{project.category}</Tag>
+          <Tag>#{project.type}</Tag>
         </TagContainer>
       </ExplainFrame>
     </CardWrapper>
