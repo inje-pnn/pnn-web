@@ -35,7 +35,21 @@ const StyledSlider = styled(Slider)`
   justify-content: center;
 
   .slick-list {
-    padding: 0 !important; 
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
+  .slick-track {
+    display: flex;  
+    align-items: center; 
+    justify-content: center; 
+  }
+
+  .slick-slide {
+    > div {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .slick-prev,
@@ -64,13 +78,10 @@ const StyledSlider = styled(Slider)`
 
 const MemberFrame = styled.div`
   width: 100%;
-  height: 50%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  align-items: center;
-  justify-content: center; 
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); // 깔끔하게 좌우 여백 없이 7개의 카드만 넣기 위해
+  gap: 10px;
+  justify-items: center; 
 `;
 
 const StyledH1 = styled.h1`
@@ -131,12 +142,16 @@ const Member = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 7,
     slidesToScroll: 1,
     arrows: true,
     autoplay: true,
     autoplaySpeed: 2000,
     pauseOnHover: true,
+    // 아래 설정들을 추가
+    variableWidth: true, // 슬라이드 너비를 자동으로 조정
+    centerMode: true, // 현재 슬라이드를 중앙에 위치
+    centerPadding: '0px', // 중앙 모드 패딩 제거
   };
 
   return (
@@ -176,6 +191,7 @@ const Member = () => {
             explain={member.student_number}
             email={member.email}
             github={member.github_url}
+            enableHover={false}
           />
         ))}
       </MemberFrame>
@@ -189,6 +205,7 @@ const Member = () => {
             explain={member.student_number}
             email={member.email}
             github={member.github_url}
+            enableHover={false}
           />
         ))}
       </MemberFrame>
@@ -202,6 +219,7 @@ const Member = () => {
             explain={member.student_number}
             email={member.email}
             github={member.github_url}
+            enableHover={false}
           />
         ))}
       </MemberFrame>
@@ -215,6 +233,7 @@ const Member = () => {
             explain={member.student_number}
             email={member.email}
             github={member.github_url}
+            enableHover={false}
           />
         ))}
       </MemberFrame>
