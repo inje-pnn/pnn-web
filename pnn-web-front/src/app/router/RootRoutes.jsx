@@ -14,10 +14,9 @@ import ProtectedRoute from "./ProtectedRoute";
 import Test2 from "../../pages/test2";
 import { CommunityPage } from "../../pages/community/CommunityPage";
 
-
 export const RootRoutes = () => {
   const user = useUserStore((state) => state.user);
-  console.log(user);
+  console.log("routes", user);
   return (
     <Routes>
       <Route path="/" element={<Layout mainContent={<MainPage />} />} />
@@ -62,24 +61,37 @@ export const RootRoutes = () => {
 
       <Route
         path="/admin/member"
-        element={<Layout mainContent={<AdminMemberControlPage />} />}
+        element={
+          <ProtectedRoute user={user} type="admin">
+            <Layout mainContent={<AdminMemberControlPage />} />
+          </ProtectedRoute>
+        }
       />
       <Route
         path="/admin/membership"
-        element={<Layout mainContent={<AdminPage />} />}
+        element={
+          <ProtectedRoute user={user} type="admin">
+            <Layout mainContent={<AdminPage />} />
+          </ProtectedRoute>
+        }
       />
       <Route
         path="/admin/board"
-        element={<Layout mainContent={<AdminPage />} />}
+        element={
+          <ProtectedRoute user={user} type="admin">
+            <Layout mainContent={<AdminPage />} />
+          </ProtectedRoute>
+        }
       />
       <Route
         path="/admin/account"
-        element={<Layout mainContent={<AdminPage />} />}
+        element={
+          <ProtectedRoute user={user} type="admin">
+            <Layout mainContent={<AdminPage />} />
+          </ProtectedRoute>
+        }
       />
-      <Route
-        path="/test2"
-        element={<Layout mainContent={<Test2 />} />}
-      />
+      <Route path="/test2" element={<Layout mainContent={<Test2 />} />} />
     </Routes>
   );
 };

@@ -32,14 +32,16 @@ export default function Header() {
         zIndex: "9999",
       }}
     >
-      <AppBar 
-        position="static" 
-        sx={{ 
-          height: "100%", 
-          backgroundColor: 'rgba(211, 211, 211, 0.5)', // lightGray를 rgba로 변경
-          backdropFilter: 'blur(10px)', // 블러 효과 추가
-          WebkitBackdropFilter: 'blur(10px)', // Safari 지원을 위한 prefix
-        }}>
+      <AppBar
+        position="static"
+        sx={{
+          height: "100%",
+          backgroundColor: "rgba(211, 211, 211, 0.5)", // lightGray를 rgba로 변경
+          backdropFilter: "blur(10px)", // 블러 효과 추가
+          WebkitBackdropFilter: "blur(10px)", // Safari 지원을 위한 prefix
+          borderRadius: 3,
+        }}
+      >
         <Toolbar
           sx={{
             height: "100%",
