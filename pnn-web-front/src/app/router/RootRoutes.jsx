@@ -14,7 +14,6 @@ import ProtectedRoute from "./ProtectedRoute";
 import Test2 from "../../pages/test2";
 import { CommunityPage } from "../../pages/community/CommunityPage";
 
-
 export const RootRoutes = () => {
   const user = useUserStore((state) => state.user);
   console.log(user);
@@ -41,9 +40,10 @@ export const RootRoutes = () => {
         element={<Layout mainContent={<ShareUpload />} />}
       />
       <Route
-        path="/share/detail"
+        path="/share/detail/:id"
         element={<Layout mainContent={<ShareDetail />} />}
       />
+
       <Route
         path="/auth/regist"
         element={<Layout mainContent={<UserRegistPage />} />}
@@ -76,10 +76,7 @@ export const RootRoutes = () => {
         path="/admin/account"
         element={<Layout mainContent={<AdminPage />} />}
       />
-      <Route
-        path="/test2"
-        element={<Layout mainContent={<Test2 />} />}
-      />
+      <Route path="/test2" element={<Layout mainContent={<Test2 />} />} />
     </Routes>
   );
 };
