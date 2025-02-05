@@ -1,3 +1,4 @@
+// Header.jsx
 import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -7,26 +8,22 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../../../assets/images/pnnlogo.png";
-import { AccountCircle } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { Badge } from "@mui/material";
 import DropPofileList from "./components/DropPofileList";
+import ModalMenu from "./ModalMenu/ModalMenu";
 
 export default function Header() {
   const [menuBarState, setMenuBarState] = useState(false);
 
-  const onClickMenuButton = (menuBarState, setMenuBarState) => {
+  const onClickMenuButton = () => {
     setMenuBarState(!menuBarState);
   };
-  const onClickUserButton = () => {};
-  const UserProfile = () => {
-    return <div>hi</div>;
-  };
+
   return (
     <Box
       sx={{
         width: "101%",
-        height: "5vh",
+        height: { xs: "7dvh", sm: "5vh" },
         position: "fixed",
         top: "0",
         zIndex: "9999",
@@ -36,9 +33,9 @@ export default function Header() {
         position="static" 
         sx={{ 
           height: "100%", 
-          backgroundColor: 'rgba(211, 211, 211, 0.5)', // lightGray를 rgba로 변경
-          backdropFilter: 'blur(10px)', // 블러 효과 추가
-          WebkitBackdropFilter: 'blur(10px)', // Safari 지원을 위한 prefix
+          backgroundColor: 'rgba(211, 211, 211, 0.5)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
         }}>
         <Toolbar
           sx={{
@@ -48,7 +45,11 @@ export default function Header() {
             justifyContent: "space-between",
           }}
         >
-          <Typography variant="h6" component="div">
+          {/* 로고 (항상 왼쪽) */}
+          <Typography 
+            variant="h6" 
+            component="div"
+          >
             <Link to="/">
               <Box
                 component="img"
@@ -66,52 +67,55 @@ export default function Header() {
             </Link>
           </Typography>
 
-          {/* 중앙 메뉴 아이템들 */}
+          {/* 중앙 메뉴 아이템들 (데스크톱에서만 표시) */}
           <Box
             sx={{
               width: "60%",
-              display: "flex",
+              display: { xs: 'none', md: 'flex' },
               alignItems: "center",
               justifyContent: "space-around",
               gap: "10rem",
             }}
           >
-            <Link
-              to="/aboutus"
-              style={{ textDecoration: "none", color: "black" }}
-            >
+            <Link to="/aboutus" style={{ textDecoration: "none", color: "black" }}>
               <Button color="inherit">About Us</Button>
             </Link>
-            <Link
-              to="/share"
-              style={{ textDecoration: "none", color: "black" }}
-            >
+            <Link to="/share" style={{ textDecoration: "none", color: "black" }}>
               <Button color="inherit">프로젝트</Button>
             </Link>
-            <Link
-              to="/aboutus"
-              style={{ textDecoration: "none", color: "black" }}
-            >
+            <Link to="/aboutus" style={{ textDecoration: "none", color: "black" }}>
               <Button color="inherit">팀원소개</Button>
             </Link>
-            <Link
-              to="/community"
-              style={{ textDecoration: "none", color: "black" }}
-            >
+            <Link to="/community" style={{ textDecoration: "none", color: "black" }}>
               <Button color="inherit">커뮤니티</Button>
             </Link>
-            <Link
-              to="/aboutus"
-              style={{ textDecoration: "none", color: "black" }}
-            >
+            <Link to="/aboutus" style={{ textDecoration: "none", color: "black" }}>
               <Button color="inherit">지원하기</Button>
             </Link>
           </Box>
 
-          {/* 우측 로그인/가입 버튼 */}
-          <DropPofileList />
+          <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center',
+          }}>
+            <DropPofileList />
+            <IconButton
+              size="large"
+              edge="end"
+              color="inherit"
+              aria-label="menu"
+              onClick={onClickMenuButton}
+              sx={{ 
+                display: { xs: 'flex', md: 'none' }
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
+
+      {menuBarState && <ModalMenu onClose={() => setMenuBarState(false)} />}
     </Box>
   );
 }
