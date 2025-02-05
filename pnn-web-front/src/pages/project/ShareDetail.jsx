@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import axios from "axios";
 import testimage from "./../../assets/images/test.png";
 import PeopleIcon from "@mui/icons-material/People";
 import CategoryIcon from "@mui/icons-material/Category";
-import BuildIcon from "@mui/icons-material/Build"; // 프로젝트 유형 아이콘 변경
+import BuildIcon from "@mui/icons-material/Build";
 
 const Container = styled.div`
   display: flex;
@@ -10,6 +11,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   background-color: #f3f4f6;
+  padding-bottom: 50px;
 
   @media (max-width: 768px) {
     padding: 20px;

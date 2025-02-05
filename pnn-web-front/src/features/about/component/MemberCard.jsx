@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { MdDesignServices } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
+import pnnlogo from "../../../assets/images/pnnlogo.png";
 
 const Container = styled.div`
-  width: 300px;
+  width: auto; // 이걸 auto 로 안주니까 멤버 프레임에 딱 안맞고 삐져나감
   height: 500px;
   display: flex;
   flex-direction: column;
@@ -12,10 +13,12 @@ const Container = styled.div`
   color: black;
   padding: 20px;
   transition: transform 0.3s ease;
+  // border: 1px solid #eee;
   
-  &:hover {
-    transform: translateY(-10px);
-  }
+  ${props => props.hover && `
+    &:hover {
+      transform: translateY(-10px);
+  `}
 `;
 
 const ImgFrame = styled.div`
@@ -26,9 +29,11 @@ const ImgFrame = styled.div`
   border-radius: 50%;
   overflow: hidden;
   
-  &:hover {
-    transform: scale(1.05);
-  }
+  ${props => props.hover && `
+    &:hover {
+      transform: scale(1.05);
+    }
+  `}
 
   img {
     width: 100%;
@@ -82,19 +87,20 @@ const SocialIcon = styled.a`
   }
 `;
 
-const MemberCard = ({ name, explain, img, social }) => {
+const MemberCard = ({ name, explain, img, email, github, enableHover = true }) => {
   return (
     <Container>
-      <ImgFrame>
-        <img src={img} alt={name} />
+      <ImgFrame hover={enableHover}>
+        <img src={img || pnnlogo} alt={name} />
       </ImgFrame>
       <Name>{name}</Name>
       <Description>{explain}</Description>
+      <Description>{email}</Description>
       <IconBox>
         <SocialIcon>
           <MdDesignServices />
         </SocialIcon>
-        <SocialIcon href="https://github.com/seunghun-5945" target="github" style={{backgroundColor:"black"}}>
+        <SocialIcon href={github} target="github" style={{backgroundColor:"black"}}>
           <FaGithub />
         </SocialIcon>
       </IconBox>

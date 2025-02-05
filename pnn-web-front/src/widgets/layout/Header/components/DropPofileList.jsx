@@ -67,7 +67,6 @@ export default function DropPofileList() {
     setAnchorEl(null);
   };
   const user = useUserStore((state) => state.user);
-  console.log("legn", user?.length);
   const onClickAuthButton = () => {
     if (user?.email) {
       userLogout();
