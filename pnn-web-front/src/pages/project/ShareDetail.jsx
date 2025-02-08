@@ -1,9 +1,14 @@
 import styled from "styled-components";
-import axios from "axios";
-import testimage from "./../../assets/images/test.png";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { projectApi } from "../../shared/api/projectApi";
 import PeopleIcon from "@mui/icons-material/People";
 import CategoryIcon from "@mui/icons-material/Category";
 import BuildIcon from "@mui/icons-material/Build";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import { fetchGitHubReadme } from "../../shared/api/githubApi";
 
 const Container = styled.div`
   display: flex;
@@ -156,41 +161,66 @@ const ExplanationFrame = styled.div`
 `;
 
 export const ShareDetail = () => {
+  const [projectDetail, setProjectDetail] = useState({});
+  const [readmeContent, setReadmeContent] = useState("");
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchProjectDetail = async () => {
+      try {
+        const detail = await projectApi.getProjectDetail(id);
+        setProjectDetail(detail);
+
+        if (detail.link) {
+          const readme = await fetchGitHubReadme(detail.link);
+          setReadmeContent(readme);
+        }
+      } catch (error) {
+        console.error("Error fetching project detail:", error);
+      }
+    };
+
+    if (id) {
+      fetchProjectDetail();
+    }
+  }, [id]);
+
   return (
     <Container>
-      <ImageFrame src={testimage} alt="project image" />
+      <ImageFrame src={projectDetail.imageUrl} alt="project image" />
 
       <TitleFrame>
-        <h1>Unknown Entity</h1>
-        <h2>유니티로 즐기는 3D 공포게임</h2>
+        <h1>{projectDetail.title}</h1>
+        <h2>{projectDetail.subTitle}</h2>
       </TitleFrame>
 
       <InfoSection>
         <Card>
           <PeopleIcon className="icon" />
-          <h3>프로젝트 멤버</h3>
-          <p>박준수, 이승훈, 현지훈</p>
+          <h3>프로젝트 형태</h3>
+          <p>{projectDetail.category}</p>
         </Card>
 
         <Card>
           <CategoryIcon className="icon" />
-          <h3>프로젝트 형태</h3>
-          <p>게임</p>
+          <h3>프로젝트 유형</h3>
+          <p>{projectDetail.tag}</p>
         </Card>
 
         <Card>
           <BuildIcon className="icon" />
-          <h3>프로젝트 유형</h3>
-          <p>캡스톤 디자인</p>
+          <h3>사용 기술</h3>
+          <p>{projectDetail.type}</p>
         </Card>
       </InfoSection>
 
       <ExplanationFrame>
         <h2>프로젝트 설명</h2>
-        <p>
-          이 프레임은 ReadMe 내용이 표시될 영역입니다. 프로젝트에 대한 상세한
-          정보와 실행 방법을 여기에 작성할 수 있습니다.
-        </p>
+        {readmeContent && (
+          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+            {readmeContent}
+          </ReactMarkdown>
+        )}
       </ExplanationFrame>
     </Container>
   );

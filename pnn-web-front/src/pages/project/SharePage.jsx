@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { projectApi } from "../../shared/api/projectApi";
 import Cookies from "js-cookie";
 import CardFrame from "../../features/Card/CardFrame";
 import { Filter } from "../../features/platform/components/Filter";
@@ -78,33 +78,14 @@ export const SharePage = () => {
 
   useEffect(() => {
     const token = Cookies.get("user");
-    if (token) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    setIsLogin(!!token);
   }, []);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.post(
-          "https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/project/get",
-          {}
-        );
-
-        if (response.status === 200) {
-          const projectData = response.data.map((project) => ({
-            id: project.id,
-            title: project.title,
-            subTitle: project.sub_title,
-            category: project.project_category,
-            type: project.project_type,
-            imageUrl: project.image,
-          }));
-
-          setProjects(projectData);
-        }
+        const projectData = await projectApi.getProjects();
+        setProjects(projectData);
       } catch (error) {
         console.error("프로젝트 데이터를 가져오는 중 오류 발생:", error);
       }

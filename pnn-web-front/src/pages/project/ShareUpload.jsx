@@ -214,6 +214,7 @@ export const ShareUpload = () => {
   const [subtitle, setSubtitle] = useState("");
   const [platform, setPlatform] = useState("");
   const [projectType, setProjectType] = useState("");
+  const [projectTag, setProjectTag] = useState("");
   const [image, setImage] = useState(null);
   const [githubUrl, setGithubUrl] = useState("");
   const [readmeContent, setReadmeContent] = useState("");
@@ -254,6 +255,10 @@ export const ShareUpload = () => {
     setProjectType(e.target.value);
   };
 
+  const handleProjectTagChange = (e) => {
+    setProjectTag(e.target.value);
+  };
+
   const fetchReadme = async (url) => {
     setError(null);
     setReadmeContent("");
@@ -286,6 +291,7 @@ export const ShareUpload = () => {
           memberid: memberId,
           title: title,
           sub_title: subtitle,
+          project_tag: projectTag,
           project_type: projectType,
           project_category: platform,
           link: githubUrl,
@@ -297,6 +303,7 @@ export const ShareUpload = () => {
         alert("프로젝트가 성공적으로 업로드되었습니다!");
         setTitle("");
         setSubtitle("");
+        setProjectTag("");
         setPlatform("");
         setProjectType("");
         setImage(null);
@@ -322,6 +329,7 @@ export const ShareUpload = () => {
     !githubUrl ||
     isUploading;
 
+  const tagOptions = ["캡스톤 디자인", "졸업 작품", "학술제", "기타 프로젝트"]
   const platformOptions = ["Web", "Mobile", "AI", "Game"];
   const frameworkOptions = [
     "Java Script",
@@ -375,6 +383,23 @@ export const ShareUpload = () => {
               <CharacterCounter isOverLimit={subtitle.length >= SUBTITLE_LIMIT}>
                 {subtitle.length}/{SUBTITLE_LIMIT}자
               </CharacterCounter>
+            </SubInputFrame>
+          </WrapperFrame>
+        </InputContainer>
+
+        <SubTitleFrame>프로젝트 유형</SubTitleFrame>
+        <InputContainer>
+          <WrapperFrame>
+            <InputFrame>유형</InputFrame>
+            <SubInputFrame>
+              <TagListFrame>
+                <Dropdown
+                  label="유형 선택"
+                  value={projectTag}
+                  options={tagOptions}
+                  onChange={handleProjectTagChange}
+                />                
+              </TagListFrame>
             </SubInputFrame>
           </WrapperFrame>
         </InputContainer>
