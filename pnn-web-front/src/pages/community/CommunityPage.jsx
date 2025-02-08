@@ -7,6 +7,7 @@ import { FloatingMenuBar } from "../../features/community/FloatingMenuBar";
 import { CommunityFilter } from "../../features/community/CommunityFilter";
 import { UploadButton } from "../../features/platform/UploadButton";
 import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
+import { useCategoryFilter } from "../../shared/hooks/useCategoryFilter";
 
 const Container = styled.div`
   display: flex;
@@ -55,9 +56,19 @@ const TitleImg = styled.img`
 
 export const CommunityPage = () => {
   const user = useUserStore((state) => state.user);
-  useEffect(() => {
-    console.log(user);
-  }, []);
+  useEffect(() => {}, []);
+
+  const {
+    projets,
+    searchText,
+    categoryList,
+    selectedPlatform,
+    selectedItemList,
+    onChangeSearchText,
+    addSelectedItemList,
+    removeSelectedItemList,
+    handleSelectedPlatform,
+  } = useCategoryFilter();
 
   return (
     <Container>
@@ -73,11 +84,20 @@ export const CommunityPage = () => {
         <TitleImg src="src/assets/images/community_test.png" />
       </BoardTitleContainer>
       <FilterContainer>
-        <CommunityFilter />
+        <CommunityFilter
+          searchText={searchText}
+          categoryList={categoryList}
+          selectedPlatform={selectedPlatform}
+          selectedItemList={selectedItemList}
+          onChangeSearchText={onChangeSearchText}
+          addSelectedItemList={addSelectedItemList}
+          removeSelectedItemList={removeSelectedItemList}
+          handleSelectedPlatform={handleSelectedPlatform}
+        />
       </FilterContainer>
       <BoardContainer>
         <div className="grid-container">
-          {boardData.map((v) => (
+          {projets.map((v) => (
             <CardBoardItem item={v} />
           ))}
         </div>

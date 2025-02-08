@@ -40,6 +40,8 @@ export const CardBoardItem = ({ item }) => {
       </CardContainer>
       <CardContent>
         <h3>{item.title}</h3>
+        <div>{item.category}</div>
+        <div>{item.type}</div>
       </CardContent>
     </Container>
   );

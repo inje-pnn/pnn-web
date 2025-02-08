@@ -1,10 +1,20 @@
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import { app } from "../../firebase";
 
 const storage = getStorage(app);
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB 제한
-const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-const ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "gif"]; // 허용 확장자
+const ALLOWED_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+];
+const ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png", "webp"]; // 허용 확장자
 
 export const uploadImageToFirebase = async (file, folder = "uploads") => {
   if (!file || !file.name) {
@@ -13,7 +23,12 @@ export const uploadImageToFirebase = async (file, folder = "uploads") => {
 
   // ✅ 파일 크기 검사
   if (file.size > MAX_FILE_SIZE) {
-    throw new Error(`파일 크기는 최대 5MB까지 업로드할 수 있습니다. (현재: ${(file.size / (1024 * 1024)).toFixed(2)}MB)`);
+    throw new Error(
+      `파일 크기는 최대 5MB까지 업로드할 수 있습니다. (현재: ${(
+        file.size /
+        (1024 * 1024)
+      ).toFixed(2)}MB)`
+    );
   }
 
   // ✅ 파일 확장자 및 MIME 타입 검사
@@ -28,8 +43,11 @@ export const uploadImageToFirebase = async (file, folder = "uploads") => {
     else if (fileType === "image/gif") fileExtension = "gif";
   }
 
-  if (!ALLOWED_MIME_TYPES.includes(fileType) && !ALLOWED_EXTENSIONS.includes(fileExtension)) {
-    throw new Error("지원되지 않는 파일 형식입니다. (허용: JPG, PNG, WEBP, GIF)");
+  if (
+    !ALLOWED_MIME_TYPES.includes(fileType) &&
+    !ALLOWED_EXTENSIONS.includes(fileExtension)
+  ) {
+    throw new Error("지원되지 않는 파일 형식입니다. (허용: JPG, PNG, WEBP)");
   }
 
   return new Promise((resolve, reject) => {
@@ -43,8 +61,9 @@ export const uploadImageToFirebase = async (file, folder = "uploads") => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
         // ✅ 10% 단위로만 로그 출력
         if (progress - lastLoggedProgress >= 10 || progress === 100) {
           console.log(`업로드 진행률: ${progress.toFixed(2)}%`);
@@ -63,7 +82,9 @@ export const uploadImageToFirebase = async (file, folder = "uploads") => {
           resolve(downloadURL);
         } catch (error) {
           console.error("URL 가져오기 실패:", error);
-          reject(new Error("업로드는 완료되었지만 URL을 가져오는 데 실패했습니다."));
+          reject(
+            new Error("업로드는 완료되었지만 URL을 가져오는 데 실패했습니다.")
+          );
         }
       }
     );
