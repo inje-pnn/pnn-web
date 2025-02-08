@@ -18,6 +18,7 @@ import styled from "styled-components";
 import { Filter } from "../../features/platform/components/Filter";
 import { useCategoryFilter } from "../../shared/hooks/useCategoryFilter";
 import { getImage } from "../../shared/util/image";
+import { boardData } from "../../shared/data/boardData";
 
 const Container = styled.div`
   width: 100%;
@@ -68,20 +69,18 @@ const FliterChipContainer = styled.div`
   height: 40%;
 `;
 const FramworkIcon = styled.img``;
-export const CommunityFilter = () => {
+export const CommunityFilter = ({
+  searchText,
+  categoryList,
+  selectedPlatform,
+  selectedItemList,
+  onChangeSearchText,
+  addSelectedItemList,
+  removeSelectedItemList,
+  handleSelectedPlatform,
+}) => {
   const [isSearchBoxOpen, setIsSearchBoxOpen] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
-
-  const {
-    searchText,
-    categoryList,
-    selectedPlatform,
-    selectedItemList,
-    onChangeSearchText,
-    addSelectedItemList,
-    removeSelectedItemList,
-    handleSelectedPlatform,
-  } = useCategoryFilter();
 
   const buttonRef = useRef(null);
   const listRef = useRef(null);

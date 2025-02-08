@@ -17,6 +17,7 @@ import { CommunityPage } from "../../pages/community/CommunityPage";
 export const RootRoutes = () => {
   const user = useUserStore((state) => state.user);
   console.log(user);
+
   return (
     <Routes>
       <Route path="/" element={<Layout mainContent={<MainPage />} />} />
