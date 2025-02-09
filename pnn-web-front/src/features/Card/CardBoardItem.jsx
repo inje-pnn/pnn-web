@@ -32,7 +32,6 @@ const CardContent = styled.div`
   border-bottom-right-radius: 10px;
 `;
 export const CardBoardItem = ({ item }) => {
-  console.log(item);
   return (
     <Container className="card-item">
       <CardContainer>

@@ -70,6 +70,7 @@ const FliterChipContainer = styled.div`
 `;
 const FramworkIcon = styled.img``;
 export const CommunityFilter = ({
+  title,
   searchText,
   categoryList,
   selectedPlatform,
@@ -135,7 +136,7 @@ export const CommunityFilter = ({
   return (
     <Container>
       <TitleContainer>
-        <h1>스터디</h1>
+        <h1>{title}</h1>
         <Filter
           selectedPlatform={selectedPlatform}
           handleSelectedPlatform={handleSelectedPlatform}
@@ -154,6 +155,7 @@ export const CommunityFilter = ({
               label={v}
               color={v !== "All" ? image.color : ""}
               onDelete={() => onClickDeleteChipItem(v, i)}
+              key={`${v}`}
             />
           );
         })}
@@ -182,7 +184,7 @@ export const CommunityFilter = ({
             </SearchBoxHeader>
             <List onClick={onClickListItem}>
               {categoryList.map((v) => (
-                <ListItem disablePadding>
+                <ListItem disablePadding key={`${v.title}`}>
                   <ListItemButton>
                     <ListItemText className="list-text" primary={v.title} />
                   </ListItemButton>

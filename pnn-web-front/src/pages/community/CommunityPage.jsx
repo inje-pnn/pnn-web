@@ -56,7 +56,6 @@ const TitleImg = styled.img`
 
 export const CommunityPage = () => {
   const user = useUserStore((state) => state.user);
-  useEffect(() => {}, []);
 
   const {
     projets,
@@ -68,7 +67,7 @@ export const CommunityPage = () => {
     addSelectedItemList,
     removeSelectedItemList,
     handleSelectedPlatform,
-  } = useCategoryFilter();
+  } = useCategoryFilter(boardData);
 
   return (
     <Container>
@@ -85,6 +84,7 @@ export const CommunityPage = () => {
       </BoardTitleContainer>
       <FilterContainer>
         <CommunityFilter
+          title={"스터디"}
           searchText={searchText}
           categoryList={categoryList}
           selectedPlatform={selectedPlatform}
@@ -98,7 +98,7 @@ export const CommunityPage = () => {
       <BoardContainer>
         <div className="grid-container">
           {projets.map((v) => (
-            <CardBoardItem item={v} />
+            <CardBoardItem item={v} key={`${v.id}card`} />
           ))}
         </div>
       </BoardContainer>
