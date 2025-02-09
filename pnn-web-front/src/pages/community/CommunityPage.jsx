@@ -56,8 +56,6 @@ const TitleImg = styled.img`
 
 export const CommunityPage = () => {
   const user = useUserStore((state) => state.user);
-  useEffect(() => {}, []);
-
   const {
     projets,
     searchText,
@@ -85,6 +83,7 @@ export const CommunityPage = () => {
       </BoardTitleContainer>
       <FilterContainer>
         <CommunityFilter
+          title={"스터디"}
           searchText={searchText}
           categoryList={categoryList}
           selectedPlatform={selectedPlatform}

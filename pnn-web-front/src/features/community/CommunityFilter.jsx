@@ -70,6 +70,7 @@ const FliterChipContainer = styled.div`
 `;
 const FramworkIcon = styled.img``;
 export const CommunityFilter = ({
+  title,
   searchText,
   categoryList,
   selectedPlatform,
@@ -135,7 +136,7 @@ export const CommunityFilter = ({
   return (
     <Container>
       <TitleContainer>
-        <h1>스터디</h1>
+        <h1>{title}</h1>
         <Filter
           selectedPlatform={selectedPlatform}
           handleSelectedPlatform={handleSelectedPlatform}
