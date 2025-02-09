@@ -1,49 +1,20 @@
 import { useEffect, useState } from "react";
 import { categoryData } from "../data/categoryData";
-import { boardData } from "../data/boardData";
 
-export const useCategoryFilter = () => {
-  const [projets, setProjects] = useState([]);
+export const useCategoryFilter = (data) => {
+  const originalData = data;
+  const [projets, setProjects] = useState(originalData);
   const [selectedPlatform, setSelectedPlatform] = useState("ALL");
   const [searchText, setSearchText] = useState("");
   const [selectedItemList, setSelectedItemList] = useState(["All"]);
   const [categoryList, setCategoryList] = useState(categoryData.framwork);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await axios.post(
-          "https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/project/get",
-          {}
-        );
-
-        if (response.status === 200) {
-          const projectData = response.data.map((project) => ({
-            id: project.id,
-            title: project.title,
-            subTitle: project.sub_title,
-            category: project.project_category,
-            type: project.project_type,
-            imageUrl: project.image,
-          }));
-
-          setProjects(projectData);
-        }
-      } catch (error) {
-        console.error("프로젝트 데이터를 가져오는 중 오류 발생:", error);
-      }
-    };
-
-    // fetchProjects();
-    setProjects(boardData);
-  }, []);
-
-  useEffect(() => {
     let filteringData;
     if (selectedPlatform === "ALL") {
-      filteringData = boardData;
+      filteringData = originalData;
     } else {
-      filteringData = boardData.filter(
+      filteringData = originalData.filter(
         (data) => data.category === selectedPlatform
       );
     }

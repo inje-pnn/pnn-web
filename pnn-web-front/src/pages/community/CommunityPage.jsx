@@ -56,6 +56,7 @@ const TitleImg = styled.img`
 
 export const CommunityPage = () => {
   const user = useUserStore((state) => state.user);
+
   const {
     projets,
     searchText,
@@ -66,7 +67,7 @@ export const CommunityPage = () => {
     addSelectedItemList,
     removeSelectedItemList,
     handleSelectedPlatform,
-  } = useCategoryFilter();
+  } = useCategoryFilter(boardData);
 
   return (
     <Container>
@@ -97,7 +98,7 @@ export const CommunityPage = () => {
       <BoardContainer>
         <div className="grid-container">
           {projets.map((v) => (
-            <CardBoardItem item={v} />
+            <CardBoardItem item={v} key={`${v.id}card`} />
           ))}
         </div>
       </BoardContainer>

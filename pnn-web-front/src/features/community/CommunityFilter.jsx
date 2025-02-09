@@ -155,6 +155,7 @@ export const CommunityFilter = ({
               label={v}
               color={v !== "All" ? image.color : ""}
               onDelete={() => onClickDeleteChipItem(v, i)}
+              key={`${v}`}
             />
           );
         })}
@@ -183,7 +184,7 @@ export const CommunityFilter = ({
             </SearchBoxHeader>
             <List onClick={onClickListItem}>
               {categoryList.map((v) => (
-                <ListItem disablePadding>
+                <ListItem disablePadding key={`${v.title}`}>
                   <ListItemButton>
                     <ListItemText className="list-text" primary={v.title} />
                   </ListItemButton>

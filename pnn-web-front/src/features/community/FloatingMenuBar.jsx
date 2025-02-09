@@ -33,7 +33,9 @@ export const FloatingMenuBar = () => {
     <Container>
       <p>커뮤니티</p>
       {menuList.map((v) => (
-        <div onClick={() => onClickMenuItem(v)}>{v.title}</div>
+        <div key={`${v.id}menu`} onClick={() => onClickMenuItem(v)}>
+          {v.title}
+        </div>
       ))}
     </Container>
   );
