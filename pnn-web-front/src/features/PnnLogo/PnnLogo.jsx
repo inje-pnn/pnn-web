@@ -2,18 +2,23 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 50%;
-  height: 20%;
-  border: 1px solid black;
+  padding: 20px;
+  z-index: 1000;
+  display: flex; // 추가
+  justify-content: center; // 추가
+  align-items: center; // 추가
+  color: white;
+`;
 
-  @media (min-width: 768px) {
-
-  }
+const LogoText = styled.h1`
+  margin: 0; 
+  font-size: 0px; 
 `;
 
 const PnnLogo = () => {
   return (
     <Container>
+      <LogoText>Pnn</LogoText>
     </Container>
   );
 };

@@ -1,11 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { categoryData } from "../data/categoryData";
 
-export const useCategoryFilter = () => {
+export const useCategoryFilter = (data) => {
+  const originalData = data;
+  const [projets, setProjects] = useState(originalData);
   const [selectedPlatform, setSelectedPlatform] = useState("ALL");
   const [searchText, setSearchText] = useState("");
   const [selectedItemList, setSelectedItemList] = useState(["All"]);
   const [categoryList, setCategoryList] = useState(categoryData.framwork);
+
+  useEffect(() => {
+    let filteringData;
+    if (selectedPlatform === "ALL") {
+      filteringData = originalData;
+    } else {
+      filteringData = originalData.filter(
+        (data) => data.category === selectedPlatform
+      );
+    }
+
+    if (selectedItemList && selectedItemList[0] !== "All") {
+      filteringData = filteringData.filter((data) =>
+        data.type.some((type) => selectedItemList.includes(type))
+      );
+    }
+    setProjects(filteringData);
+  }, [selectedItemList, selectedPlatform]);
+
   const handleSetCategorys = () => {};
 
   const addSelectedItemList = (data) => {
@@ -45,12 +66,14 @@ export const useCategoryFilter = () => {
   const handleSelectedPlatform = (v) => {
     setSelectedPlatform(v);
   };
+
   //   프로젝트 필터 함수 들어와야합니다.
   return {
     searchText,
     selectedItemList,
     selectedPlatform,
     categoryList,
+    projets,
     handleSetCategorys,
     onChangeSearchText,
     addSelectedItemList,

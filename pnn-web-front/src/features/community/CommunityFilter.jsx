@@ -18,6 +18,7 @@ import styled from "styled-components";
 import { Filter } from "../../features/platform/components/Filter";
 import { useCategoryFilter } from "../../shared/hooks/useCategoryFilter";
 import { getImage } from "../../shared/util/image";
+import { boardData } from "../../shared/data/boardData";
 
 const Container = styled.div`
   width: 100%;
@@ -68,20 +69,19 @@ const FliterChipContainer = styled.div`
   height: 40%;
 `;
 const FramworkIcon = styled.img``;
-export const CommunityFilter = () => {
+export const CommunityFilter = ({
+  title,
+  searchText,
+  categoryList,
+  selectedPlatform,
+  selectedItemList,
+  onChangeSearchText,
+  addSelectedItemList,
+  removeSelectedItemList,
+  handleSelectedPlatform,
+}) => {
   const [isSearchBoxOpen, setIsSearchBoxOpen] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
-
-  const {
-    searchText,
-    categoryList,
-    selectedPlatform,
-    selectedItemList,
-    onChangeSearchText,
-    addSelectedItemList,
-    removeSelectedItemList,
-    handleSelectedPlatform,
-  } = useCategoryFilter();
 
   const buttonRef = useRef(null);
   const listRef = useRef(null);
@@ -136,7 +136,7 @@ export const CommunityFilter = () => {
   return (
     <Container>
       <TitleContainer>
-        <h1>스터디</h1>
+        <h1>{title}</h1>
         <Filter
           selectedPlatform={selectedPlatform}
           handleSelectedPlatform={handleSelectedPlatform}
@@ -155,6 +155,7 @@ export const CommunityFilter = () => {
               label={v}
               color={v !== "All" ? image.color : ""}
               onDelete={() => onClickDeleteChipItem(v, i)}
+              key={`${v}`}
             />
           );
         })}
@@ -183,7 +184,7 @@ export const CommunityFilter = () => {
             </SearchBoxHeader>
             <List onClick={onClickListItem}>
               {categoryList.map((v) => (
-                <ListItem disablePadding>
+                <ListItem disablePadding key={`${v.title}`}>
                   <ListItemButton>
                     <ListItemText className="list-text" primary={v.title} />
                   </ListItemButton>
