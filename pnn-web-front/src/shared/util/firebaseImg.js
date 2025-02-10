@@ -3,8 +3,8 @@ import { app } from "../../firebase";
 
 const storage = getStorage(app);
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB 제한
-const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-const ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "gif"]; // 허용 확장자
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png", "webp"]; // 허용 확장자
 
 export const uploadImageToFirebase = async (file, folder = "uploads") => {
   if (!file || !file.name) {

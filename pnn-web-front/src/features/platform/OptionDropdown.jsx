@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem, Chip, Box } from "@mui/material";
 import styled from "styled-components";
 
 const StyledFormControl = styled(FormControl)`
@@ -14,7 +14,7 @@ const StyledFormControl = styled(FormControl)`
     padding-left: 20px;
     padding-right: 40px;
     font-size: 14px;
-    height: 50px;
+    min-height: 50px;
   }
 
   .MuiOutlinedInput-notchedOutline {
@@ -30,28 +30,47 @@ const StyledFormControl = styled(FormControl)`
   }
 `;
 
+const StyledChip = styled(Chip)`
+  margin: 2px;
+  background-color: #f5f5f5;
+  
+  &:hover {
+    background-color: #e0e0e0;
+  }
+`;
+
 const menuProps = {
   PaperProps: {
     style: {
-      maxHeight: 48 * 4.5 + 8, // 드롭다운의 최대 높이 조정
-      overflowY: "auto", // 드롭다운 스크롤 설정
+      maxHeight: 48 * 4.5 + 8,
+      overflowY: "auto",
     },
   },
-  disableScrollLock: true, // body 스크롤 잠금 비활성화
+  disableScrollLock: true,
 };
 
-export const Dropdown = ({ label, options, onChange }) => (
+export const Dropdown = ({ label, options, value, onChange, multiple = false }) => (
   <StyledFormControl variant="outlined">
     <InputLabel>{label}</InputLabel>
     <Select
-      defaultValue=""
+      multiple={multiple}
+      value={multiple ? (Array.isArray(value) ? value : []) : value}
       onChange={onChange}
       label={label}
-      MenuProps={menuProps} // MenuProps 적용
+      MenuProps={menuProps}
+      renderValue={multiple ? (selected) => (
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+          {selected.map((value) => (
+            <StyledChip key={value} label={value} />
+          ))}
+        </Box>
+      ) : undefined}
     >
-      <MenuItem value="" disabled>
-        선택
-      </MenuItem>
+      {!multiple && (
+        <MenuItem value="" disabled>
+          선택
+        </MenuItem>
+      )}
       {options.map((option, index) => (
         <MenuItem key={index} value={option}>
           {option}

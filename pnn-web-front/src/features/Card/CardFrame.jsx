@@ -84,7 +84,7 @@ const CardFrame = ({ project }) => {
 
         <TagContainer>
           <Tag>#{project.category}</Tag>
-          <Tag>#{project.type}</Tag>
+          <Tag>#{project.tag}</Tag>
         </TagContainer>
       </ExplainFrame>
     </CardWrapper>
