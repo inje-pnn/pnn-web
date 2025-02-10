@@ -102,7 +102,7 @@ export const SharePage = () => {
     <Container>
       <Frame>
         <HeaderFrame>
-          <h1>P&N에서 진행된 프로젝트 둘러보기</h1>
+          <h1>P&N에서 진행된 프로젝트 둘러보기.</h1>
         </HeaderFrame>
 
         <Filter
