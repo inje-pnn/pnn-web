@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { MdDesignServices } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
+import pnnlogo from "../../../assets/images/pnnlogo.png";
 
 const Container = styled.div`
   width: 300px;
@@ -82,19 +83,20 @@ const SocialIcon = styled.a`
   }
 `;
 
-const MemberCard = ({ name, explain, img, social }) => {
+const MemberCard = ({ name, explain, img, email, github }) => {
   return (
     <Container>
       <ImgFrame>
-        <img src={img} alt={name} />
+        <img src={img || pnnlogo} alt={name} />
       </ImgFrame>
       <Name>{name}</Name>
       <Description>{explain}</Description>
+      <Description>{email}</Description>
       <IconBox>
         <SocialIcon>
           <MdDesignServices />
         </SocialIcon>
-        <SocialIcon href="https://github.com/seunghun-5945" target="github" style={{backgroundColor:"black"}}>
+        <SocialIcon href={github} target="github" style={{backgroundColor:"black"}}>
           <FaGithub />
         </SocialIcon>
       </IconBox>

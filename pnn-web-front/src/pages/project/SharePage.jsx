@@ -1,29 +1,47 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { projectApi } from "../../shared/api/projectApi";
+import Cookies from "js-cookie";
 import CardFrame from "../../features/Card/CardFrame";
-import Filter from "../../features/filter/Filter";
+import { Filter } from "../../features/platform/components/Filter";
 import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
+import { UploadButton } from "../../features/platform/UploadButton";
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   height: auto;
-  min-height: 100%;
   padding: 16px;
-  background-color: lightgreen;
+  margin-top: 50px;
+  background-color: #f2f5f8;
+
+  @media (max-width: 768px) {
+    margin-top: 20px;
+    padding: 8px;
+  }
 `;
 
 const Frame = styled.div`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   width: 1238px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const HeaderFrame = styled.div`
   width: 100%;
   height: 70px;
-  color: white;
+  display: flex;
+
+  @media (max-width: 768px) {
+    height: auto;
+    justify-content: center;
+    text-align: center;
+  }
 `;
 
 const ProjectNumber = styled.div`
@@ -33,70 +51,50 @@ const ProjectNumber = styled.div`
   flex-direction: column;
   align-items: flex-end;
   color: #bebec1;
+
+  @media (max-width: 768px) {
+    align-items: center;
+    font-size: 14px;
+  }
 `;
 
 const CardContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
-  gap: 50px 42px;
+  gap: 50px 60px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 50px 30px;
+    margin: 20px 0 50px 0px;
+  }
 `;
 
 export const SharePage = () => {
-  const [selectedPlatform, setSelectedPlatform] = useState("전체");
+  const [selectedPlatform, setSelectedPlatform] = useState("ALL");
   const [isLogin, setIsLogin] = useState(false);
-
-  const navigate = useNavigate();
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    const token = Cookies.get("user");
+    setIsLogin(!!token);
+    console.log();
   }, []);
 
-  const handleUploadClick = () => {
-    navigate("/share/upload");
-  };
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const projectData = await projectApi.getProjects();
+        setProjects(projectData);
+      } catch {}
+    };
 
-  // 임시 더미 데이터
-  const projects = [
-    {
-      id: 1,
-      title: "Project 1",
-      platform: "WEB",
-      description: "간단한 프로젝트 설명 1 (서브 타이틀)",
-    },
-    {
-      id: 2,
-      title: "Project 2",
-      platform: "APP",
-      description: "간단한 프로젝트 설명 2 (서브 타이틀)",
-    },
-    {
-      id: 3,
-      title: "Project 3",
-      platform: "WEB",
-      description: "간단한 프로젝트 설명 3 (서브 타이틀)",
-    },
-    {
-      id: 4,
-      title: "Project 4",
-      platform: "GAME",
-      description: "간단한 프로젝트 설명 4 (서브 타이틀)",
-    },
-    {
-      id: 5,
-      title: "Project 5",
-      platform: "AI",
-      description: "간단한 프로젝트 설명 5 (서브 타이틀)",
-    },
-  ];
+    fetchProjects();
+  }, []);
 
   const filteredProjects =
-    selectedPlatform === "전체"
+    selectedPlatform === "ALL"
       ? projects
       : projects.filter((project) => project.platform === selectedPlatform);
 
@@ -112,9 +110,9 @@ export const SharePage = () => {
           setSelectedPlatform={setSelectedPlatform}
         />
 
-        <h3 onClick={handleUploadClick}>임시 업로드 버튼</h3>
-
-        <ProjectNumber>{filteredProjects.length}개의 프로젝트</ProjectNumber>
+        <ProjectNumber>
+          {filteredProjects.length}개의 프로젝트
+        </ProjectNumber>
 
         <CardContainer>
           {filteredProjects.map((project) => (
@@ -123,6 +121,8 @@ export const SharePage = () => {
         </CardContainer>
       </Frame>
       <ScrollToTopButton />
+
+      {isLogin && <UploadButton />}
     </Container>
   );
 };

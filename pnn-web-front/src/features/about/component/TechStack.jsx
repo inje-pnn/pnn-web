@@ -36,6 +36,7 @@ const Container = styled.div`
     max-width: 800px;
   }
 `;
+
 const StyledSlider = styled(Slider)`
   width: 90%;
   margin-top: 80px;
@@ -58,7 +59,6 @@ const IconContainer = styled.div`
     color: white;
   }
 `;
-
 
 
 const TechStack = () => {

@@ -7,6 +7,10 @@
   font-family: "Cafe24Ssurround-v2.0";
   src: url("./assets//fonts//Cafe24Ssurround-v2.0.ttf") format("truetype");
 }
+:root {
+  --default-background: #ffffff;
+  --default-card-border: 0.2px solid #ddd;
+}
 
 * {
   margin: 0px;

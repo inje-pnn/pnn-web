@@ -1,88 +1,91 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import pnnlogo from "./../../assets/images/pnnlogo.png";
 
 const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 384px;
-  height: 405px;
+  width: 374px;
+  height: 326px;
   cursor: pointer;
-  border: solid 1px;
-  border-radius: 20px;
   position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const ImageFrame = styled.img`
   width: 100%;
-  height: 100%;
-  border-radius: 20px;
+  height: 226px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+
+  ${CardWrapper}:hover & {
+    transform: scale(1.05);
+  }
 `;
 
 const ExplainFrame = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 134px;
-  bottom: 0px;
-  background: rgba(0, 0, 0, 0.68);
-  box-shadow: rgba(0, 0, 0, 0.05) 0px -1px 1px 0px;
-  backdrop-filter: blur(5px);
-  border-radius: 0px 0px 14px 14px;
-  transition: 0.3s ease-in-out;
+  background: white;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  z-index: 1;
 `;
 
 const TitleFrame = styled.div`
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 8px;
-  gap: 8px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
+
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+  }
 `;
 
 const SubTitleFrame = styled.div`
-  color: white;
-  margin-top: 4px;
   font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+  margin-top: 4px;
 `;
 
-const PlatformContainer = styled.div`
-  position: absolute;
-  bottom: 12px;
-  right: 16px;
-  font-size: 12px;
-  color: white;
+const TagContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: auto;
+  font-size: 13px;
+`;
+
+const Tag = styled.span`
+  font-size: 14px;
+  font-weight: bold;
 `;
 
 const CardFrame = ({ project }) => {
   const navigate = useNavigate();
 
   const handleDetailClick = () => {
-    navigate("/share/detail");
+    navigate(`/share/detail/${project.id}`);
   };
 
   return (
     <CardWrapper onClick={handleDetailClick}>
-      <ImageFrame src={pnnlogo} alt={project.title} />
-
+      <ImageFrame src={project.imageUrl} alt={project.title} />
       <ExplainFrame>
         <TitleFrame>
           <h2>{project.title}</h2>
         </TitleFrame>
 
-        <SubTitleFrame>
-          <span>{project.description}</span>
-        </SubTitleFrame>
+        <SubTitleFrame>{project.subTitle}</SubTitleFrame>
 
-        <PlatformContainer>
-          <span>{project.platform}</span>
-        </PlatformContainer>
+        <TagContainer>
+          <Tag>#{project.category}</Tag>
+          <Tag>#{project.tag}</Tag>
+        </TagContainer>
       </ExplainFrame>
     </CardWrapper>
   );

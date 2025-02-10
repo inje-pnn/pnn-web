@@ -8,6 +8,13 @@ import { useNavigate } from "react-router-dom";
 // import userStore from "../../entities/user/model/userStore";
 
 export const useAuth = () => {
+  //   0 오너 관리자
+
+  // 1 일반 멤버 게시글 작성, 강의 공유 페이지 접근 가능
+
+  // 2 로그인만 한 녀석들
+
+  // 3 가입 신청한 녀석들
   const { updateUser, clearUser } = useUserStore();
   const { getAllMembers, postAuthLoginUser } = memberApi();
   const navigate = useNavigate();

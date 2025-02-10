@@ -11,10 +11,12 @@ import AboutUs from "../../pages/AboutUs";
 import { AdminMemberControlPage } from "../../pages/admin/AdminMemberControlPage";
 import useUserStore from "../../shared/store/useUserStroe";
 import ProtectedRoute from "./ProtectedRoute";
+import Test2 from "../../pages/test2";
+import { CommunityPage } from "../../pages/community/CommunityPage";
 
 export const RootRoutes = () => {
   const user = useUserStore((state) => state.user);
-  // const isAdmin = user.
+  console.log(user);
   return (
     <Routes>
       <Route path="/" element={<Layout mainContent={<MainPage />} />} />
@@ -28,19 +30,32 @@ export const RootRoutes = () => {
           </ProtectedRoute>
         }
       />
-
+      <Route
+        path="/auth/regist"
+        element={<Layout mainContent={<UserRegistPage />} />}
+      />
       <Route path="/share" element={<Layout mainContent={<SharePage />} />} />
       <Route
         path="/share/upload"
         element={<Layout mainContent={<ShareUpload />} />}
       />
       <Route
-        path="/share/detail"
+        path="/share/detail/:id"
         element={<Layout mainContent={<ShareDetail />} />}
       />
+
       <Route
         path="/auth/regist"
         element={<Layout mainContent={<UserRegistPage />} />}
+      />
+
+      <Route
+        path="/community"
+        element={
+          <ProtectedRoute user={user} type="member">
+            <Layout mainContent={<CommunityPage />} />
+          </ProtectedRoute>
+        }
       />
       {/* 관리자 페이지 라우트 */}
       <Route path="/admin" element={<Layout mainContent={<AdminPage />} />} />
@@ -61,6 +76,7 @@ export const RootRoutes = () => {
         path="/admin/account"
         element={<Layout mainContent={<AdminPage />} />}
       />
+      <Route path="/test2" element={<Layout mainContent={<Test2 />} />} />
     </Routes>
   );
 };
