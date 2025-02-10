@@ -79,6 +79,7 @@ export const SharePage = () => {
   useEffect(() => {
     const token = Cookies.get("user");
     setIsLogin(!!token);
+    console.log();
   }, []);
 
   useEffect(() => {
