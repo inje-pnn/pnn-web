@@ -3,7 +3,7 @@ import { Fab } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { styled } from '@mui/system';
 
-const ScrollToTopFab = styled(Fab)(({ theme }) => ({
+const ScrollToTopFab = styled(Fab)({
   position: 'fixed',
   bottom: '80px',
   right: '60px',
@@ -14,11 +14,11 @@ const ScrollToTopFab = styled(Fab)(({ theme }) => ({
   '&:hover': {
     backgroundColor: '#556cd6',
   },
-}));
+});
 
 export const ScrollToTopButton = () => {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.body.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

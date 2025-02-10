@@ -319,15 +319,16 @@ export const ShareUpload = () => {
       setIsUploading(false);
     }
   };
-  
+
   const isUploadDisabled =
-    !title ||
-    !subtitle ||
-    !platform ||
-    !projectType ||
-    !image ||
-    !githubUrl ||
-    isUploading;
+  !title ||
+  !subtitle ||
+  !platform ||
+  projectType.length === 0 ||
+  !projectTag ||
+  !image ||
+  !githubUrl ||
+  isUploading;
 
   const tagOptions = ["캡스톤 디자인", "졸업 작품", "학술제", "기타 프로젝트"]
   const platformOptions = ["Web", "Mobile", "AI", "Game"];
@@ -444,7 +445,7 @@ export const ShareUpload = () => {
           </WrapperFrame>
         </InputContainer>
 
-        <SubTitleFrame>프로젝트</SubTitleFrame>
+        <SubTitleFrame>ReadMe 업로드</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
             <InputFrame>
@@ -481,7 +482,7 @@ export const ShareUpload = () => {
           </TableStyles>
         </ReadMeFrame>
 
-        <UploadButton onClick={handlePostUpload} disabled={isUploading || isUploadDisabled}>
+        <UploadButton onClick={handlePostUpload} disabled={isUploadDisabled}>
         <ButtonContent>
           {isUploading && <Spinner />}
           업로드 하기

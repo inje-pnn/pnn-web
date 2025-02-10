@@ -132,9 +132,9 @@ const Card = styled.div`
 const ExplanationFrame = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 1400px;
-  width: 100%;
+  width: 70%;
   margin-top: 40px;
+  overflow-wrap: break-word;
   padding: 30px;
   background: #fff;
   border-radius: 12px;
@@ -160,6 +160,19 @@ const ExplanationFrame = styled.div`
       font-size: 14px;
     }
   }
+
+  table {
+    width: auto;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 4px;
+  }
 `;
 
 export const ShareDetail = () => {
@@ -177,9 +190,7 @@ export const ShareDetail = () => {
           const readme = await fetchGitHubReadme(detail.link);
           setReadmeContent(readme);
         }
-      } catch (error) {
-        console.error("Error fetching project detail:", error);
-      }
+      } catch {}
     };
 
     if (id) {
@@ -210,10 +221,12 @@ export const ShareDetail = () => {
         </Card>
 
         <Card>
-          <CodeIcon className="icon" />
-          <h3>사용 기술</h3>
-          <p>{projectDetail.type}</p>
-        </Card>
+  <CodeIcon className="icon" />
+  <h3>사용 기술</h3>
+  <p>{Array.isArray(projectDetail.type) ? projectDetail.type.join(", ") : projectDetail.type}</p>
+</Card>
+
+
       </InfoSection>
 
       <ExplanationFrame>
