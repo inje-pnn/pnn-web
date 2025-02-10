@@ -213,7 +213,7 @@ export const ShareUpload = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [platform, setPlatform] = useState("");
-  const [projectType, setProjectType] = useState("");
+  const [projectType, setProjectType] = useState([]);
   const [projectTag, setProjectTag] = useState("");
   const [image, setImage] = useState(null);
   const [githubUrl, setGithubUrl] = useState("");
@@ -305,7 +305,7 @@ export const ShareUpload = () => {
         setSubtitle("");
         setProjectTag("");
         setPlatform("");
-        setProjectType("");
+        setProjectType([]);
         setImage(null);
         setGithubUrl("");
         setReadmeContent("");
@@ -421,6 +421,7 @@ export const ShareUpload = () => {
                   value={projectType}
                   options={frameworkOptions}
                   onChange={handleProjectTypeChange}
+                  multiple={true}
                 />
               </TagListFrame>
             </SubInputFrame>

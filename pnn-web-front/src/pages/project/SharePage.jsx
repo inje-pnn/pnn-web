@@ -86,9 +86,7 @@ export const SharePage = () => {
       try {
         const projectData = await projectApi.getProjects();
         setProjects(projectData);
-      } catch (error) {
-        console.error("프로젝트 데이터를 가져오는 중 오류 발생:", error);
-      }
+      } catch {}
     };
 
     fetchProjects();

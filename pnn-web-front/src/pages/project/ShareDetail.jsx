@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { projectApi } from "../../shared/api/projectApi";
-import PeopleIcon from "@mui/icons-material/People";
+import FolderIcon from "@mui/icons-material/Folder";
 import CategoryIcon from "@mui/icons-material/Category";
-import BuildIcon from "@mui/icons-material/Build";
+import CodeIcon from "@mui/icons-material/Code";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -29,7 +29,7 @@ const ImageFrame = styled.img`
   border-radius: 10px;
   margin-bottom: 40px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
+  
   @media (max-width: 768px) {
     height: 300px;
   }
@@ -130,7 +130,9 @@ const Card = styled.div`
 `;
 
 const ExplanationFrame = styled.div`
-  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
   width: 100%;
   margin-top: 40px;
   padding: 30px;
@@ -196,19 +198,19 @@ export const ShareDetail = () => {
 
       <InfoSection>
         <Card>
-          <PeopleIcon className="icon" />
+          <CategoryIcon className="icon" />
           <h3>프로젝트 형태</h3>
           <p>{projectDetail.category}</p>
         </Card>
 
         <Card>
-          <CategoryIcon className="icon" />
+          <FolderIcon className="icon" />
           <h3>프로젝트 유형</h3>
           <p>{projectDetail.tag}</p>
         </Card>
 
         <Card>
-          <BuildIcon className="icon" />
+          <CodeIcon className="icon" />
           <h3>사용 기술</h3>
           <p>{projectDetail.type}</p>
         </Card>
