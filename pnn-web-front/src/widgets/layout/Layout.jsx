@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import ButtonAppBar from "./Header/Header2";
+import Header from "./Header/Header";
 import { AdminSideNavBar } from "./sideBar/AdminSideNavBar";
 import { RegistBanner } from "../../shared/components/common/RegistBanner";
 import Footer from "./Footer/Footer";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -45,13 +46,23 @@ const Main = styled.div`
 
 const Layout = ({ mainContent }) => {
   const isAdmin = mainContent.type.name.search("Admin");
+  const location = useLocation();
+  const isMainPage = location.pathname === '/';
+
   return (
     <Container>
-      {isAdmin === 0 ? <AdminSideNavBar /> : <ButtonAppBar />}
-      {/* <Banner /> */}
+      {/* 헤더는 항상 표시 */}
+      {isAdmin === 0 ? <AdminSideNavBar /> : <Header />}
+      
       <Main>{mainContent}</Main>
-      <RegistBanner />
-      <Footer />
+      
+      {/* 메인 페이지가 아닐 때만 배너와 푸터 표시 */}
+      {!isMainPage && (
+        <>
+          <RegistBanner />
+          <Footer />
+        </>
+      )}
     </Container>
   );
 };

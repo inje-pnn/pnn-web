@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { MdDesignServices } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
+import { BsDatabaseCheck } from "react-icons/bs";
 import pnnlogo from "../../../assets/images/pnnlogo.png";
 
 const Container = styled.div`
@@ -13,7 +14,6 @@ const Container = styled.div`
   color: black;
   padding: 20px;
   transition: transform 0.3s ease;
-  // border: 1px solid #eee;
   
   ${props => props.hover && `
     &:hover {
@@ -22,10 +22,9 @@ const Container = styled.div`
 `;
 
 const ImgFrame = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   position: relative;
-  border: 5px solid #667EEA;
   border-radius: 50%;
   overflow: hidden;
   
@@ -48,6 +47,7 @@ const Name = styled.h3`ß
   font-weight: 600;
   margin: 20px 0 10px 0;
   color: #2D3748;
+  text-align: center;
 `;
 
 const Description = styled.span`
@@ -88,6 +88,14 @@ const SocialIcon = styled.a`
 `;
 
 const MemberCard = ({ name, explain, img, email, github, enableHover = true }) => {
+  const RandomIcon = Math.random() < 0.5 ? MdDesignServices : BsDatabaseCheck;
+
+  const getIconBgColor = (IconComponent) => {
+    if (IconComponent === MdDesignServices) return "#86b2e2";  
+    if (IconComponent === BsDatabaseCheck) return "#ae80db";   
+    return "";
+  };
+
   return (
     <Container>
       <ImgFrame hover={enableHover}>
@@ -97,10 +105,10 @@ const MemberCard = ({ name, explain, img, email, github, enableHover = true }) =
       <Description>{explain}</Description>
       <Description>{email}</Description>
       <IconBox>
-        <SocialIcon>
-          <MdDesignServices />
+        <SocialIcon style={{ backgroundColor: getIconBgColor(RandomIcon) }}>
+          <RandomIcon />
         </SocialIcon>
-        <SocialIcon href={github} target="github" style={{backgroundColor:"black"}}>
+        <SocialIcon style={{ backgroundColor: "black" }} href={github} target="_blank">
           <FaGithub />
         </SocialIcon>
       </IconBox>

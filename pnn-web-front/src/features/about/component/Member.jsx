@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MemberCard from "./MemberCard";
 import { memberApi } from "../../../shared/api/memberApi";
-import { filterMemberGrade } from "../../../shared/util/memberUtil";
-import { filterMemberAuthority } from "../../../shared/util/memberUtil";
 
 const Container = styled.div`
   width: 100%;
@@ -19,36 +17,54 @@ const Container = styled.div`
   color: black;
 `;
 
-const ManageMentTeam = styled.div`
+const GradeNavigation = styled.div`
   width: 100%;
-  height: 50%;
+  padding: 15px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  margin-top: 25px;
+`;
+
+const GradeButton = styled.button`
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: ${props => props.active ? '#007bff' : '#f8f9fa'};
+  color: ${props => props.active ? 'white' : 'black'};
+  border: 1px solid #eee;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 15px;
+
+  &:hover {
+    background-color: ${props => props.active ? '#0056b3' : '#e9ecef'};
+  }
+`;
+
+const ManagementTeam = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
 `;
 
 const StyledSlider = styled(Slider)`
   width: 100%;
-  height: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+  
   .slick-list {
-    padding: 0 !important;
     overflow: hidden;
   }
 
   .slick-track {
-    display: flex;  
-    align-items: center; 
-    justify-content: center; 
+    display: flex;
+    align-items: stretch;
   }
 
   .slick-slide {
     > div {
-      display: flex;
-      justify-content: center;
+      height: 100%;
+      padding: 0 10px;
     }
   }
 
@@ -57,42 +73,98 @@ const StyledSlider = styled(Slider)`
     width: 30px;
     height: 30px;
     z-index: 1;
+    &::before {
+      font-size: 30px;
+      color: black;
+    }
   }
 
   .slick-prev {
     left: -35px;
-    &::before {
-      font-size: 30px;
-      color: black;
-    }
   }
 
   .slick-next {
     right: -35px;
-    &::before {
-      font-size: 30px;
-      color: black;
-    }
+  }
+
+  /* 클론된 슬라이드를 위한 스타일 */
+  .slick-slide.slick-cloned {
+    display: flex !important;
   }
 `;
 
-const MemberFrame = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); // 깔끔하게 좌우 여백 없이 7개의 카드만 넣기 위해
-  gap: 10px;
-  justify-items: center; 
-`;
+const settings = {
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 6,
+  slidesToScroll: 1,
+  arrows: true,
+  autoplay: true,
+  autoplaySpeed: 2000,
+  pauseOnHover: true,
+  swipe: true,
+  touchMove: true,
+  waitForAnimate: false,  // 애니메이션 대기 시간 제거
+  responsive: [
+    {
+      breakpoint: 1200,
+      settings: {
+        slidesToShow: 4,
+        infinite: true,
+        waitForAnimate: false
+      }
+    },
+    {
+      breakpoint: 900,
+      settings: {
+        slidesToShow: 3,
+        infinite: true,
+        waitForAnimate: false
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        infinite: true,
+        waitForAnimate: false
+      }
+    }
+  ]
+};
 
 const StyledH1 = styled.h1`
   margin: 5% 0% 2% 0%;
 `;
 
+const MemberFrame = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  justify-items: center; 
+`;
+
 const Member = () => {
   const [members, setMembers] = useState([]);
+  const [selectedGrade, setSelectedGrade] = useState(null);
   const api = memberApi();
 
-  const memberArray = [
+  const managementTeam = [
+    { 
+      name: "최준혁", 
+      explain: "팀장을 맡고있는 최준혁이라고 합니다",
+      email: "test1234@oasis.inje.ac.kr"
+    },
+    { 
+      name: "이혁준", 
+      explain: "부팀장을 맡고있는 이혁준이라고 합니다",
+      email: "test1234@oasis.inje.ac.kr"
+    }
+  ];
+
+  const headerMembers = [
     { 
       name: "김재민", 
       explain: "4학년 헤더 김재민입니다.",
@@ -118,7 +190,58 @@ const Member = () => {
       explain: "공부는 왜 해야 하노",
       img: "https://avatars.githubusercontent.com/u/127940854?s=96&v=4"
     },
+    { 
+      name: "이승훈", 
+      explain: "안녕하세요 웹소켓은 제왕 박준수입니다",
+      img: "https://avatars.githubusercontent.com/u/127470862?s=96&v=4"
+    },
+    { 
+      name: "정주환", 
+      explain: "안녕 나는 철찌 숫자단 벌쥐 호팔이다.",
+      img: "https://avatars.githubusercontent.com/u/72590478?s=100&v=4"
+    },
+    { 
+      name: "염정규", 
+      explain: "공부는 왜 해야 하노",
+      img: "https://avatars.githubusercontent.com/u/127940854?s=96&v=4"
+    }
   ];
+
+  // Slider settings
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 7,
+    slidesToScroll: 1,
+    arrows: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    pauseOnHover: true,
+    variableWidth: false,
+    centerMode: false,
+    centerPadding: '0px',
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 4
+        }
+      },
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 3
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2
+        }
+      }
+    ]
+  };
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -138,105 +261,86 @@ const Member = () => {
     return members.filter(member => member.student_grade === grade);
   };
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 7,
-    slidesToScroll: 1,
-    arrows: true,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    pauseOnHover: true,
-    // 아래 설정들을 추가
-    variableWidth: true, // 슬라이드 너비를 자동으로 조정
-    centerMode: true, // 현재 슬라이드를 중앙에 위치
-    centerPadding: '0px', // 중앙 모드 패딩 제거
-  };
-
   return (
     <Container>
-      <StyledH1>운영진</StyledH1>
-      <ManageMentTeam>
-        <MemberCard 
-          name={"최준혁"}
-          explain={"팀장을 맡고있는 최준혁이라고 합니다"}
-          email="test1234@oasis.inje.ac.kr"
-        />
-        <MemberCard 
-          name={"이혁준"}
-          explain={"부팀장을 맡고있는 이혁준이라고 합니다"}
-          email="test1234@oasis.inje.ac.kr"
-        />
-      </ManageMentTeam>
+      <GradeNavigation>
+        <GradeButton 
+          active={selectedGrade === null}
+          onClick={() => setSelectedGrade(null)}
+        >
+          운영진
+        </GradeButton>
+        <GradeButton 
+          active={selectedGrade === 1}
+          onClick={() => setSelectedGrade(1)}
+        >
+          1학년
+        </GradeButton>
+        <GradeButton 
+          active={selectedGrade === 2}
+          onClick={() => setSelectedGrade(2)}
+        >
+          2학년
+        </GradeButton>
+        <GradeButton 
+          active={selectedGrade === 3}
+          onClick={() => setSelectedGrade(3)}
+        >
+          3학년
+        </GradeButton>
+        <GradeButton 
+          active={selectedGrade === 4}
+          onClick={() => setSelectedGrade(4)}
+        >
+          4학년
+        </GradeButton>
+      </GradeNavigation>
 
-      <StyledH1>헤더</StyledH1>
-      <StyledSlider {...settings}>
-        {memberArray.map((member, index) => (
-          <MemberCard 
-            key={index}
-            name={member.name}
-            explain={member.explain}
-            img={member.img}
-          />
-        ))}
-      </StyledSlider>
+      {(selectedGrade === null) && (
+        <>
+          <StyledH1>운영진</StyledH1>
+          <ManagementTeam>
+            {managementTeam.map((member, index) => (
+              <MemberCard 
+                key={index}
+                name={member.name}
+                explain={member.explain}
+                email={member.email}
+              />
+            ))}
+          </ManagementTeam>
 
-      <StyledH1>4학년</StyledH1>
-      <MemberFrame>
-        {filterByGrade(4).map((member) => (
-          <MemberCard 
-            key={member.id}
-            name={member.name}
-            explain={member.student_number}
-            email={member.email}
-            github={member.github_url}
-            enableHover={false}
-          />
-        ))}
-      </MemberFrame>
+          <StyledH1>헤더</StyledH1>
+          <StyledSlider {...settings}>
+            {headerMembers.map((member, index) => (
+              <MemberCard 
+                key={index}
+                name={member.name}
+                explain={member.explain}
+                img={member.img}
+              />
+            ))}
+          </StyledSlider>
+        </>
+      )}
 
-      <StyledH1>3학년</StyledH1>
-      <MemberFrame>
-        {filterByGrade(3).map((member) => (
-          <MemberCard 
-            key={member.id}
-            name={member.name}
-            explain={member.student_number}
-            email={member.email}
-            github={member.github_url}
-            enableHover={false}
-          />
-        ))}
-      </MemberFrame>
-
-      <StyledH1>2학년</StyledH1>
-      <MemberFrame>
-        {filterByGrade(2).map((member) => (
-          <MemberCard 
-            key={member.id}
-            name={member.name}
-            explain={member.student_number}
-            email={member.email}
-            github={member.github_url}
-            enableHover={false}
-          />
-        ))}
-      </MemberFrame>
-
-      <StyledH1>1학년</StyledH1>
-      <MemberFrame>
-        {filterByGrade(1).map((member) => (
-          <MemberCard 
-            key={member.id}
-            name={member.name}
-            explain={member.student_number}
-            email={member.email}
-            github={member.github_url}
-            enableHover={false}
-          />
-        ))}
-      </MemberFrame>
+      {(selectedGrade === 1 || selectedGrade === 2 || selectedGrade === 3 || selectedGrade === 4) && (
+        <>
+          <StyledH1>{selectedGrade}학년</StyledH1>
+          <MemberFrame>
+            {filterByGrade(selectedGrade).map((member) => (
+              <MemberCard 
+                key={member.id}
+                name={member.name}
+                explain={member.student_number}
+                email={member.email}
+                github={member.github_url}
+                enableHover={false}
+              />
+            ))}
+          </MemberFrame>
+        </>
+      )}
     </Container>
   );
 };
