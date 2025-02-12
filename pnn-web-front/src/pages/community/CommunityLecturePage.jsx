@@ -46,7 +46,7 @@ const TitleImg = styled.img`
 export const CommunityLecturePage = () => {
   return (
     <Container>
-      <UploadButton />
+      <UploadButton path={"/community/lecture/upload"} />
       <ScrollToTopButton />
       <BoardTitleContainer>
         <h1>

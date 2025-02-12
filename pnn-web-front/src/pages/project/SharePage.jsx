@@ -130,7 +130,9 @@ export const SharePage = () => {
             <FolderOpenOutlinedIcon fontSize="large" color="primary" />
             P&N에서 진행된 프로젝트 둘러보기
           </h1>
-          <p>다양한 플랫폼에서 진행된 프로젝트를 확인하고, 영감을 얻어보세요.</p>
+          <p>
+            다양한 플랫폼에서 진행된 프로젝트를 확인하고, 영감을 얻어보세요.
+          </p>
         </HeaderFrame>
 
         <Filter
@@ -148,7 +150,7 @@ export const SharePage = () => {
       </Frame>
 
       <ScrollToTopButton />
-      {isLogin && <UploadButton />}
+      {isLogin && <UploadButton path={"/share/upload"} />}
     </Container>
   );
 };

@@ -72,7 +72,7 @@ export const CommunityPage = () => {
   return (
     <Container>
       <FloatingMenuBar />
-      <UploadButton />
+      <UploadButton path={"/community/study/upload"} />
       <ScrollToTopButton />
       <BoardTitleContainer>
         <h1>

@@ -14,6 +14,7 @@ import { CommunityPage } from "../../pages/community/CommunityPage";
 import { CommunityLecturePage } from "../../pages/community/CommunityLecturePage";
 import useUserStore from "../../shared/store/useUserStroe";
 import { useAuth } from "../../shared/hooks/auth/useAuth";
+import { CommunityUploadPage } from "../../pages/community/CommnunityStudyUploadPage";
 
 export const RootRoutes = ({ user }) => {
   return (
@@ -62,6 +63,22 @@ export const RootRoutes = ({ user }) => {
         element={
           <ProtectedRoute user={user} type="member">
             <Layout mainContent={<CommunityLecturePage />} />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/community/study/upload"
+        element={
+          <ProtectedRoute user={user} type="member">
+            <Layout mainContent={<CommunityUploadPage />} />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/community/lecture/upload"
+        element={
+          <ProtectedRoute user={user} type="member">
+            <Layout mainContent={<CommunityUploadPage />} />
           </ProtectedRoute>
         }
       />

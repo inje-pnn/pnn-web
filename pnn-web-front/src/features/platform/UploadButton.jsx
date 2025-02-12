@@ -29,11 +29,11 @@ const StyledButton = styled(Button)`
   }
 `;
 
-export const UploadButton = () => {
+export const UploadButton = ({ path }) => {
   const navigate = useNavigate();
 
   const onClickUpload = () => {
-    navigate("/share/upload");
+    navigate(path);
   };
 
   return (

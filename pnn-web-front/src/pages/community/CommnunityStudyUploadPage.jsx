@@ -2,14 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import Cookies from "js-cookie";
 import { Dropdown } from "../../features/platform/OptionDropdown";
 import { ImageUpload } from "../../features/platform/ImageUpload";
-import { fetchGitHubReadme } from "../../shared/api/githubApi";
 import { uploadImageToFirebase } from "../../shared/util/firebaseImg";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
+import { categoryData } from "../../shared/data/categoryData";
+import useUserStore from "../../shared/store/useUserStroe";
 
 const Container = styled.div`
   display: flex;
@@ -112,73 +109,6 @@ const TagListFrame = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 12px;
-  }
-`;
-
-const ReadMeFrame = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: auto;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  margin-top: 20px;
-  padding: 60px;
-  overflow: auto;
-  line-height: 2.5;
-
-  @media (max-width: 768px) {
-    padding: 20px;
-    line-height: 2;
-    margin-top: 16px;
-  }
-`;
-
-const StyledImage = styled.img`
-  max-width: 100%;
-  height: auto;
-  margin: 8px auto;
-  border-radius: 4px;
-
-  @media (max-width: 768px) {
-    margin: 6px auto;
-  }
-`;
-
-const TableStyles = styled.div`
-  table {
-    width: auto;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 16px;
-  }
-
-  th,
-  td {
-    border: 1px solid #ddd;
-    padding: 4px;
-  }
-
-  th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-  }
-
-  tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
-  @media (max-width: 768px) {
-    table {
-      font-size: 14px;
-      margin: 16px 0;
-      width: 100%;
-    }
-
-    th,
-    td {
-      padding: 3px;
-    }
   }
 `;
 
@@ -303,87 +233,61 @@ const UploadButton = styled.button`
   }
 `;
 
-export const ShareUpload = () => {
-  const [memberId, setMemberId] = useState("");
-  const [title, setTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
-  const [platform, setPlatform] = useState("");
-  const [projectType, setProjectType] = useState([]);
-  const [projectTag, setProjectTag] = useState("");
-  const [image, setImage] = useState(null);
-  const [githubUrl, setGithubUrl] = useState("");
-  const [readmeContent, setReadmeContent] = useState("");
-  const [error, setError] = useState(null);
+const TITLE_LIMIT = 20;
+const SUBTITLE_LIMIT = 30;
+
+export const CommunityUploadPage = () => {
+  const user = useUserStore((state) => state.user);
   const [isUploading, setIsUploading] = useState(false);
+  const [image, setImage] = useState(null);
+  const [isUploadDisabled, setIsUploadDisabled] = useState(true);
+  const [boardData, setBoardData] = useState({
+    title: "",
+    subtitle: "",
+    platform: "",
+    projectType: [],
+    projectTag: "",
+  });
+
+  useEffect(() => {
+    const isValiedValue =
+      !boardData.title ||
+      !boardData.subtitle ||
+      !boardData.platform ||
+      boardData.projectType.length === 0 ||
+      !boardData.projectTag ||
+      isUploading;
+
+    setIsUploadDisabled(isValiedValue);
+    setBoardData((prev) => {
+      const updatedBoardData = { ...prev };
+
+      if (boardData.title !== prev.title) updatedBoardData.title = title;
+      if (boardData.subtitle !== prev.subtitle)
+        updatedBoardData.subtitle = subtitle;
+      if (boardData.platform !== prev.platform)
+        updatedBoardData.platform = platform;
+      if (boardData.projectType !== prev.projectType)
+        updatedBoardData.projectType = projectType;
+      if (boardData.projectTag !== prev.projectTag)
+        updatedBoardData.projectTag = projectTag;
+      if (image !== prev.image) updatedBoardData.image = image;
+
+      return updatedBoardData;
+    });
+  }, [boardData, image]);
 
   const navigate = useNavigate();
 
-  const TITLE_LIMIT = 20;
-  const SUBTITLE_LIMIT = 30;
-
-  useEffect(() => {
-    const storedMemberId = Cookies.get("user");
-    if (storedMemberId) {
-      setMemberId(storedMemberId);
-    }
-  }, []);
-
-  const handleTitleChange = (e) => {
-    const input = e.target.value;
-    if (input.length <= TITLE_LIMIT) {
-      setTitle(input);
-    }
-  };
-
-  const handleSubtitleChange = (e) => {
-    const input = e.target.value;
-    if (input.length <= SUBTITLE_LIMIT) {
-      setSubtitle(input);
-    }
-  };
-
-  const handlePlatformChange = (e) => {
-    setPlatform(e.target.value);
-  };
-
-  const handleProjectTypeChange = (e) => {
-    setProjectType(e.target.value);
-  };
-
-  const handleProjectTagChange = (e) => {
-    setProjectTag(e.target.value);
-  };
-
-  const fetchReadme = async (url) => {
-    setError(null);
-    setReadmeContent("");
-
-    try {
-      const content = await fetchGitHubReadme(url);
-      setReadmeContent(content);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleGithubUrlChange = (e) => {
-    const url = e.target.value;
-    setGithubUrl(url);
-    if (url) {
-      fetchReadme(url);
-    }
-  };
-
   const handlePostUpload = async () => {
     setIsUploading(true);
-
     try {
       const imageUrl = await uploadImageToFirebase(image);
 
       const response = await axios.post(
         "https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/project/create",
         {
-          memberid: memberId,
+          memberid: user.id,
           title: title,
           sub_title: subtitle,
           project_tag: projectTag,
@@ -396,16 +300,17 @@ export const ShareUpload = () => {
 
       if (response.status === 200 && response.data) {
         alert("프로젝트가 성공적으로 업로드되었습니다!");
-        setTitle("");
-        setSubtitle("");
-        setProjectTag("");
-        setPlatform("");
-        setProjectType([]);
-        setImage(null);
-        setGithubUrl("");
-        setReadmeContent("");
+        setBoardData({
+          title: "",
+          subtitle: "",
+          platform: "",
+          projectType: [],
+          projectTag: "",
+        });
 
-        navigate("/share");
+        setImage(null);
+
+        navigate("/commnuty/study");
       } else {
         throw new Error("업로드 실패");
       }
@@ -415,52 +320,35 @@ export const ShareUpload = () => {
     }
   };
 
-  const isUploadDisabled =
-    !title ||
-    !subtitle ||
-    !platform ||
-    projectType.length === 0 ||
-    !projectTag ||
-    !image ||
-    !githubUrl ||
-    isUploading;
-
-  const tagOptions = ["캡스톤 디자인", "졸업 작품", "학술제", "기타 프로젝트"];
-  const platformOptions = ["Web", "Mobile", "AI", "Game"];
-  const frameworkOptions = [
-    "Java Script",
-    "Java",
-    "Python",
-    "C",
-    "C++",
-    "Spring",
-    "React",
-    "Vue",
-    "React Native",
-    "Unity",
-    "Flutter",
-  ];
+  const handleBoardData = (data, setData, type) => {
+    console.log(data, setData, type);
+    setData((prev) => ({ ...prev, [type]: data }));
+  };
 
   return (
     <Container>
-      <TitleFrame>프로젝트 작성하기</TitleFrame>
+      <TitleFrame>게시글 작성하기</TitleFrame>
       <ContentContainer>
-        <SubTitleFrame>프로젝트 타이틀</SubTitleFrame>
+        <SubTitleFrame>게시글 타이틀</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
             <InputFrame>
-              <h4>프로젝트 이름</h4>
+              <h4>게시글 제목</h4>
             </InputFrame>
             <SubInputFrame>
               <GlobalInput
                 type="text"
                 placeholder="프로젝트 이름을 입력하세요"
-                value={title}
-                onChange={handleTitleChange}
-                isOverLimit={title.length >= TITLE_LIMIT}
+                value={boardData.title}
+                onChange={(e) =>
+                  handleBoardData(e.target.value, setBoardData, "title")
+                }
+                isOverLimit={boardData.title.length >= TITLE_LIMIT}
               />
-              <CharacterCounter isOverLimit={title.length >= TITLE_LIMIT}>
-                {title.length}/{TITLE_LIMIT}자
+              <CharacterCounter
+                isOverLimit={boardData.title.length >= TITLE_LIMIT}
+              >
+                {boardData.title.length}/{TITLE_LIMIT}자
               </CharacterCounter>
             </SubInputFrame>
           </WrapperFrame>
@@ -472,30 +360,17 @@ export const ShareUpload = () => {
               <GlobalInput
                 type="text"
                 placeholder="프로젝트에 대한 상세설명을 입력하세요"
-                value={subtitle}
-                onChange={handleSubtitleChange}
-                isOverLimit={subtitle.length >= SUBTITLE_LIMIT}
+                value={boardData.subtitle}
+                onChange={(e) =>
+                  handleBoardData(e.target.value, setBoardData, "subtitle")
+                }
+                isOverLimit={boardData.subtitle.length >= SUBTITLE_LIMIT}
               />
-              <CharacterCounter isOverLimit={subtitle.length >= SUBTITLE_LIMIT}>
-                {subtitle.length}/{SUBTITLE_LIMIT}자
+              <CharacterCounter
+                isOverLimit={boardData.subtitle.length >= SUBTITLE_LIMIT}
+              >
+                {boardData.subtitle.length}/{SUBTITLE_LIMIT}자
               </CharacterCounter>
-            </SubInputFrame>
-          </WrapperFrame>
-        </InputContainer>
-
-        <SubTitleFrame>프로젝트 유형</SubTitleFrame>
-        <InputContainer>
-          <WrapperFrame>
-            <InputFrame>유형</InputFrame>
-            <SubInputFrame>
-              <TagListFrame>
-                <Dropdown
-                  label="유형 선택"
-                  value={projectTag}
-                  options={tagOptions}
-                  onChange={handleProjectTagChange}
-                />
-              </TagListFrame>
             </SubInputFrame>
           </WrapperFrame>
         </InputContainer>
@@ -508,15 +383,19 @@ export const ShareUpload = () => {
               <TagListFrame>
                 <Dropdown
                   label="플랫폼 선택"
-                  value={platform}
-                  options={platformOptions}
-                  onChange={handlePlatformChange}
+                  value={boardData.platform}
+                  options={categoryData.product}
+                  onChange={(e) =>
+                    handleBoardData(e.target.value, setBoardData, "platform")
+                  }
                 />
                 <Dropdown
                   label="프레임워크 선택"
-                  value={projectType}
-                  options={frameworkOptions}
-                  onChange={handleProjectTypeChange}
+                  value={boardData.projectType}
+                  options={categoryData.framwork}
+                  onChange={(e) =>
+                    handleBoardData(e.target.value, setBoardData, "projectType")
+                  }
                   multiple={true}
                 />
               </TagListFrame>
@@ -532,50 +411,13 @@ export const ShareUpload = () => {
             </InputFrame>
             <SubInputFrame>
               <ImageUpload
-                image={image}
+                image={boardData.image}
                 onImageChange={setImage}
                 onImageRemove={() => setImage(null)}
               />
             </SubInputFrame>
           </WrapperFrame>
         </InputContainer>
-
-        <SubTitleFrame>ReadMe 업로드</SubTitleFrame>
-        <InputContainer>
-          <WrapperFrame>
-            <InputFrame>
-              <h4>GitHub 링크</h4>
-            </InputFrame>
-            <SubInputFrame>
-              <GlobalInput
-                type="text"
-                placeholder="GitHub 레포지토리 URL을 입력하세요"
-                value={githubUrl}
-                onChange={handleGithubUrlChange}
-              />
-            </SubInputFrame>
-          </WrapperFrame>
-        </InputContainer>
-
-        <ReadMeFrame>
-          <TableStyles>
-            {error ? (
-              <span style={{ color: "red" }}>{error}</span>
-            ) : readmeContent ? (
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw]}
-                components={{
-                  img: ({ node, ...props }) => <StyledImage {...props} />,
-                }}
-              >
-                {readmeContent}
-              </ReactMarkdown>
-            ) : (
-              "README가 여기에 표시됩니다."
-            )}
-          </TableStyles>
-        </ReadMeFrame>
 
         <UploadButton onClick={handlePostUpload} disabled={isUploadDisabled}>
           <ButtonContent>
