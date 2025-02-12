@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FloatingMenuBar } from "../../features/community/FloatingMenuBar";
 import { UploadButton } from "../../features/platform/UploadButton";
 import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
-import { CommunityAccordianCard } from "../../features/community/\bCommunityAccordianCard";
+import { CommunityAccordianCard } from "../../features/community/CommunityAccordianCard";
 
 const Container = styled.div`
   display: flex;

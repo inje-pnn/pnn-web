@@ -10,7 +10,6 @@ import { MainPage } from "../../pages/main/MainPage";
 import AboutUs from "../../pages/AboutUs";
 import { AdminMemberControlPage } from "../../pages/admin/AdminMemberControlPage";
 import ProtectedRoute from "./ProtectedRoute";
-import Test2 from "../../pages/test2";
 import { CommunityPage } from "../../pages/community/CommunityPage";
 import { CommunityLecturePage } from "../../pages/community/CommunityLecturePage";
 import useUserStore from "../../shared/store/useUserStroe";
@@ -85,7 +84,6 @@ export const RootRoutes = ({ user }) => {
         path="/admin/account"
         element={<Layout mainContent={<AdminPage />} />}
       />
-      <Route path="/test2" element={<Layout mainContent={<Test2 />} />} />
     </Routes>
   );
 };
