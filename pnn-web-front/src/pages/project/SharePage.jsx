@@ -6,6 +6,7 @@ import CardFrame from "../../features/Card/CardFrame";
 import { Filter } from "../../features/platform/components/Filter";
 import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
 import { UploadButton } from "../../features/platform/UploadButton";
+import { CommunityFilter } from "../../features/community/CommunityFilter";
 import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
 
 const Container = styled.div`
@@ -17,7 +18,7 @@ const Container = styled.div`
   background-color: #f2f5f8;
 
   @media (max-width: 768px) {
-    margin-top: 20px;
+    margin-top: 8vh;
     padding: 8px;
   }
 `;

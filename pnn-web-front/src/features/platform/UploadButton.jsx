@@ -15,9 +15,17 @@ const StyledButton = styled(Button)`
   position: fixed;
   bottom: 160px;
   right: 60px;
+  min-width: unset;
 
   &:hover {
     background-color: #5a67d8;
+  }
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    bottom: 120px;
+    right: 20px;
   }
 `;
 
@@ -26,8 +34,8 @@ export const UploadButton = () => {
 
   const onClickUpload = () => {
     navigate("/share/upload");
-  }
-  
+  };
+
   return (
     <StyledButton onClick={onClickUpload}>
       <UploadFileIcon />

@@ -14,6 +14,12 @@ const ScrollToTopFab = styled(Fab)({
   '&:hover': {
     backgroundColor: '#556cd6',
   },
+  '@media (max-width: 768px)': {
+    width: '50px',
+    height: '50px',
+    bottom: '60px',
+    right: '20px',
+  },
 });
 
 export const ScrollToTopButton = () => {
