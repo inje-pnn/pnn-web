@@ -17,6 +17,10 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   padding: 40px 0;
+
+  @media (max-width: 768px) {
+    padding: 40px 16px;
+  }
 `;
 
 const TitleFrame = styled.div`
@@ -26,18 +30,32 @@ const TitleFrame = styled.div`
   font-size: 42px;
   width: 100%;
   margin: 60px 0px 100px 0px;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    margin: 30px 0px 50px 0px;
+  }
 `;
 
 const SubTitleFrame = styled.div`
   display: flex;
   margin-bottom: 20px;
   font-size: 24px;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
 `;
 
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 1200px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const GlobalInput = styled.input`
@@ -67,17 +85,34 @@ const GlobalInput = styled.input`
       border-color: #ff0000;
     }
   `}
+
+  @media (max-width: 768px) {
+    height: 40px;
+    font-size: 13px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 `;
 
 const CharacterCounter = styled.span`
   padding: 5px 0 0 5px;
   font-size: 12px;
   color: ${(props) => (props.isOverLimit ? "#ff0000" : "#666")};
+
+  @media (max-width: 768px) {
+    font-size: 11px;
+    padding: 3px 0 0 3px;
+  }
 `;
 
 const TagListFrame = styled.div`
   display: flex;
   gap: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 12px;
+  }
 `;
 
 const ReadMeFrame = styled.div`
@@ -91,6 +126,12 @@ const ReadMeFrame = styled.div`
   padding: 60px;
   overflow: auto;
   line-height: 2.5;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    line-height: 2;
+    margin-top: 16px;
+  }
 `;
 
 const StyledImage = styled.img`
@@ -100,7 +141,7 @@ const StyledImage = styled.img`
   border-radius: 4px;
 
   @media (max-width: 768px) {
-    max-width: 100%;
+    margin: 6px auto;
   }
 `;
 
@@ -126,6 +167,19 @@ const TableStyles = styled.div`
   tr:nth-child(even) {
     background-color: #f9f9f9;
   }
+
+  @media (max-width: 768px) {
+    table {
+      font-size: 14px;
+      margin: 16px 0;
+      width: 100%;
+    }
+
+    th,
+    td {
+      padding: 3px;
+    }
+  }
 `;
 
 const InputContainer = styled.div`
@@ -135,6 +189,10 @@ const InputContainer = styled.div`
   height: auto;
   border-top: solid 2px;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 24px;
+  }
 `;
 
 const InputFrame = styled.div`
@@ -152,11 +210,25 @@ const InputFrame = styled.div`
     font-weight: bold;
     margin-bottom: 8px;
   }
+
+  @media (max-width: 768px) {
+    width: 25%;
+    padding-left: 10px;
+
+    h4 {
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+  }
 `;
 
 const WrapperFrame = styled.div`
   display: flex;
   flex-direction: row;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const SubInputFrame = styled.div`
@@ -167,6 +239,11 @@ const SubInputFrame = styled.div`
   height: auto;
   padding: 20px;
   border-bottom: solid 1px #e0e0e0;
+
+  @media (max-width: 768px) {
+    width: 75%;
+    padding: 12px;
+  }
 `;
 
 const Spinner = styled.div`
@@ -177,6 +254,13 @@ const Spinner = styled.div`
   height: 20px;
   animation: spin 1s linear infinite;
   margin-right: 10px;
+
+  @media (max-width: 768px) {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+    margin-right: 8px;
+  }
 
   @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -205,6 +289,13 @@ const UploadButton = styled.button`
 
   &:hover {
     background-color: ${(props) => (props.disabled ? "#e0e0e0" : "#0056b3")};
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 30px;
+    padding: 8px 16px;
+    font-size: 14px;
+    width: 100%;
   }
 `;
 
@@ -319,15 +410,16 @@ export const ShareUpload = () => {
       setIsUploading(false);
     }
   };
-  
+
   const isUploadDisabled =
-    !title ||
-    !subtitle ||
-    !platform ||
-    !projectType ||
-    !image ||
-    !githubUrl ||
-    isUploading;
+  !title ||
+  !subtitle ||
+  !platform ||
+  projectType.length === 0 ||
+  !projectTag ||
+  !image ||
+  !githubUrl ||
+  isUploading;
 
   const tagOptions = ["캡스톤 디자인", "졸업 작품", "학술제", "기타 프로젝트"]
   const platformOptions = ["Web", "Mobile", "AI", "Game"];
@@ -444,7 +536,7 @@ export const ShareUpload = () => {
           </WrapperFrame>
         </InputContainer>
 
-        <SubTitleFrame>프로젝트</SubTitleFrame>
+        <SubTitleFrame>ReadMe 업로드</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
             <InputFrame>
@@ -481,7 +573,7 @@ export const ShareUpload = () => {
           </TableStyles>
         </ReadMeFrame>
 
-        <UploadButton onClick={handlePostUpload} disabled={isUploading || isUploadDisabled}>
+        <UploadButton onClick={handlePostUpload} disabled={isUploadDisabled}>
         <ButtonContent>
           {isUploading && <Spinner />}
           업로드 하기

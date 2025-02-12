@@ -6,6 +6,8 @@ import CardFrame from "../../features/Card/CardFrame";
 import { Filter } from "../../features/platform/components/Filter";
 import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
 import { UploadButton } from "../../features/platform/UploadButton";
+import { CommunityFilter } from "../../features/community/CommunityFilter";
+import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
 
 const Container = styled.div`
   display: flex;
@@ -16,15 +18,15 @@ const Container = styled.div`
   background-color: #f2f5f8;
 
   @media (max-width: 768px) {
-    margin-top: 20px;
+    margin-top: 8vh;
     padding: 8px;
   }
 `;
 
 const Frame = styled.div`
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   width: 1238px;
 
   @media (max-width: 768px) {
@@ -34,13 +36,36 @@ const Frame = styled.div`
 
 const HeaderFrame = styled.div`
   width: 100%;
-  height: 70px;
   display: flex;
+  flex-direction: column;
+  padding: 40px 0;
+  margin-bottom: 30px;
 
   @media (max-width: 768px) {
-    height: auto;
-    justify-content: center;
-    text-align: center;
+    padding: 20px 0;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    color: #666;
+    margin-top: 8px;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
   }
 `;
 
@@ -60,7 +85,7 @@ const ProjectNumber = styled.div`
 
 const CardContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   width: 100%;
   gap: 50px 60px;
 
@@ -79,7 +104,6 @@ export const SharePage = () => {
   useEffect(() => {
     const token = Cookies.get("user");
     setIsLogin(!!token);
-    console.log();
   }, []);
 
   useEffect(() => {
@@ -102,7 +126,11 @@ export const SharePage = () => {
     <Container>
       <Frame>
         <HeaderFrame>
-          <h1>P&N에서 진행된 프로젝트 둘러보기.</h1>
+          <h1>
+            <FolderOpenOutlinedIcon fontSize="large" color="primary" />
+            P&N에서 진행된 프로젝트 둘러보기
+          </h1>
+          <p>다양한 플랫폼에서 진행된 프로젝트를 확인하고, 영감을 얻어보세요.</p>
         </HeaderFrame>
 
         <Filter
@@ -110,9 +138,7 @@ export const SharePage = () => {
           setSelectedPlatform={setSelectedPlatform}
         />
 
-        <ProjectNumber>
-          {filteredProjects.length}개의 프로젝트
-        </ProjectNumber>
+        <ProjectNumber>{filteredProjects.length}개의 프로젝트</ProjectNumber>
 
         <CardContainer>
           {filteredProjects.map((project) => (
@@ -120,8 +146,8 @@ export const SharePage = () => {
           ))}
         </CardContainer>
       </Frame>
-      <ScrollToTopButton />
 
+      <ScrollToTopButton />
       {isLogin && <UploadButton />}
     </Container>
   );

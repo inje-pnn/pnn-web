@@ -24,6 +24,11 @@ const DropZone = styled.div`
     border-width: 3px;
     box-shadow: 0 0 10px rgba(74, 144, 226, 0.3);
   `}
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 250px;
+  }
 `;
 
 const PreviewImage = styled.img`
@@ -32,6 +37,11 @@ const PreviewImage = styled.img`
   position: absolute;
   top: 0;
   left: 0;
+  object-fit: cover;
+
+  @media (max-width: 768px) {
+    object-fit: contain;
+  }
 `;
 
 const DropzoneContent = styled.div`
@@ -44,6 +54,10 @@ const DropzoneContent = styled.div`
   background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 8px;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
 `;
 
 const RemoveButton = styled.button`
@@ -71,6 +85,12 @@ const RemoveButton = styled.button`
   ${props => props.show && `
     opacity: 1;
   `}
+
+  @media (max-width: 768px) {
+    width: 25px;
+    height: 25px;
+    font-size: 16px;
+  }
 `;
 
 const HiddenFileInput = styled.input`
@@ -87,7 +107,12 @@ const SubText = styled.p`
   padding: 0;
   font-size: 12px;
   color: #666;
+  
+  @media (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
+
 
 export const ImageUpload = ({ image, onImageChange, onImageRemove }) => {
   const [isDragging, setIsDragging] = useState(false);

@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 const StyledFormControl = styled(FormControl)`
   width: 100%;
-  margin-bottom: 16px;
 
   .MuiInputLabel-root {
     font-weight: bold;
@@ -31,7 +30,7 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 const StyledChip = styled(Chip)`
-  margin: 2px;
+  
   background-color: #f5f5f5;
   
   &:hover {

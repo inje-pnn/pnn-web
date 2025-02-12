@@ -17,27 +17,32 @@ const Container = styled.div`
   flex-direction: column;
   background-color: #f3f4f6;
   padding-bottom: 50px;
+  width: 100%;
+  margin-top: 5vh;
 
   @media (max-width: 768px) {
-    padding: 20px;
+    padding: 16px;
+    margin-top: 7vh
   }
 `;
 
 const ImageFrame = styled.img`
   width: 100%;
   height: 580px;
-  border-radius: 10px;
   margin-bottom: 40px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  
+
   @media (max-width: 768px) {
     height: 300px;
+    margin-bottom: 30px;
   }
 `;
 
 const TitleFrame = styled.div`
   text-align: center;
   margin-bottom: 30px;
+  width: 100%;
+  padding: 0 16px;
 
   h1 {
     font-size: 32px;
@@ -68,10 +73,11 @@ const InfoSection = styled.div`
   max-width: 1200px;
   width: 100%;
   gap: 20px;
+  padding: 0 16px;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
   }
 `;
 
@@ -94,7 +100,12 @@ const Card = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-    padding: 15px;
+    padding: 16px;
+    min-width: auto;
+    
+    &:hover {
+      transform: none;
+    }
   }
 
   .icon {
@@ -103,7 +114,8 @@ const Card = styled.div`
     margin-bottom: 15px;
 
     @media (max-width: 768px) {
-      font-size: 40px;
+      font-size: 36px;
+      margin-bottom: 12px;
     }
   }
 
@@ -115,6 +127,7 @@ const Card = styled.div`
 
     @media (max-width: 768px) {
       font-size: 18px;
+      margin-bottom: 8px;
     }
   }
 
@@ -132,13 +145,19 @@ const Card = styled.div`
 const ExplanationFrame = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 1400px;
-  width: 100%;
+  width: 70%;
   margin-top: 40px;
+  overflow-wrap: break-word;
   padding: 30px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    width: 90%;
+    padding: 20px;
+    margin-top: 30px;
+  }
 
   h2 {
     font-size: 24px;
@@ -148,6 +167,7 @@ const ExplanationFrame = styled.div`
 
     @media (max-width: 768px) {
       font-size: 20px;
+      margin-bottom: 16px;
     }
   }
 
@@ -158,6 +178,31 @@ const ExplanationFrame = styled.div`
 
     @media (max-width: 768px) {
       font-size: 14px;
+      line-height: 1.6;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    overflow-x: auto;
+    display: block;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      margin: 16px 0;
+    }
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+
+    @media (max-width: 768px) {
+      padding: 6px;
     }
   }
 `;
@@ -177,9 +222,7 @@ export const ShareDetail = () => {
           const readme = await fetchGitHubReadme(detail.link);
           setReadmeContent(readme);
         }
-      } catch (error) {
-        console.error("Error fetching project detail:", error);
-      }
+      } catch {}
     };
 
     if (id) {
@@ -212,14 +255,21 @@ export const ShareDetail = () => {
         <Card>
           <CodeIcon className="icon" />
           <h3>사용 기술</h3>
-          <p>{projectDetail.type}</p>
+          <p>
+            {Array.isArray(projectDetail.type)
+              ? projectDetail.type.join(", ")
+              : projectDetail.type}
+          </p>
         </Card>
       </InfoSection>
 
       <ExplanationFrame>
         <h2>프로젝트 설명</h2>
         {readmeContent && (
-          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw]}
+          >
             {readmeContent}
           </ReactMarkdown>
         )}
