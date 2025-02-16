@@ -1,13 +1,14 @@
 import useUserStore from "../../shared/store/useUserStroe";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { boardData } from "../../shared/data/boardData";
 import { CardBoardItem } from "../../features/Card/CardBoardItem";
 import { FloatingMenuBar } from "../../features/community/FloatingMenuBar";
 import { CommunityFilter } from "../../features/community/CommunityFilter";
 import { UploadButton } from "../../features/platform/UploadButton";
 import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
 import { useCategoryFilter } from "../../shared/hooks/useCategoryFilter";
+import { communityApi } from "../../shared/api/communityApi";
+import { Pagination } from "@mui/material";
 
 const Container = styled.div`
   display: flex;
@@ -57,6 +58,8 @@ const TitleImg = styled.img`
 export const CommunityPage = () => {
   const user = useUserStore((state) => state.user);
 
+  const [page, setPage] = useState(0);
+  const { getStudyBoardList } = communityApi();
   const {
     projets,
     searchText,
@@ -67,8 +70,15 @@ export const CommunityPage = () => {
     addSelectedItemList,
     removeSelectedItemList,
     handleSelectedPlatform,
-  } = useCategoryFilter(boardData);
-
+  } = useCategoryFilter(getStudyBoardList);
+  const [paginationList, setPaginationList] = useState(projets);
+  useEffect(() => {
+    setPaginationList(projets.slice(0, 12));
+  }, [projets]);
+  const handlePageNation = (e, v) => {
+    const arr = projets.slice((v - 1) * 12, (v - 1) * 12 + 12);
+    setPaginationList(arr);
+  };
   return (
     <Container>
       <FloatingMenuBar />
@@ -97,11 +107,14 @@ export const CommunityPage = () => {
       </FilterContainer>
       <BoardContainer>
         <div className="grid-container">
-          {projets.map((v) => (
-            <CardBoardItem item={v} key={`${v.id}card`} />
-          ))}
+          {paginationList?.map((v, index) => {
+            if (index < 12) {
+              return <CardBoardItem item={v} key={`${v.serial_number}card`} />;
+            }
+          })}
         </div>
       </BoardContainer>
+      <Pagination count={projets?.length / 12} onChange={handlePageNation} />
     </Container>
   );
 };
