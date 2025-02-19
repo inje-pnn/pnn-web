@@ -58,7 +58,7 @@ export const CommunityPage = () => {
   const user = useUserStore((state) => state.user);
 
   const {
-    projets,
+    projects,
     searchText,
     categoryList,
     selectedPlatform,
@@ -97,7 +97,7 @@ export const CommunityPage = () => {
       </FilterContainer>
       <BoardContainer>
         <div className="grid-container">
-          {projets.map((v) => (
+          {projects.map((v) => (
             <CardBoardItem item={v} key={`${v.id}card`} />
           ))}
         </div>

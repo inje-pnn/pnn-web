@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Chip, Box } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { projectApi } from "../../shared/api/projectApi";
@@ -22,15 +23,18 @@ const Container = styled.div`
 
   @media (max-width: 768px) {
     padding: 16px;
-    margin-top: 7vh
+    margin-top: 7vh;
   }
 `;
 
 const ImageFrame = styled.img`
-  width: 100%;
+  max-width: 1200px;
+  width: 90%;
   height: 580px;
-  margin-bottom: 40px;
+  margin: 40px 0 40px 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+  display: block;    
 
   @media (max-width: 768px) {
     height: 300px;
@@ -102,7 +106,7 @@ const Card = styled.div`
     width: 100%;
     padding: 16px;
     min-width: auto;
-    
+
     &:hover {
       transform: none;
     }
@@ -157,6 +161,19 @@ const ExplanationFrame = styled.div`
     width: 90%;
     padding: 20px;
     margin-top: 30px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 1rem 0;
+    
+    @media (max-width: 768px) {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
   }
 
   h2 {
@@ -255,11 +272,20 @@ export const ShareDetail = () => {
         <Card>
           <CodeIcon className="icon" />
           <h3>사용 기술</h3>
-          <p>
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 0.5,
+              justifyContent: "center",
+            }}
+          >
             {Array.isArray(projectDetail.type)
-              ? projectDetail.type.join(", ")
-              : projectDetail.type}
-          </p>
+              ? projectDetail.type.map((tech, index) => (
+                  <Chip key={index} label={tech} />
+                ))
+              : projectDetail.type && <Chip label={projectDetail.type} />}
+          </Box>
         </Card>
       </InfoSection>
 

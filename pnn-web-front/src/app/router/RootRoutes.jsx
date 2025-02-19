@@ -12,6 +12,7 @@ import { AdminMemberControlPage } from "../../pages/admin/AdminMemberControlPage
 import ProtectedRoute from "./ProtectedRoute";
 import { CommunityPage } from "../../pages/community/CommunityPage";
 import { CommunityLecturePage } from "../../pages/community/CommunityLecturePage";
+import { RecruitingPage } from "../../pages/recruiting/RecruitingPage";
 import useUserStore from "../../shared/store/useUserStroe";
 import { useAuth } from "../../shared/hooks/auth/useAuth";
 
@@ -42,6 +43,8 @@ export const RootRoutes = ({ user }) => {
         path="/share/detail/:id"
         element={<Layout mainContent={<ShareDetail />} />}
       />
+
+      <Route path="/recruiting" element={<Layout mainContent={<RecruitingPage />} />} />
 
       <Route
         path="/auth/regist"
