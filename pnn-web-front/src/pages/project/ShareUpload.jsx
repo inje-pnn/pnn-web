@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import Cookies from "js-cookie";
-import { Dropdown } from "../../features/platform/OptionDropdown";
+import { OptionDropdown } from "../../features/platform/OptionDropdown";
 import { ImageUpload } from "../../features/platform/ImageUpload";
 import { fetchGitHubReadme } from "../../shared/api/githubApi";
 import { uploadImageToFirebase  } from "../../shared/util/firebaseImg";
@@ -311,6 +311,7 @@ export const ShareUpload = () => {
   const [readmeContent, setReadmeContent] = useState("");
   const [error, setError] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [isUploadDisabled, setIsUploadDisabled] = useState(true);
 
   const navigate = useNavigate();
 
@@ -323,6 +324,20 @@ export const ShareUpload = () => {
       setMemberId(storedMemberId);
     }
   }, []);
+
+  useEffect(() => {
+    const isDisabled =
+      !title ||
+      !subtitle ||
+      !platform ||
+      projectType.length === 0 ||
+      !projectTag ||
+      !image ||
+      !githubUrl ||
+      isUploading;
+
+    setIsUploadDisabled(isDisabled);
+  }, [title, subtitle, platform, projectType, projectTag, image, githubUrl, isUploading]);
 
   const handleTitleChange = (e) => {
     const input = e.target.value;
@@ -372,10 +387,17 @@ export const ShareUpload = () => {
 
   const handlePostUpload = async () => {
     setIsUploading(true);
-
+  
     try {
       const imageUrl = await uploadImageToFirebase(image);
-
+  
+      const now = new Date();
+      const createData = now.toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).replace(/. /g, "-").replace(".", ""); // "YYYY-MM-DD" 형식으로 변환
+  
       const response = await axios.post(
         "https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/project/create",
         {
@@ -387,9 +409,10 @@ export const ShareUpload = () => {
           project_category: platform,
           link: githubUrl,
           image: imageUrl,
+          create_data: createData,
         }
       );
-
+  
       if (response.status === 200 && response.data) {
         alert("프로젝트가 성공적으로 업로드되었습니다!");
         setTitle("");
@@ -400,29 +423,18 @@ export const ShareUpload = () => {
         setImage(null);
         setGithubUrl("");
         setReadmeContent("");
-
+  
         navigate("/share");
-      }else {
+      } else {
         throw new Error("업로드 실패");
       }
     } catch (error) {
-      alert(`업로드에 실패했습니다: ${error.message}`);
       setIsUploading(false);
     }
   };
 
-  const isUploadDisabled =
-  !title ||
-  !subtitle ||
-  !platform ||
-  projectType.length === 0 ||
-  !projectTag ||
-  !image ||
-  !githubUrl ||
-  isUploading;
-
   const tagOptions = ["캡스톤 디자인", "졸업 작품", "학술제", "기타 프로젝트"]
-  const platformOptions = ["Web", "Mobile", "AI", "Game"];
+  const platformOptions = ["Web", "App", "AI", "Game"];
   const frameworkOptions = [
     "Java Script",
     "Java",
@@ -485,7 +497,7 @@ export const ShareUpload = () => {
             <InputFrame>유형</InputFrame>
             <SubInputFrame>
               <TagListFrame>
-                <Dropdown
+                <OptionDropdown
                   label="유형 선택"
                   value={projectTag}
                   options={tagOptions}
@@ -502,13 +514,13 @@ export const ShareUpload = () => {
             <InputFrame>플랫폼</InputFrame>
             <SubInputFrame>
               <TagListFrame>
-                <Dropdown
+                <OptionDropdown
                   label="플랫폼 선택"
                   value={platform}
                   options={platformOptions}
                   onChange={handlePlatformChange}
                 />
-                <Dropdown
+                <OptionDropdown
                   label="프레임워크 선택"
                   value={projectType}
                   options={frameworkOptions}

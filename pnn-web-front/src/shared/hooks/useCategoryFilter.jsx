@@ -3,7 +3,7 @@ import { categoryData } from "../data/categoryData";
 
 export const useCategoryFilter = (data) => {
   const originalData = data;
-  const [projets, setProjects] = useState(originalData);
+  const [projects, setProjects] = useState(originalData);
   const [selectedPlatform, setSelectedPlatform] = useState("ALL");
   const [searchText, setSearchText] = useState("");
   const [selectedItemList, setSelectedItemList] = useState(["All"]);
@@ -73,7 +73,7 @@ export const useCategoryFilter = (data) => {
     selectedItemList,
     selectedPlatform,
     categoryList,
-    projets,
+    projects,
     handleSetCategorys,
     onChangeSearchText,
     addSelectedItemList,
