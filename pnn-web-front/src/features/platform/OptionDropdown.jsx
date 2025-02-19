@@ -1,5 +1,12 @@
 import React from "react";
-import { FormControl, InputLabel, Select, MenuItem, Chip, Box } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Chip,
+  Box,
+} from "@mui/material";
 import styled from "styled-components";
 
 const StyledFormControl = styled(FormControl)`
@@ -30,9 +37,8 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 const StyledChip = styled(Chip)`
-  
   background-color: #f5f5f5;
-  
+
   &:hover {
     background-color: #e0e0e0;
   }
@@ -48,7 +54,13 @@ const menuProps = {
   disableScrollLock: true,
 };
 
-export const Dropdown = ({ label, options, value, onChange, multiple = false }) => (
+export const Dropdown = ({
+  label,
+  options,
+  value,
+  onChange,
+  multiple = false,
+}) => (
   <StyledFormControl variant="outlined">
     <InputLabel>{label}</InputLabel>
     <Select
@@ -57,13 +69,17 @@ export const Dropdown = ({ label, options, value, onChange, multiple = false }) 
       onChange={onChange}
       label={label}
       MenuProps={menuProps}
-      renderValue={multiple ? (selected) => (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-          {selected.map((value) => (
-            <StyledChip key={value} label={value} />
-          ))}
-        </Box>
-      ) : undefined}
+      renderValue={
+        multiple
+          ? (selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value) => (
+                  <StyledChip key={value} label={value} />
+                ))}
+              </Box>
+            )
+          : undefined
+      }
     >
       {!multiple && (
         <MenuItem value="" disabled>
@@ -71,8 +87,8 @@ export const Dropdown = ({ label, options, value, onChange, multiple = false }) 
         </MenuItem>
       )}
       {options.map((option, index) => (
-        <MenuItem key={index} value={option}>
-          {option}
+        <MenuItem key={index} value={option.title}>
+          {option.title}
         </MenuItem>
       ))}
     </Select>

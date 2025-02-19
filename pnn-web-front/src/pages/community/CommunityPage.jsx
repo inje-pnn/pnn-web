@@ -12,9 +12,16 @@ import { Pagination } from "@mui/material";
 
 const Container = styled.div`
   display: flex;
-  position: relative;
-  width: 100%;
+  justify-content: center;
+  height: auto;
+  padding: 16px;
+  margin-top: 50px;
+  background-color: #f2f5f8;
   flex-direction: column;
+  @media (max-width: 768px) {
+    margin-top: 8vh;
+    padding: 8px;
+  }
 `;
 const BoardTitleContainer = styled.div`
   display: flex;
@@ -36,7 +43,7 @@ const BoardContainer = styled.div`
   flex-direction: column;
   .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개씩 */
+    grid-template-columns: repeat(1, 1fr); /* 한 줄에 3개씩 */
     gap: 16px; /* 카드 간격 */
     width: 60%; /* 내부 그리드 컨테이너 너비 */
     height: auto; /* 높이는 카드 내용에 따라 자동 조절 */
@@ -53,6 +60,47 @@ const FilterContainer = styled.div`
 const TitleImg = styled.img`
   width: 250px;
   height: 250px;
+`;
+const PageContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+`;
+const HeaderFrame = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20%;
+  margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    padding: 20px 0;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    color: #666;
+    margin-top: 8px;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
 `;
 
 export const CommunityPage = () => {
@@ -73,25 +121,32 @@ export const CommunityPage = () => {
   } = useCategoryFilter(getStudyBoardList);
   const [paginationList, setPaginationList] = useState(projets);
   useEffect(() => {
-    setPaginationList(projets.slice(0, 12));
+    setPaginationList(projets?.slice(0, 6));
   }, [projets]);
   const handlePageNation = (e, v) => {
-    const arr = projets.slice((v - 1) * 12, (v - 1) * 12 + 12);
+    const arr = projets?.slice((v - 1) * 6, (v - 1) * 6 + 6);
     setPaginationList(arr);
   };
   return (
     <Container>
       <FloatingMenuBar />
-      <UploadButton path={"/community/study/upload"} />
+      {user.authority === 0 || user.authority === 1 ? (
+        <UploadButton path={"/community/study/upload"} />
+      ) : null}
+
       <ScrollToTopButton />
-      <BoardTitleContainer>
+      {/* <BoardTitleContainer>
         <h1>
           커뮤니티 페이지입니다.
           <br />
           개발 이야기를 공유해보세요.
         </h1>
         <TitleImg src="src/assets/images/community_test.png" />
-      </BoardTitleContainer>
+      </BoardTitleContainer> */}
+      <HeaderFrame>
+        <h1>IT 스터디 둘러보기</h1>
+        <p>IT의 다양한 지식을 공유하고, 지식을 얻어가세요.</p>
+      </HeaderFrame>
       <FilterContainer>
         <CommunityFilter
           title={"스터디"}
@@ -108,13 +163,15 @@ export const CommunityPage = () => {
       <BoardContainer>
         <div className="grid-container">
           {paginationList?.map((v, index) => {
-            if (index < 12) {
+            if (index < 6) {
               return <CardBoardItem item={v} key={`${v.serial_number}card`} />;
             }
           })}
         </div>
       </BoardContainer>
-      <Pagination count={projets?.length / 12} onChange={handlePageNation} />
+      <PageContainer>
+        <Pagination count={projets?.length / 6} onChange={handlePageNation} />
+      </PageContainer>
     </Container>
   );
 };

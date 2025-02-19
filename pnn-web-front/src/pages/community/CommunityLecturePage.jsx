@@ -3,6 +3,9 @@ import { FloatingMenuBar } from "../../features/community/FloatingMenuBar";
 import { UploadButton } from "../../features/platform/UploadButton";
 import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
 import { CommunityAccordianCard } from "../../features/community/CommunityAccordianCard";
+import { communityApi } from "../../shared/api/communityApi";
+import { useEffect, useState } from "react";
+import useUserStore from "../../shared/store/useUserStroe";
 
 const Container = styled.div`
   display: flex;
@@ -44,9 +47,19 @@ const TitleImg = styled.img`
 `;
 
 export const CommunityLecturePage = () => {
+  const { getAccountBoardList } = communityApi();
+  const [boardList, setBoardList] = useState([]);
+  const user = useUserStore((state) => state.user);
+  useEffect(() => {
+    getAccountBoardList().then((res) => {
+      setBoardList(res);
+    });
+  }, []);
   return (
     <Container>
-      <UploadButton path={"/community/lecture/upload"} />
+      {user.authority === 0 || user.authority === 1 ? (
+        <UploadButton path={"/community/study/upload"} />
+      ) : null}
       <ScrollToTopButton />
       <BoardTitleContainer>
         <h1>
@@ -59,7 +72,7 @@ export const CommunityLecturePage = () => {
 
       <BoardContainer>
         <FloatingMenuBar />
-        {[...new Array(5)].map(() => (
+        {boardList?.map(() => (
           <CommunityAccordianCard />
         ))}
       </BoardContainer>

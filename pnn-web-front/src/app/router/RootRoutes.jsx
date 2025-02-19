@@ -15,6 +15,7 @@ import { CommunityLecturePage } from "../../pages/community/CommunityLecturePage
 import useUserStore from "../../shared/store/useUserStroe";
 import { useAuth } from "../../shared/hooks/auth/useAuth";
 import { CommunityUploadPage } from "../../pages/community/CommnunityStudyUploadPage";
+import { CommunityDetailPage } from "../../pages/community/CommunityDetailPage";
 
 export const RootRoutes = ({ user }) => {
   return (
@@ -51,11 +52,7 @@ export const RootRoutes = ({ user }) => {
 
       <Route
         path="/community"
-        element={
-          <ProtectedRoute user={user} type="member">
-            <Layout mainContent={<CommunityPage />} />
-          </ProtectedRoute>
-        }
+        element={<Layout mainContent={<CommunityPage />} />}
       />
 
       <Route
@@ -70,7 +67,7 @@ export const RootRoutes = ({ user }) => {
         path="/community/study/upload"
         element={
           <ProtectedRoute user={user} type="member">
-            <Layout mainContent={<CommunityUploadPage />} />
+            <Layout mainContent={<CommunityUploadPage type="study" />} />
           </ProtectedRoute>
         }
       />
@@ -78,10 +75,11 @@ export const RootRoutes = ({ user }) => {
         path="/community/lecture/upload"
         element={
           <ProtectedRoute user={user} type="member">
-            <Layout mainContent={<CommunityUploadPage />} />
+            <Layout mainContent={<CommunityUploadPage type="lecture" />} />
           </ProtectedRoute>
         }
       />
+
       {/* 관리자 페이지 라우트 */}
       <Route path="/admin" element={<Layout mainContent={<AdminPage />} />} />
 
