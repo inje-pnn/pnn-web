@@ -104,7 +104,6 @@ const Introduce = () => {
   return (
     <Container>
       <AnimatedSection ref={section1Ref} className={section1Visible ? 'visible' : ''}>
-        <h1>인사말</h1>
         <h2>『 📖의미 🏫동아리 』</h2>
         <h3>" Programming을 즐기는네트워크라는 뜻을 가진<br/>
         인제대학교 컴퓨터공학부 학술동아리 입니다. "</h3>
