@@ -8,6 +8,7 @@ import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton"
 import { UploadButton } from "../../features/platform/UploadButton";
 import { CommunityFilter } from "../../features/community/CommunityFilter";
 import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
+import { useCategoryFilter } from "../../shared/hooks/useCategoryFilter";
 
 const Container = styled.div`
   display: flex;
@@ -97,7 +98,6 @@ const CardContainer = styled.div`
 `;
 
 export const SharePage = () => {
-  const [selectedPlatform, setSelectedPlatform] = useState("ALL");
   const [isLogin, setIsLogin] = useState(false);
   const [projects, setProjects] = useState([]);
 
@@ -111,16 +111,24 @@ export const SharePage = () => {
       try {
         const projectData = await projectApi.getProjects();
         setProjects(projectData);
-      } catch {}
+      } catch (error) {
+        console.error("프로젝트 데이터를 불러오는 중 오류 발생:", error);
+      }
     };
 
     fetchProjects();
   }, []);
 
-  const filteredProjects =
-    selectedPlatform === "ALL"
-      ? projects
-      : projects.filter((project) => project.platform === selectedPlatform);
+  const {
+    searchText,
+    categoryList,
+    selectedPlatform,
+    selectedItemList,
+    onChangeSearchText,
+    addSelectedItemList,
+    removeSelectedItemList,
+    handleSelectedPlatform,
+  } = useCategoryFilter(projects);
 
   return (
     <Container>
@@ -135,15 +143,22 @@ export const SharePage = () => {
           </p>
         </HeaderFrame>
 
-        <Filter
+        <CommunityFilter
+          title={"프로젝트"}
+          searchText={searchText}
+          categoryList={categoryList}
           selectedPlatform={selectedPlatform}
-          setSelectedPlatform={setSelectedPlatform}
+          selectedItemList={selectedItemList}
+          onChangeSearchText={onChangeSearchText}
+          addSelectedItemList={addSelectedItemList}
+          removeSelectedItemList={removeSelectedItemList}
+          handleSelectedPlatform={handleSelectedPlatform}
         />
 
-        <ProjectNumber>{filteredProjects.length}개의 프로젝트</ProjectNumber>
+        <ProjectNumber>{projects.length}개의 프로젝트</ProjectNumber>
 
         <CardContainer>
-          {filteredProjects.map((project) => (
+          {projects.map((project) => (
             <CardFrame key={project.id} project={project} />
           ))}
         </CardContainer>

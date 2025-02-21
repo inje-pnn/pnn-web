@@ -1,18 +1,13 @@
 import styled from "styled-components";
-import inje from "../assets/images/inje.png";
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import { useState } from "react";
 import Introduce from "../features/about/component/Introuduce";
-import TechStack from "../features/about/component/TechStack";
-import History from "../features/about/component/History";
+import Learning from "../features/about/Learning";
 import Member from "../features/about/component/Member";
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #111111;
+  background-color: white;
   color: white;
   
   @media (max-width: 768px) {
@@ -27,136 +22,168 @@ const Container = styled.div`
     align-items: center;
     justify-content: flex-start;
   }
+
+  @media (min-width: 1440px) {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 2560px) {
+    max-width: 2300px;
+  }
 `;
 
-const ImgFrame = styled.div`
+const Header = styled.div`
   width: 100%;
-  height: auto;
-  position: relative;
-  
-  img {
-    width: 100%;
-    height: 200px;
-    
-    @media (min-width: 768px) {
-      height: 300px;
-    }
-    
-    position: relative;
-    object-fit: cover;
-    object-position: bottom;
+  min-height: 200px;
+  margin-top: 5vh;
+  background-color: #f2f5f8;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px 5% 20px 5%;
+
+  @media (min-width: 768px) {
+    padding: 40px 60px 20px 260px;
   }
-  
+
+  @media (min-width: 1440px) {
+    padding: 40px 10% 20px 10%;
+    min-height: 250px;
+  }
+
+  @media (min-width: 2560px) {
+    padding: 60px 15% 30px 15%;
+    min-height: 300px;
+  }
+`;
+
+const Title = styled.div`
+  text-align: center;
+  margin-bottom: 30px;
+  width: 100%;
+
   h1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    z-index: 1;
     font-size: 24px;
-    
+
     @media (min-width: 768px) {
+      font-size: 28px;
+    }
+
+    @media (min-width: 1440px) {
       font-size: 32px;
     }
-  }
 
-  h4 {
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    z-index: 1;
-    font-size: 16px;
-    text-align: center;
-    width: 90%;
-    
-    @media (min-width: 768px) {
-      font-size: 18px;
-      width: auto;
+    @media (min-width: 2560px) {
+      font-size: 40px;
     }
   }
 `;
 
-function CenteredTabs({ value, handleChange }) {
-  return (
-    <Box sx={{
-      width: '100%',
-      minHeight: { xs: '80px', md: '100px' },
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#111111',
-      borderBottom: '1px solid gray',
-    }}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        centered
-        TabIndicatorProps={{
-          style: { backgroundColor: "#667EEA"}
-        }}
-        sx={{
-          '& .MuiTab-root': {
-            color: 'white',
-            fontSize: { xs: '16px', md: '20px' },
-            padding: { xs: '12px 16px', md: '12px 24px' },
-            minWidth: { xs: '25%', md: 'auto' },
-            flex: { xs: '1', md: 'none' },
-            '&.Mui-selected': {
-              color: '#667EEA'
-            }
-          },
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-around'
-        }}
-      >
-        <Tab label="인사말" />
-        <Tab label="기술스택" />
-        <Tab label="활동" />
-        <Tab label="팀원소개" />
-      </Tabs>
-    </Box>
-  );
- }
- 
- const AboutUs = () => {
-  const [value, setValue] = React.useState(0);
- 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
- 
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+
+  @media (min-width: 1440px) {
+    gap: 30px;
+  }
+
+  @media (min-width: 2560px) {
+    gap: 40px;
+  }
+`;
+
+const RouteButton = styled.button`
+  padding: 12px 24px;
+  border-radius: 20px;
+  background-color: ${props => props.active ? '#667EEA' : 'white'};
+  color: ${props => props.active ? 'white' : 'black'};
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: ${props => props.active ? '#667EEA' : '#e0e0e0'};
+  }
+
+  @media (min-width: 1440px) {
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 25px;
+  }
+
+  @media (min-width: 2560px) {
+    padding: 20px 40px;
+    font-size: 22px;
+    border-radius: 30px;
+  }
+`;
+
+const ContentWrapper = styled.div`
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+
+  @media (min-width: 1440px) {
+    max-width: 1920px;
+  }
+
+  @media (min-width: 2560px) {
+    max-width: 2300px;
+  }
+`;
+
+const AboutUs = () => {
+  const [activeTab, setActiveTab] = useState(0);
+
+  const tabs = [
+    { id: 0, label: "인사말" },
+    { id: 1, label: "행사/활동" },
+    { id: 2, label: "팀원소개" }
+  ];
+
   const renderContent = () => {
-    switch (value) {
+    switch (activeTab) {
       case 0:
         return <Introduce />;
       case 1:
-        return <TechStack />;
+        return <Learning />;
       case 2:
-        return <History />;
-      case 3:
         return <Member />;
       default:
         return <Introduce />;
     }
   };
- 
+
   return (
     <Container>
-      <ImgFrame>
-        <img src={inje} alt="인제대학교" />
-        <h1>소개</h1>
-        <h4>P&N에 대하여 소개합니다</h4>
-      </ImgFrame>
-      <CenteredTabs value={value} handleChange={handleChange} />
-      {renderContent()}
+      <Header>
+        <Title>
+          <h1>P&N Info</h1>
+        </Title>
+        <ButtonContainer>
+          {tabs.map((tab) => (
+            <RouteButton
+              key={tab.id}
+              active={activeTab === tab.id}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </RouteButton>
+          ))}
+        </ButtonContainer>
+      </Header>
+      <ContentWrapper>
+        {renderContent()}
+      </ContentWrapper>
     </Container>
   );
- };
+};
 
 export default AboutUs;

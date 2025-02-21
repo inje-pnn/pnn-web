@@ -45,7 +45,7 @@ const ManagementTeam = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 80px;
   margin-bottom: 30px;
 `;
 
@@ -141,14 +141,21 @@ const StyledH1 = styled.h1`
 const MemberFrame = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 80px;
   justify-items: center; 
 `;
 
 const Member = () => {
   const [members, setMembers] = useState([]);
   const [selectedGrade, setSelectedGrade] = useState(null);
+  const grades = [
+    { id: null, label: "운영진" },
+    { id: 1, label: "1학년" },
+    { id: 2, label: "2학년" },
+    { id: 3, label: "3학년" },
+    { id: 4, label: "4학년" }
+  ];
   const api = memberApi();
 
   const managementTeam = [
@@ -209,18 +216,21 @@ const Member = () => {
 
   // Slider settings
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
-    speed: 500,
-    slidesToShow: 7,
-    slidesToScroll: 1,
+    speed: 1000,
+    slidesToShow: 5,
+    slidesToScroll: 5,
     arrows: true,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 5000,
     pauseOnHover: true,
     variableWidth: false,
     centerMode: false,
     centerPadding: '0px',
+    draggable: false,    // 드래그 비활성화
+    swipe: false,        // 스와이프 비활성화
+    touchMove: false,    // 터치 이동 비활성화
     responsive: [
       {
         breakpoint: 1200,
@@ -264,41 +274,20 @@ const Member = () => {
   return (
     <Container>
       <GradeNavigation>
-        <GradeButton 
-          active={selectedGrade === null}
-          onClick={() => setSelectedGrade(null)}
-        >
-          운영진
-        </GradeButton>
-        <GradeButton 
-          active={selectedGrade === 1}
-          onClick={() => setSelectedGrade(1)}
-        >
-          1학년
-        </GradeButton>
-        <GradeButton 
-          active={selectedGrade === 2}
-          onClick={() => setSelectedGrade(2)}
-        >
-          2학년
-        </GradeButton>
-        <GradeButton 
-          active={selectedGrade === 3}
-          onClick={() => setSelectedGrade(3)}
-        >
-          3학년
-        </GradeButton>
-        <GradeButton 
-          active={selectedGrade === 4}
-          onClick={() => setSelectedGrade(4)}
-        >
-          4학년
-        </GradeButton>
+        {grades.map((grade) => (
+          <GradeButton 
+            key={grade.id ?? 'management'}
+            active={selectedGrade === grade.id}
+            onClick={() => setSelectedGrade(grade.id)}
+          >
+            {grade.label}
+          </GradeButton>
+        ))}
       </GradeNavigation>
 
       {(selectedGrade === null) && (
         <>
-          <StyledH1>운영진</StyledH1>
+          <StyledH1>팀장 및 부팀장</StyledH1>
           <ManagementTeam>
             {managementTeam.map((member, index) => (
               <MemberCard 
@@ -310,7 +299,7 @@ const Member = () => {
             ))}
           </ManagementTeam>
 
-          <StyledH1>헤더</StyledH1>
+          <StyledH1>학년 헤더</StyledH1>
           <StyledSlider {...settings}>
             {headerMembers.map((member, index) => (
               <MemberCard 

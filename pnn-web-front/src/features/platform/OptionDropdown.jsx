@@ -7,6 +7,7 @@ import {
   Chip,
   Box,
 } from "@mui/material";
+import { getImage } from "../../shared/util/image";
 import styled from "styled-components";
 
 const StyledFormControl = styled(FormControl)`
@@ -37,10 +38,9 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 const StyledChip = styled(Chip)`
-  background-color: #f5f5f5;
-
+  background-color: ${(props) => props.bgcolor || "#f5f5f5"};
   &:hover {
-    background-color: #e0e0e0;
+    background-color: ${(props) => props.bgcolor || "#e0e0e0"};
   }
 `;
 
@@ -54,7 +54,7 @@ const menuProps = {
   disableScrollLock: true,
 };
 
-export const Dropdown = ({
+export const OptionDropdown = ({
   label,
   options,
   value,
@@ -73,9 +73,10 @@ export const Dropdown = ({
         multiple
           ? (selected) => (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value) => (
-                  <StyledChip key={value} label={value} />
-                ))}
+                {selected.map((val) => {
+                  const { color } = getImage(val) || {};
+                  return <StyledChip key={val} label={val} bgcolor={color} />;
+                })}
               </Box>
             )
           : undefined

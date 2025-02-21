@@ -89,7 +89,7 @@ export default function Header() {
             <Link to="/community" style={{ textDecoration: "none", color: "black" }}>
               <Button color="inherit">커뮤니티</Button>
             </Link>
-            <Link to="/aboutus" style={{ textDecoration: "none", color: "black" }}>
+            <Link to="/recruiting" style={{ textDecoration: "none", color: "black" }}>
               <Button color="inherit">지원하기</Button>
             </Link>
           </Box>

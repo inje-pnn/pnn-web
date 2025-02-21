@@ -109,7 +109,7 @@ export const CommunityPage = () => {
   const [page, setPage] = useState(0);
   const { getStudyBoardList } = communityApi();
   const {
-    projets,
+    projects,
     searchText,
     categoryList,
     selectedPlatform,

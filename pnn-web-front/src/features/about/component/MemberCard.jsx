@@ -5,8 +5,8 @@ import { BsDatabaseCheck } from "react-icons/bs";
 import pnnlogo from "../../../assets/images/pnnlogo.png";
 
 const Container = styled.div`
-  width: auto; // 이걸 auto 로 안주니까 멤버 프레임에 딱 안맞고 삐져나감
-  height: 500px;
+  width: 280px; // 이걸 auto 로 안주니까 멤버 프레임에 딱 안맞고 삐져나감
+  height: 420px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,6 +14,9 @@ const Container = styled.div`
   color: black;
   padding: 20px;
   transition: transform 0.3s ease;
+  border: 1px solid lightgray;
+  background-color: #f2f5f8;
+  border-radius: 10px;
   
   ${props => props.hover && `
     &:hover {

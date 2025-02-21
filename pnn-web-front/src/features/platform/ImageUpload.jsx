@@ -37,7 +37,6 @@ const PreviewImage = styled.img`
   position: absolute;
   top: 0;
   left: 0;
-  object-fit: cover;
 
   @media (max-width: 768px) {
     object-fit: contain;
