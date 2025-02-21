@@ -5,33 +5,40 @@ export const communityApi = () => {
     "https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/";
   const postStudyBoard = async (data) => {
     console.log(data);
-    // const postData = {
-    //   title: data.title,
-    //   user_id: data.userId,
-    //   type: data.type,
-    //   content_link: data.content_link,
-    // };
-    // try {
-    //   const res = await axios.post(`${path}.post/post_studyboard`, postData);
-    //   if (res.status !== 200) {
-    //     alert("오류가 발생하였습니다.");
-    //   }
-    // } catch (e) {}
-  };
-
-  const postAccountboard = async (data) => {
     const postData = {
-      account_id: data.account,
-      account_password: data.pw,
-      sharer: data.sharer,
-      username: data.name,
+      title: data.title,
+      project_category: data.platform,
+      content_link: data.boardLink,
+      email: data.userEmail,
+      project_type: data.projectType,
+      description: data.subtitle,
+      image: data.imageUrl,
     };
     try {
-      const res = await axios.post(`${path}.post/post_Accontboard`, postData);
+      const res = await axios.post(`${path}post/post_studyboard`, postData);
       if (res.status !== 200) {
         alert("오류가 발생하였습니다.");
       }
     } catch (e) {}
+  };
+
+  const postAccountboard = async (data) => {
+    const postData = {
+      title: data.title,
+      account_id: data.accountId,
+      account_password: data.accountPw,
+      sharer: data.name,
+      username: [],
+      description: data.subtitle,
+      image: data.imageUrl,
+    };
+    console.log(postAccountboard);
+    // try {
+    //   const res = await axios.post(`${path}.post/post_Accontboard`, postData);
+    //   if (res.status !== 200) {
+    //     alert("오류가 발생하였습니다.");
+    //   }
+    // } catch (e) {}
   };
 
   const getStudyBoardList = async () => {
@@ -43,7 +50,8 @@ export const communityApi = () => {
 
   const getAccountBoardList = async () => {
     try {
-      const res = await axios.get(path + "postget_accountboardlist");
+      const res = await axios.get(path + "post/get_accountboardlist");
+      console.log(res.data);
       return res.data;
     } catch {}
   };

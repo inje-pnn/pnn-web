@@ -7,6 +7,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useState } from "react";
 import styled from "styled-components";
+import { Button } from "@mui/material";
 
 const CustomAccordion = muiStyled(Accordion)(({ theme }) => ({
   marginBottom: 20,
@@ -28,8 +29,39 @@ const TitleContainer = styled.div`
   background-color: #f1f1f1;
   opacity: 0.9;
 `;
-export const CommunityAccordianCard = () => {
-  const [isCheckin, setIsCheckin] = useState(false);
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+`;
+const SecretInput = styled.div`
+  display: flex;
+  width: 200px;
+  height: 25px;
+  border-radius: 25px;
+  background-color: #ddd;
+  color: #828282;
+  padding-left: 10px;
+  align-items: center;
+  font-size: 14px;
+  margin-right: 25px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const CustomButton = muiStyled(Button)(({ theme }) => ({
+  background: "#f1f1f1",
+  borderRadius: "20px",
+  width: 80,
+  color: "#000000",
+}));
+
+export const CommunityAccordianCard = ({ data }) => {
+  console.log(data);
+  const [isCheckin, setIsCheckin] = useState(true);
   return (
     <CustomAccordion>
       <CustomAccordionSummary
@@ -38,17 +70,29 @@ export const CommunityAccordianCard = () => {
         id="panel2-header"
       >
         <TitleContainer>
-          <h2>React Native 강의 계정</h2>
-          <h3>계정 공유자 호팔5</h3>
+          <h2>{data.title}</h2>
+          <h3>계정 공유자 {data.sharer}</h3>
+          <p>{data.description}</p>
         </TitleContainer>
       </CustomAccordionSummary>
 
       <AccordionDetails>
         <p>사용중인 유저</p>
-        <p>호팔1 호팔2 호팔3 호팔4</p>
-        <p>id: test1234</p>
-        <p>pw: test1234</p>
-        <p>{isCheckin ? "시용" : "사용완료"} </p>
+        <TextContainer>
+          {data.username.map((v) => (
+            <p>{v}</p>
+          ))}
+        </TextContainer>
+        <TextContainer>
+          id: <SecretInput>{isCheckin ? data.account_id : null}</SecretInput>
+          pw:{" "}
+          <SecretInput>{isCheckin ? data.account_password : null}</SecretInput>
+        </TextContainer>
+        <ButtonContainer>
+          <CustomButton>{isCheckin ? "사용완료" : "사용하기"} </CustomButton>
+        </ButtonContainer>
+
+        {isCheckin}
       </AccordionDetails>
     </CustomAccordion>
   );

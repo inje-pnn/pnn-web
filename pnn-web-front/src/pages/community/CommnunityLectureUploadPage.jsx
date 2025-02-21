@@ -7,6 +7,8 @@ import { ImageUpload } from "../../features/platform/ImageUpload";
 import { uploadImageToFirebase } from "../../shared/util/firebaseImg";
 import { categoryData } from "../../shared/data/categoryData";
 import useUserStore from "../../shared/store/useUserStroe";
+import { communityApi } from "../../shared/api/communityApi";
+import LinkIcon from "@mui/icons-material/Link";
 
 const Container = styled.div`
   display: flex;
@@ -135,7 +137,6 @@ const InputFrame = styled.div`
   border-bottom: solid 1px #e0e0e0;
   width: 12%;
   height: auto;
-
   h4 {
     font-weight: bold;
     margin-bottom: 8px;
@@ -233,20 +234,28 @@ const UploadButton = styled.button`
   }
 `;
 
+const IconContainer = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8px;
+`;
+
 const TITLE_LIMIT = 20;
 const SUBTITLE_LIMIT = 30;
 
-export const CommunityUploadPage = () => {
+export const CommunityLectureUploadPage = ({ type }) => {
+  const { postStudyBoard, postAccountboard } = communityApi();
   const user = useUserStore((state) => state.user);
   const [isUploading, setIsUploading] = useState(false);
   const [image, setImage] = useState(null);
   const [isUploadDisabled, setIsUploadDisabled] = useState(true);
   const [boardData, setBoardData] = useState({
     title: "",
+    accountId: "",
+    accountPw: "",
     subtitle: "",
-    platform: "",
-    projectType: [],
-    projectTag: "",
+    link: "",
   });
 
   useEffect(() => {
@@ -257,24 +266,13 @@ export const CommunityUploadPage = () => {
       boardData.projectType.length === 0 ||
       !boardData.projectTag ||
       isUploading;
+    setIsUploading(!isValiedValue);
 
-    setIsUploadDisabled(isValiedValue);
-    setBoardData((prev) => {
-      const updatedBoardData = { ...prev };
+    setIsUploadDisabled(!isValiedValue);
 
-      if (boardData.title !== prev.title) updatedBoardData.title = title;
-      if (boardData.subtitle !== prev.subtitle)
-        updatedBoardData.subtitle = subtitle;
-      if (boardData.platform !== prev.platform)
-        updatedBoardData.platform = platform;
-      if (boardData.projectType !== prev.projectType)
-        updatedBoardData.projectType = projectType;
-      if (boardData.projectTag !== prev.projectTag)
-        updatedBoardData.projectTag = projectTag;
-      if (image !== prev.image) updatedBoardData.image = image;
-
-      return updatedBoardData;
-    });
+    const urlRegex =
+      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+    urlRegex.test(boardData.boardLink);
   }, [boardData, image]);
 
   const navigate = useNavigate();
@@ -283,34 +281,27 @@ export const CommunityUploadPage = () => {
     setIsUploading(true);
     try {
       const imageUrl = await uploadImageToFirebase(image);
-
-      const response = await axios.post(
-        "https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/project/create",
-        {
-          memberid: user.id,
-          title: title,
-          sub_title: subtitle,
-          project_tag: projectTag,
-          project_type: projectType,
-          project_category: platform,
-          link: githubUrl,
-          image: imageUrl,
-        }
-      );
+      if (type === "study") {
+        postStudyBoard({
+          ...boardData,
+          userEmail: user.email,
+          imageUrl: imageUrl,
+        });
+      }
 
       if (response.status === 200 && response.data) {
         alert("프로젝트가 성공적으로 업로드되었습니다!");
         setBoardData({
           title: "",
+          accountId: "",
+          accountPw: "",
           subtitle: "",
-          platform: "",
-          projectType: [],
-          projectTag: "",
+          link: "",
         });
 
         setImage(null);
 
-        navigate("/commnuty/study");
+        navigate("/commnuty/lecture");
       } else {
         throw new Error("업로드 실패");
       }
@@ -321,7 +312,6 @@ export const CommunityUploadPage = () => {
   };
 
   const handleBoardData = (data, setData, type) => {
-    console.log(data, setData, type);
     setData((prev) => ({ ...prev, [type]: data }));
   };
 
@@ -374,35 +364,60 @@ export const CommunityUploadPage = () => {
             </SubInputFrame>
           </WrapperFrame>
         </InputContainer>
-
-        <SubTitleFrame>태그 선택</SubTitleFrame>
+        <SubTitleFrame>
+          링크 입력
+          <IconContainer>
+            <LinkIcon />
+          </IconContainer>
+        </SubTitleFrame>
         <InputContainer>
           <WrapperFrame>
-            <InputFrame>플랫폼</InputFrame>
+            <InputFrame>링크</InputFrame>
             <SubInputFrame>
               <TagListFrame>
-                <Dropdown
-                  label="플랫폼 선택"
-                  value={boardData.platform}
-                  options={categoryData.product}
+                <GlobalInput
+                  type="text"
+                  placeholder="주소를 입력하세요"
+                  value={boardData.link}
                   onChange={(e) =>
-                    handleBoardData(e.target.value, setBoardData, "platform")
+                    handleBoardData(e.target.value, setBoardData, "link")
                   }
-                />
-                <Dropdown
-                  label="프레임워크 선택"
-                  value={boardData.projectType}
-                  options={categoryData.framwork}
-                  onChange={(e) =>
-                    handleBoardData(e.target.value, setBoardData, "projectType")
-                  }
-                  multiple={true}
+                  isOverLimit={boardData.link.length >= TITLE_LIMIT}
                 />
               </TagListFrame>
             </SubInputFrame>
           </WrapperFrame>
         </InputContainer>
-
+        <SubTitleFrame>
+          <h4>계정 정보</h4>
+        </SubTitleFrame>
+        <InputContainer>
+          <WrapperFrame>
+            <InputFrame>계정 정보</InputFrame>
+            <SubInputFrame>
+              <TagListFrame>
+                <GlobalInput
+                  type="text"
+                  placeholder="ID를 입력하세요"
+                  value={boardData.accountId}
+                  onChange={(e) =>
+                    handleBoardData(e.target.value, setBoardData, "accountId")
+                  }
+                  isOverLimit={boardData.accountId.length >= TITLE_LIMIT}
+                />
+                <GlobalInput
+                  type="text"
+                  placeholder="PW를 입력하세요"
+                  value={boardData.accountPw}
+                  onChange={(e) =>
+                    handleBoardData(e.target.value, setBoardData, "accountPw")
+                  }
+                  isOverLimit={boardData.accountPw.length >= TITLE_LIMIT}
+                />
+              </TagListFrame>
+            </SubInputFrame>
+          </WrapperFrame>
+        </InputContainer>
         <SubTitleFrame>사진 등록</SubTitleFrame>
         <InputContainer>
           <WrapperFrame>

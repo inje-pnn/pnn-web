@@ -16,7 +16,7 @@ const Container = styled.div`
   cursor: pointer;
 `;
 const CardContainer = styled.div`
-  width: 60%;
+  width: 40%;
   height: 100%;
   padding: 20px;
   overflow: hidden;
@@ -38,12 +38,13 @@ const CardContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
+  width: 60%;
   height: 100%;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 `;
 const CustomChip = muiStyled(Chip)(({ color }) => ({
+  display: "relative",
   width: "auto",
   height: 20,
   backgroundColor: `${color}`,
@@ -70,14 +71,22 @@ const CardInfoContainer = styled.div`
   color: #666;
   padding-right: 10px;
 `;
+
+const ChipContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+  overflow-x: auto;
+  width: 100%;
+  height: auto;
+`;
 export const CardBoardItem = ({ item }) => {
   const navigation = useNavigate();
+  console.log(item);
   const onClickCard = () => {
-    window.location.href =
-      "https://www.notion.so/RAF-43c1505d09d0447ca822da3c96e9db37?pvs=4";
+    window.location.href = item.content_link;
   };
   const formatDate = (isoString) => {
-    console.log(isoString);
     const cleanString = isoString?.split(".")[0]; // 마이크로초 제거
     const date = new Date(cleanString);
     return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(
@@ -89,21 +98,21 @@ export const CardBoardItem = ({ item }) => {
   return (
     <Container className="card-item" onClick={onClickCard}>
       <CardContainer>
-        <CardImage src="src/assets/images/community_test.png" />
+        <CardImage src={item.imgae} />
       </CardContainer>
       <CardContent>
         <h3>{item.title}</h3>
         <CardDescription>{item.description}</CardDescription>
-
-        {item.project_type.map((v) => {
-          return <CustomChip label={v} />;
-        })}
-
+        <ChipContainer>
+          {item.project_type.map((v) => {
+            return <CustomChip label={v} />;
+          })}
+        </ChipContainer>
         <CardInfoContainer>
           <span>
             {item.category}WEB {formatDate(item.created_at)}
           </span>
-          <span>Editor · 김재민</span>
+          <span>Editor · {item.username}</span>
         </CardInfoContainer>
       </CardContent>
     </Container>

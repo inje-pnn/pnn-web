@@ -256,7 +256,6 @@ export const CommunityUploadPage = ({ type }) => {
     boardLink: "",
     platform: "",
     projectType: [],
-    projectTag: "",
   });
 
   useEffect(() => {
@@ -283,7 +282,11 @@ export const CommunityUploadPage = ({ type }) => {
     try {
       const imageUrl = await uploadImageToFirebase(image);
       if (type === "study") {
-        postStudyBoard({ ...boardData, userId: user.id, imageUrl: imageUrl });
+        postStudyBoard({
+          ...boardData,
+          userEmail: user.email,
+          imageUrl: imageUrl,
+        });
       }
 
       if (response.status === 200 && response.data) {
@@ -293,7 +296,6 @@ export const CommunityUploadPage = ({ type }) => {
           subtitle: "",
           platform: "",
           projectType: [],
-          projectTag: "",
         });
 
         setImage(null);

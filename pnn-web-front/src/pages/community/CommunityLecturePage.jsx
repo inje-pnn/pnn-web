@@ -9,9 +9,44 @@ import useUserStore from "../../shared/store/useUserStroe";
 
 const Container = styled.div`
   display: flex;
-
+  padding: 16px;
+  margin-top: 50px;
   width: 100%;
   flex-direction: column;
+`;
+const HeaderFrame = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20%;
+  margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    padding: 20px 0;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    color: #666;
+    margin-top: 8px;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
 `;
 const BoardTitleContainer = styled.div`
   display: flex;
@@ -49,6 +84,7 @@ const TitleImg = styled.img`
 export const CommunityLecturePage = () => {
   const { getAccountBoardList } = communityApi();
   const [boardList, setBoardList] = useState([]);
+
   const user = useUserStore((state) => state.user);
   useEffect(() => {
     getAccountBoardList().then((res) => {
@@ -61,19 +97,16 @@ export const CommunityLecturePage = () => {
         <UploadButton path={"/community/study/upload"} />
       ) : null}
       <ScrollToTopButton />
-      <BoardTitleContainer>
-        <h1>
-          강의 페이지입니다.
-          <br />
-          정보를 공유 해봐요.
-        </h1>
-        <TitleImg src="src/assets/images/community_test.png" />
-      </BoardTitleContainer>
+
+      <HeaderFrame>
+        <h1>IT 강의 계정 </h1>
+        <p>IT의 다양한 지식을 공유하고, 지식을 얻어가세요.</p>
+      </HeaderFrame>
 
       <BoardContainer>
         <FloatingMenuBar />
-        {boardList?.map(() => (
-          <CommunityAccordianCard />
+        {boardList?.map((v) => (
+          <CommunityAccordianCard data={v} />
         ))}
       </BoardContainer>
     </Container>
