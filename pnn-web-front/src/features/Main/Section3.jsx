@@ -1,4 +1,3 @@
-// sections/Section3.jsx
 import styled from "styled-components";
 import { useRef, useEffect, useState } from "react";
 import pnn1 from "../../assets/images/pnn1.jpeg";
@@ -39,18 +38,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* center 대신 flex-start 사용 */
   background-color: white;
   position: relative;
-  padding: 0 20px;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  padding: 40px 20px; /* 상하 패딩 추가 */
+  /* overflow-y 스크롤 제거 */
+  overflow: visible;
 `;
 
 const ContentContainer = styled.div`
@@ -81,7 +74,7 @@ const AnimatedSection = styled.div`
   }
 
   &:last-child {
-    margin-bottom: 0;
+    margin-bottom: 40px; /* 마지막 섹션 마진 조정 */
   }
 `;
 
@@ -129,6 +122,7 @@ const CardGrid = styled.div`
   }
 `;
 
+// 나머지 스타일 컴포넌트는 동일
 const Card = styled.div`
   background: white;
   border-radius: 20px;
@@ -185,31 +179,6 @@ const CardText = styled.p`
   word-break: keep-all;
 `;
 
-const MoreInfoButton = styled.button`
-  display: block;
-  margin: 0 auto;
-  padding: 15px 40px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: white;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-  }
-
-  @media (min-width: 768px) {
-    padding: 18px 50px;
-    font-size: 1.2rem;
-  }
-`;
-
 const ImageBox = ({ img, title, text }) => {
   return (
     <Card>
@@ -225,8 +194,12 @@ const ImageBox = ({ img, title, text }) => {
 };
 
 const Section3 = () => {
-  const [section1Ref, section1Visible] = useIntersectionObserver();
-  const [section2Ref, section2Visible] = useIntersectionObserver();
+  const [section1Ref, section1Visible] = useIntersectionObserver({
+    threshold: 0.1, // 10%만 보여도 활성화
+  });
+  const [section2Ref, section2Visible] = useIntersectionObserver({
+    threshold: 0.1,
+  });
 
   return (
     <Container>
@@ -259,7 +232,6 @@ const Section3 = () => {
               text="동아리가 주최하는 해커톤에서는 밤새 코딩하며 아이디어를 현실로 만드는 열정 가득한 순간을 경험할 수 있습니다."
             />
           </CardGrid>
-          <MoreInfoButton>More Info</MoreInfoButton>
         </AnimatedSection>
 
         <AnimatedSection
@@ -289,7 +261,6 @@ const Section3 = () => {
               text="특정 기술이나 프로젝트에 관심 있는 부원들이 모여 함께 공부하고 성장하는 소규모 스터디를 운영합니다."
             />
           </CardGrid>
-          <MoreInfoButton>More Info</MoreInfoButton>
         </AnimatedSection>
       </ContentContainer>
     </Container>

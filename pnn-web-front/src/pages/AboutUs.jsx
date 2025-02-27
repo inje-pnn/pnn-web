@@ -26,7 +26,6 @@ const Container = styled.div`
   @media (min-width: 1440px) {
     max-width: 1920px;
     margin: 0 auto;
-    border: 3px solid red;
   }
 
   @media (min-width: 2560px) {
@@ -55,7 +54,6 @@ const Header = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid green;
   }
 
   @media (min-width: 2560px) {
