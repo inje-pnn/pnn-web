@@ -20,10 +20,6 @@ const Container = styled.div`
 const Main = styled.div`
   width: 100%;
   min-height: 92dvh; // height를 min-height로 변경
-  
-  @media (min-width: 768px) {
-    width: 1920px;
-  }
 `;
 
 // const BannerFrame = styled.div`
@@ -47,15 +43,15 @@ const Main = styled.div`
 const Layout = ({ mainContent }) => {
   const isAdmin = mainContent.type.name.search("Admin");
   const location = useLocation();
-  const isMainPage = location.pathname === '/';
+  const isMainPage = location.pathname === "/";
 
   return (
     <Container>
       {/* 헤더는 항상 표시 */}
       {isAdmin === 0 ? <AdminSideNavBar /> : <Header />}
-      
+
       <Main>{mainContent}</Main>
-      
+
       {/* 메인 페이지가 아닐 때만 배너와 푸터 표시 */}
       {!isMainPage && (
         <>
