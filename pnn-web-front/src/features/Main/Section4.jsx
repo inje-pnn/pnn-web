@@ -204,7 +204,7 @@ const Section4 = () => {
     {
       year: "2020",
       title: "P&N 설립",
-      description: "혁신적인 서비스를 제공하기 위해 P&N이 설립되었습니다..",
+      description: "혁신적인 서비스를 제공하기 위해 P&N이 설립되었습니다.",
       position: "right",
     },
     {
