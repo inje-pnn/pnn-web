@@ -16,7 +16,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: #f3f4f6;
+  background-color: #f2f5f8;
   padding-bottom: 50px;
   width: 100%;
   margin-top: 5vh;
@@ -31,10 +31,9 @@ const ImageFrame = styled.img`
   max-width: 1200px;
   width: 90%;
   height: 580px;
-  margin: 40px 0 40px 0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  
-  display: block;    
+  margin: 40px 0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
 
   @media (max-width: 768px) {
     height: 300px;

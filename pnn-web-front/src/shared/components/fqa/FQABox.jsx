@@ -77,7 +77,7 @@ const QuestionText = styled.div`
   color: #525252;
   
   @media (max-width: 768px) {
-    font-size: 16px;
+    font-size: 15px;
     gap: 10px;
   }
 `;
