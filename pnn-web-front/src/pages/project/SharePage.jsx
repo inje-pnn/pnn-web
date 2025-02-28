@@ -15,8 +15,7 @@ const Container = styled.div`
   justify-content: center;
   height: auto;
   padding: 16px;
-  margin-top: 50px;
-  background-color: #f2f5f8;
+  margin-top: 30px;
 
   @media (max-width: 768px) {
     margin-top: 8vh;
@@ -28,6 +27,7 @@ const Frame = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 1238px;
 
   @media (max-width: 768px) {
@@ -36,14 +36,25 @@ const Frame = styled.div`
 `;
 
 const HeaderFrame = styled.div`
-  width: 100%;
+  width: 100vw;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  background-color: #f2f5f8;
   padding: 40px 0;
   margin-bottom: 30px;
 
   @media (max-width: 768px) {
     padding: 20px 0;
+  }
+`;
+
+const InnerHeaderFrame = styled.div`
+  width: 100%;
+  max-width: 1238px;
+  height: 120px;
+
+  @media (max-width: 768px) {
+    padding-left: 20px;
   }
 
   h1 {
@@ -55,7 +66,7 @@ const HeaderFrame = styled.div`
     gap: 10px;
 
     @media (max-width: 768px) {
-      font-size: 24px;
+      font-size: 20px;
     }
   }
 
@@ -70,6 +81,7 @@ const HeaderFrame = styled.div`
   }
 `;
 
+
 const ProjectNumber = styled.div`
   width: 100%;
   height: 50px;
@@ -77,6 +89,7 @@ const ProjectNumber = styled.div`
   flex-direction: column;
   align-items: flex-end;
   color: #bebec1;
+  margin-bottom: 20px;
 
   @media (max-width: 768px) {
     align-items: center;
@@ -94,8 +107,10 @@ const CardContainer = styled.div`
     grid-template-columns: 1fr;
     gap: 50px 30px;
     margin: 20px 0 50px 0px;
+    justify-items: center;
   }
 `;
+
 
 export const SharePage = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -133,16 +148,15 @@ export const SharePage = () => {
   return (
     <Container>
       <Frame>
-        <HeaderFrame>
-          <h1>
-            <FolderOpenOutlinedIcon fontSize="large" color="primary" />
-            P&N에서 진행된 프로젝트 둘러보기
-          </h1>
-          <p>
-            다양한 플랫폼에서 진행된 프로젝트를 확인하고, 영감을 얻어보세요.
-          </p>
-        </HeaderFrame>
-
+      <HeaderFrame>
+  <InnerHeaderFrame>
+    <h1>
+      <FolderOpenOutlinedIcon fontSize="large" color="primary" />
+      P&N에서 진행된 프로젝트 둘러보기
+    </h1>
+    <p>다양한 플랫폼에서 진행된 프로젝트를 확인하고, 영감을 얻어보세요.</p>
+  </InnerHeaderFrame>
+</HeaderFrame>
         <CommunityFilter
           title={"프로젝트"}
           searchText={searchText}

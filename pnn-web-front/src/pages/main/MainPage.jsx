@@ -1,431 +1,240 @@
-// 필요한 라이브러리와 컴포넌트 import
-import { useNavigate } from "react-router-dom";
+// MainPage.jsx - 모바일 최적화
 import styled from "styled-components";
-import { useEffect, useState, useRef, createRef } from "react";
-import computer from "../../assets/video/computer.mp4";
-import { Opacity } from "@mui/icons-material";
+import { useEffect, useState, useRef } from "react";
+import Section1 from "../../features/Main/Section1";
+import Section2 from "../../features/Main/Section2";
+import Section3 from "../../features/Main/Section3";
+import Section4 from "../../features/Main/Section4";
+import Footer from "../../widgets/layout/Footer/Footer";
 
-// 메인 페이지의 전체 래퍼 컴포넌트
-// min-height를 100vh로 설정하여 최소한 화면 높이만큼 확보
-const MainWrapper = styled.div`
+const PageContainer = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: scroll;
   position: relative;
-  overflow-x: hidden;
-    font-family: 'Arial', sans-serif; // 원하는 기본 폰트를 여기에 지정
+  background-color: rgba(237, 235, 236, 1);
+
+  /* 애니메이션 제거 */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  /* 모바일 뷰 최적화 */
+  @media (max-width: 768px) {
+    height: 100%; /* 모바일에서는 높이 제한 없애기 */
+    overflow-x: hidden; /* 가로 스크롤 방지 */
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
-// 스크롤 가능한 영역을 생성하는 컨테이너
-const ScrollContainer = styled.div`
+const Section = styled.section`
   width: 100%;
-  height: 600%;  // 20개 섹션을 위해 2000vh로 변경
   position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
+
+  /* PC 환경에서는 이전 스타일 유지, Section4도 auto로 변경 */
+  height: ${(props) =>
+    props.id === "section3" || props.id === "section4" ? "auto" : "100vh"};
+  min-height: ${(props) =>
+    props.id === "section3" || props.id === "section4" ? "100vh" : "auto"};
+  overflow: ${(props) =>
+    props.id === "section3" || props.id === "section4" ? "visible" : "hidden"};
+
+  /* 모바일 환경에서는 모든 섹션 높이 자동 조정 */
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: ${(props) =>
+      props.id === "section1" || props.id === "section2" ? "100vh" : "auto"};
+    padding: ${(props) =>
+      props.id === "section3" || props.id === "section4" ? "40px 0" : "0"};
+    overflow: visible; /* 모든 섹션에서 오버플로우 제거 */
+    display: flex; /* 모바일에서 플렉스 레이아웃 사용 */
+    flex-direction: column; /* 세로 방향으로 정렬 */
+  }
 `;
 
-// 배경 비디오를 위한 스타일 컴포넌트
-// fixed 포지션으로 화면에 고정되며, 전체 화면을 커버
-const VideoBackground = styled.video`
+// 페이지 내비게이션
+const PageNavigation = styled.div`
   position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -1;
-  object-fit: cover;
-`;
-
-const Letter = styled.span`
-  position: fixed;
-  font-size: ${props => props.fontSize}px;
-  color: white;
-  z-index: 1;
-  transition: all 0.5s ease;
-  transform-origin: center center;
-  pointer-events: none;
-  white-space: nowrap;  // 텍스트가 길어져도 한 줄로 유지
-  
-  top: ${props => props.top}%;
-  left: ${props => props.left}%;
-  transform: translate(-50%, -50%);
-`;
-
-const Sentence = styled.span`
-  position: fixed;
-  font-size: ${props => props.fontSize}px;
-  color: rgba(255, 255, 255, ${props => props.opacityValue}); // opacity 대신 color의 alpha 값으로 변경
-  z-index: 1;
-  transition: all 0.8s ease;
-  transform-origin: center center;
-  pointer-events: none;
-  white-space: nowrap;
-  
-  top: ${props => props.top}%;
-  left: ${props => props.left}%;
-  transform: translate(-50%, -50%);
-`;
-
-// 각 섹션을 위한 스타일 컴포넌트
-// 높이를 100vh로 설정하여 전체 화면 높이를 차지
-const Section = styled.div`
-  height: 50vh;
-  width: 100%;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 24px;
-  position: relative;
+  flex-direction: column;
+  gap: 15px;
+
+  @media (max-width: 768px) {
+    right: 10px;
+    gap: 12px;
+    /* 모바일에서 탭 영역 확대 */
+    & > div {
+      padding: 5px;
+      margin: -5px;
+    }
+  }
 `;
 
-// Intersection Observer의 관찰 대상이 될 요소
-// top prop으로 위치 조절 가능
-const Observer = styled.div`
-  position: absolute;
-  top: ${props => props.top}%;
-  height: 1px;
-  width: 100%;
-  background: transparent;
-`;
-
-const ApplyButton = styled.button`
-  position: fixed;
-  padding: 10px 20px;
-  font-size: 18px;
-  background-color: transparent;
-  color: white;
-  border: 2px solid white;
+const NavDot = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: ${(props) => (props.active ? "#000" : "#ccc")};
   cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10;
-  opacity: ${props => props.visible ? 1 : 0};
-  visibility: ${props => props.visible ? 'visible' : 'hidden'};
-  
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+  transition: background-color 0.3s ease;
+
+  @media (min-width: 768px) {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* 모바일에서는 더 작게 */
+  @media (max-width: 768px) {
+    width: 10px;
+    height: 10px;
+  }
+`;
+
+// 모바일에서 푸터 위치 조정
+const FooterWrapper = styled.div`
+  width: 100%;
+
+  @media (max-width: 768px) {
+    position: relative;
+    z-index: 10;
   }
 `;
 
 export const MainPage = () => {
+  // 현재 활성화된 섹션
+  const [activeSection, setActiveSection] = useState(0);
+  // 모바일 감지
+  const [isMobile, setIsMobile] = useState(false);
 
-  const navigate = useNavigate();
-  const [isLastSectionVisible, setIsLastSectionVisible] = useState(false);
+  // 페이지 컨테이너 ref
+  const pageContainerRef = useRef(null);
 
-  // 각 글자의 스타일과 내용을 함께 관리
-  const sectionAnimations = {
-    1: {
-      letters: {
-        letter1: { text: "P", fontSize: 400, top: 50, left: 35 },
-        letter2: { text: "N", fontSize: 400, top: 50, left: 50 },
-        letter3: { text: "N", fontSize: 400, top: 50, left: 65 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 30, top: 60, left: 35, opacityValue: 0 },
-        sentence2: { text: "And", fontSize: 30, top: 60, left: 50, opacityValue: 0 },
-        sentence3: { text: "Network", fontSize: 30, top: 60, left: 65, opacityValue: 0 }
+  // 섹션 refs
+  const sectionRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+
+  // 모바일 감지
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
+
+  // 스크롤 이벤트 핸들러 - 모바일 최적화
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!pageContainerRef.current) return;
+
+      const scrollPosition = pageContainerRef.current.scrollTop;
+      const windowHeight = window.innerHeight;
+
+      // 현재 보이는 섹션 확인
+      let currentSection = 0;
+
+      // 모바일에서는 스크롤 위치에 따라 다르게 감지
+      const threshold = isMobile ? windowHeight / 3 : windowHeight / 2;
+
+      sectionRefs.forEach((ref, index) => {
+        if (!ref.current) return;
+
+        const sectionTop = ref.current.offsetTop;
+
+        // 모바일에서 섹션3과 섹션4는 높이가 가변적이므로 특별 처리
+        if (isMobile && (index === 2 || index === 3)) {
+          const sectionHeight = ref.current.offsetHeight;
+          const sectionMiddle = sectionTop + sectionHeight / 2;
+
+          // 스크롤 위치가 섹션 중간점 근처에 있으면 해당 섹션 활성화
+          if (Math.abs(scrollPosition - sectionMiddle) < sectionHeight / 2) {
+            currentSection = index;
+          }
+        } else if (scrollPosition >= sectionTop - threshold) {
+          currentSection = index;
+        }
+      });
+
+      setActiveSection(currentSection);
+    };
+
+    const containerElement = pageContainerRef.current;
+    if (containerElement) {
+      containerElement.addEventListener("scroll", handleScroll);
+
+      // 초기 스크롤 위치에 따른 활성 섹션 설정
+      setTimeout(handleScroll, 100);
+    }
+
+    return () => {
+      if (containerElement) {
+        containerElement.removeEventListener("scroll", handleScroll);
       }
-    },
-    2: {
-      letters: {
-        letter1: { text: "P", fontSize: 400, top: 50, left: 35 },
-        letter2: { text: "N", fontSize: 400, top: 50, left: 50 },
-        letter3: { text: "N", fontSize: 400, top: 50, left: 65 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 30, top: 60, left: 35, opacityValue: 0 },
-        sentence2: { text: "And", fontSize: 30, top: 60, left: 50, opacityValue: 0 },
-        sentence3: { text: "Network", fontSize: 30, top: 60, left: 65, opacityValue: 0 }
+    };
+  }, [isMobile]); // isMobile 의존성 추가
+
+  // 섹션으로 스크롤하는 함수 - 모바일 최적화
+  const scrollToSection = (index) => {
+    if (sectionRefs[index]?.current && pageContainerRef.current) {
+      // 모바일에서는 오프셋 약간 조정
+      let offset = 0;
+      if (isMobile && index > 0) {
+        offset = -20; // 상단 여백 확보
       }
-    },
-    3: {
-      letters: {
-        letter1: { text: "P", fontSize: 150, top: 50, left: 35 },
-        letter2: { text: "N", fontSize: 150, top: 50, left: 50 },
-        letter3: { text: "N", fontSize: 150, top: 50, left: 65 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 30, top: 60, left: 35, opacityValue: 0 },
-        sentence2: { text: "And", fontSize: 30, top: 60, left: 50, opacityValue: 0 },
-        sentence3: { text: "Network", fontSize: 30, top: 60, left: 65, opacityValue: 0 }
-      }
-    },
-    4: {
-      letters: {
-        letter1: { text: "P", fontSize: 150, top: 50, left: 25 },
-        letter2: { text: "N", fontSize: 150, top: 50, left: 30 },
-        letter3: { text: "N", fontSize: 150, top: 50, left: 35 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 30, top: 60, left: 35, opacityValue: 0 },
-        sentence2: { text: "And", fontSize: 30, top: 60, left: 50, opacityValue: 0 },
-        sentence3: { text: "Network", fontSize: 30, top: 60, left: 65, opacityValue: 0 }
-      }
-    },
-    5: { // 여기네 ㅅㅂ 레터가 올라가기 시작하는 부분임
-      letters: {
-        letter1: { text: "P", fontSize: 150, top: 25, left: 25 },
-        letter2: { text: "N", fontSize: 150, top: 25, left: 30 },
-        letter3: { text: "N", fontSize: 150, top: 25, left: 35 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 30, top: 60, left: 35, opacityValue: 0 },
-        sentence2: { text: "And", fontSize: 30, top: 60, left: 50, opacityValue: 0 },
-        sentence3: { text: "Network", fontSize: 30, top: 60, left: 65, opacityValue: 0 }
-      }
-    },
-    6: {
-      letters: {
-        letter1: { text: "P", fontSize: 150, top: 25, left: 25 },
-        letter2: { text: "N", fontSize: 150, top: 25, left: 30 },
-        letter3: { text: "N", fontSize: 150, top: 25, left: 35 }
-      },
-      sentences: {  // 여기서부터 sentence 등장이 맞긴 함
-        sentence1: { text: "Programming", fontSize: 150, top: 40, left: 50, opacityValue: 0 },
-        sentence2: { text: "And", fontSize: 150, top: 55, left: 28, opacityValue: 0 },
-        sentence3: { text: "Network", fontSize: 150, top: 70, left: 45, opacityValue: 0 }
-      }
-    },
-    7: {
-      letters: {
-        letter1: { text: "P", fontSize: 150, top: 25, left: 25 },
-        letter2: { text: "N", fontSize: 150, top: 25, left: 30 },
-        letter3: { text: "N", fontSize: 150, top: 25, left: 35 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 150, top: 40, left: 55, opacityValue: 0 },
-        sentence2: { text: "And", fontSize: 150, top: 55, left: 29, opacityValue: 0 },
-        sentence3: { text: "Network", fontSize: 150, top: 70, left: 45, opacityValue: 0 }
-      }
-    },
-    8: {
-      letters: {
-        letter1: { text: "P", fontSize: 150, top: 25, left: 25 },
-        letter2: { text: "N", fontSize: 150, top: 25, left: 30 },
-        letter3: { text: "N", fontSize: 150, top: 25, left: 35 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 150, top: 40, left: 55, opacityValue: 0.5 },
-        sentence2: { text: "And", fontSize: 150, top: 55, left: 29, opacityValue: 0 },
-        sentence3: { text: "Network", fontSize: 150, top: 70, left: 45, opacityValue: 0 }
-      }
-    },
-    9: {
-      letters: {
-        letter1: { text: "P", fontSize: 150, top: 25, left: 25 },
-        letter2: { text: "N", fontSize: 150, top: 25, left: 30 },
-        letter3: { text: "N", fontSize: 150, top: 25, left: 35 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 150, top: 40, left: 55, opacityValue: 1 },
-        sentence2: { text: "And", fontSize: 150, top: 55, left: 29, opacityValue: 0.5 },
-        sentence3: { text: "Network", fontSize: 150, top: 70, left: 46, opacityValue: 0 }
-      }
-    },
-    10: {
-      letters: {
-        letter1: { text: "P", fontSize: 150, top: 25, left: 25 },
-        letter2: { text: "N", fontSize: 150, top: 25, left: 30 },
-        letter3: { text: "N", fontSize: 150, top: 25, left: 35 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 150, top: 40, left: 55, opacityValue: 1 },
-        sentence2: { text: "And", fontSize: 150, top: 55, left: 29, opacityValue: 1 },
-        sentence3: { text: "Network", fontSize: 150, top: 70, left: 46, opacityValue: 0.5 }
-      }
-    },
-    11: {
-      letters: {
-        letter1: { text: "P", fontSize: 150, top: 25, left: 25 },
-        letter2: { text: "N", fontSize: 150, top: 25, left: 30 },
-        letter3: { text: "N", fontSize: 150, top: 25, left: 35 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 150, top: 40, left: 55, opacityValue: 1 },
-        sentence2: { text: "And", fontSize: 150, top: 55, left: 29, opacityValue: 1 },
-        sentence3: { text: "Network", fontSize: 150, top: 70, left: 46, opacityValue: 1 }
-      }
-    },
-    12: {
-      letters: {
-        letter1: { text: "P", fontSize: 150, top: 25, left: 25 },
-        letter2: { text: "N", fontSize: 150, top: 25, left: 30 },
-        letter3: { text: "N", fontSize: 150, top: 25, left: 35 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 150, top: 40, left: 55, opacityValue: 1 },
-        sentence2: { text: "And", fontSize: 150, top: 55, left: 29, opacityValue: 1 },
-        sentence3: { text: "Network", fontSize: 150, top: 70, left: 46, opacityValue: 1 }
-      }
-    },
-    11: {
-      letters: {
-        letter1: { text: "P", fontSize: 150, top: 25, left: 25 },
-        letter2: { text: "N", fontSize: 150, top: 25, left: 30 },
-        letter3: { text: "N", fontSize: 150, top: 25, left: 35 }
-      },
-      sentences: {
-        sentence1: { text: "Programming", fontSize: 150, top: 40, left: 55, opacityValue: 1 },
-        sentence2: { text: "And", fontSize: 150, top: 55, left: 29, opacityValue: 1 },
-        sentence3: { text: "Network", fontSize: 150, top: 70, left: 46, opacityValue: 1 }
-      }
-    },
-    12: {
-      letter1: { text: "P", fontSize: 100, top: 50, left: 45 },
-      letter2: { text: "&", fontSize: 100, top: 50, left: 50 },
-      letter3: { text: "N", fontSize: 100, top: 50, left: 55 }
-    },
-    sentences: {
-      sentence1: { text: "Programming", fontSize: 150, top: 40, left: 55, opacityValue: 0 },
-      sentence2: { text: "And", fontSize: 150, top: 55, left: 28, opacityValue: 0 },
-      sentence3: { text: "Network", fontSize: 150, top: 70, left: 45, opacityValue: 0 }
+
+      pageContainerRef.current.scrollTo({
+        top: sectionRefs[index].current.offsetTop + offset,
+        behavior: "smooth", // 부드러운 스크롤링 적용
+      });
     }
   };
 
-  // 초기 상태 설정
-  const [letter1, setLetter1] = useState({
-    text: "P",
-    fontSize: 150,
-    top: 50,
-    left: 40
-  });
-  
-  const [letter2, setLetter2] = useState({
-    text: "N",
-    fontSize: 150,
-    top: 50,
-    left: 50
-  });
-  
-  const [letter3, setLetter3] = useState({
-    text: "N",
-    fontSize: 150,
-    top: 50,
-    left: 55
-  });
+  return (
+    <PageContainer ref={pageContainerRef}>
+      <Section ref={sectionRefs[0]} id="section1">
+        <Section1 />
+      </Section>
 
-  const [sentence1, setSentence1] = useState({
-    text: "Programming",
-    fontSize: 150,
-    top: 40,
-    left: 55,
-    opacityValue: 0
-  });
+      <Section ref={sectionRefs[1]} id="section2">
+        <Section2 />
+      </Section>
 
-  const [sentence2, setSentence2] = useState({
-    text: "And",
-    fontSize: 150,
-    top: 50,
-    left: 55,
-    opacityValue: 0
-  });
+      <Section ref={sectionRefs[2]} id="section3">
+        <Section3 />
+      </Section>
 
-  const [sentence3, setSentence3] = useState({
-    text: "Network",
-    fontSize: 150,
-    top: 50,
-    left: 55,
-    opacityValue: 0
-  });
-  
-  const sectionRefs = useRef(Array(12).fill(null).map(() => createRef()));
+      <Section ref={sectionRefs[3]} id="section4">
+        <Section4 />
+      </Section>
 
-  useEffect(() => {
-    const options = {
-      threshold: [0.5],
-      rootMargin: '0px',
-    };
-
-    const callback = (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const sectionNumber = parseInt(entry.target.dataset.section);
-          
-          // 마지막 섹션에 대한 특별한 처리
-          if (sectionNumber === 12) {
-            setIsLastSectionVisible(true);
-          } else {
-            setIsLastSectionVisible(false);
-          }
-
-          const animation = sectionAnimations[sectionNumber];
-          
-          if (animation) {
-            if (animation.letters && animation.sentences) {
-              // 새로운 구조를 사용하는 섹션의 경우
-              setLetter1(animation.letters.letter1);
-              setLetter2(animation.letters.letter2);
-              setLetter3(animation.letters.letter3);
-              setSentence1(animation.sentences.sentence1);
-              setSentence2(animation.sentences.sentence2);
-              setSentence3(animation.sentences.sentence3);
-            } else {
-              // 이전 구조를 사용하는 섹션의 경우
-              setLetter1(animation.letter1);
-              setLetter2(animation.letter2);
-              setLetter3(animation.letter3);
-              // sentences는 숨김 처리
-              setSentence1({ ...sentence1, opacityValue: 0 });
-              setSentence2({ ...sentence2, opacityValue: 0 });
-              setSentence3({ ...sentence3, opacityValue: 0 });
-            }
-          }
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(callback, options);
-    
-    sectionRefs.current.forEach((ref, index) => {
-      if (ref.current) {
-        ref.current.dataset.section = index + 1;
-        observer.observe(ref.current);
-      }
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-    // 섹션 생성 함수
-    const renderSections = () => {
-      return Array(12).fill(null).map((_, index) => (
-        <Section key={index + 1}>
-          <Observer 
-            ref={sectionRefs.current[index]} 
-            top={50} 
-            data-section={index + 1}
+      <PageNavigation>
+        {[0, 1, 2, 3].map((index) => (
+          <NavDot
+            key={index}
+            active={activeSection === index}
+            onClick={() => scrollToSection(index)}
           />
-        </Section>
-      ));
-    };
+        ))}
+      </PageNavigation>
 
-    return (
-      <MainWrapper>
-        <VideoBackground autoPlay loop muted src={computer} />
-        <Letter {...letter1}>{letter1.text}</Letter>
-        <Letter {...letter2}>{letter2.text}</Letter>
-        <Letter {...letter3}>{letter3.text}</Letter>
-        <Sentence {...sentence1}>{sentence1.text}</Sentence>
-        <Sentence {...sentence2}>{sentence2.text}</Sentence>
-        <Sentence {...sentence3}>{sentence3.text}</Sentence>
-        
-        <ApplyButton 
-          visible={isLastSectionVisible}
-          style={{
-            top: '70%', 
-            left: '50%', 
-            transform: 'translate(-50%, -50%)'
-          }}
-          onClick={() => navigate('/aboutus')}
-        >
-          지원하기
-        </ApplyButton>
-        
-        <ScrollContainer>
-          {renderSections()}
-        </ScrollContainer>
-      </MainWrapper>
-    );
-  };
+      <FooterWrapper>
+        <Footer />
+      </FooterWrapper>
+    </PageContainer>
+  );
+};
+
+export default MainPage;

@@ -9,7 +9,7 @@ const Container = styled.div`
   height: 100%;
   background-color: white;
   color: white;
-  
+
   @media (max-width: 768px) {
     min-height: 100vh;
   }
@@ -29,7 +29,7 @@ const Container = styled.div`
   }
 
   @media (min-width: 2560px) {
-    max-width: 2300px;
+    max-width: 100%;
   }
 `;
 
@@ -41,7 +41,7 @@ const Header = styled.div`
   color: black;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
   padding: 40px 5% 20px 5%;
 
   @media (min-width: 768px) {
@@ -51,6 +51,9 @@ const Header = styled.div`
   @media (min-width: 1440px) {
     padding: 40px 10% 20px 10%;
     min-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   @media (min-width: 2560px) {
@@ -100,8 +103,8 @@ const ButtonContainer = styled.div`
 const RouteButton = styled.button`
   padding: 12px 24px;
   border-radius: 20px;
-  background-color: ${props => props.active ? '#667EEA' : 'white'};
-  color: ${props => props.active ? 'white' : 'black'};
+  background-color: ${(props) => (props.active ? "#667EEA" : "white")};
+  color: ${(props) => (props.active ? "white" : "black")};
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -109,7 +112,7 @@ const RouteButton = styled.button`
   font-weight: bold;
 
   &:hover {
-    background-color: ${props => props.active ? '#667EEA' : '#e0e0e0'};
+    background-color: ${(props) => (props.active ? "#667EEA" : "#e0e0e0")};
   }
 
   @media (min-width: 1440px) {
@@ -145,7 +148,7 @@ const AboutUs = () => {
   const tabs = [
     { id: 0, label: "인사말" },
     { id: 1, label: "행사/활동" },
-    { id: 2, label: "팀원소개" }
+    { id: 2, label: "팀원소개" },
   ];
 
   const renderContent = () => {
@@ -179,9 +182,7 @@ const AboutUs = () => {
           ))}
         </ButtonContainer>
       </Header>
-      <ContentWrapper>
-        {renderContent()}
-      </ContentWrapper>
+      <ContentWrapper>{renderContent()}</ContentWrapper>
     </Container>
   );
 };

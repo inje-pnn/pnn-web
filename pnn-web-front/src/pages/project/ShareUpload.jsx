@@ -449,8 +449,8 @@ export const ShareUpload = () => {
     }
   };
 
-  const tagOptions = ["캡스톤 디자인", "졸업 작품", "학술제", "기타 프로젝트"];
-  const platformOptions = ["Web", "App", "AI", "Game"];
+  const tagOptions = ["캡스톤 디자인", "졸업 작품", "학술제", "기타 프로젝트"]
+  const platformOptions = ["WEB", "APP", "AI", "GANE"];
   const frameworkOptions = [
     "Java Script",
     "Java",

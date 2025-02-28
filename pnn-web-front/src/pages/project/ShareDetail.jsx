@@ -149,7 +149,7 @@ const Card = styled.div`
 const ExplanationFrame = styled.div`
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 1200px;
   margin-top: 40px;
   overflow-wrap: break-word;
   padding: 30px;
