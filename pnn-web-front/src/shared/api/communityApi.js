@@ -31,14 +31,14 @@ export const communityApi = () => {
       username: [],
       description: data.subtitle,
       image: data.imageUrl,
+      content_link: data.link,
     };
-    console.log(postAccountboard);
-    // try {
-    //   const res = await axios.post(`${path}.post/post_Accontboard`, postData);
-    //   if (res.status !== 200) {
-    //     alert("오류가 발생하였습니다.");
-    //   }
-    // } catch (e) {}
+    try {
+      const res = await axios.post(`${path}post/post_Accountboard`, postData);
+      if (res.status !== 200) {
+        alert("오류가 발생하였습니다.");
+      }
+    } catch (e) {}
   };
 
   const getStudyBoardList = async () => {
@@ -55,10 +55,22 @@ export const communityApi = () => {
       return res.data;
     } catch {}
   };
+
+  const updateLectureBoard = async (data) => {
+    const putData = {
+      serial_number: data.boardId,
+      username: data.user,
+    };
+    try {
+      const res = await axios.put(path + "post/update_accountboard", putData);
+      return res.data;
+    } catch {}
+  };
   return {
     postStudyBoard,
     postAccountboard,
     getStudyBoardList,
     getAccountBoardList,
+    updateLectureBoard,
   };
 };

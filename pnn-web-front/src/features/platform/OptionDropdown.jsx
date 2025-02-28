@@ -54,7 +54,7 @@ const menuProps = {
   disableScrollLock: true,
 };
 
-export const Dropdown = ({
+export const OptionDropdown = ({
   label,
   options,
   value,

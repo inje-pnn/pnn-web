@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { categoryData } from "../data/categoryData";
 let originalData;
 export const useCategoryFilter = (getBoardList) => {
-  const [projets, setProjects] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [selectedPlatform, setSelectedPlatform] = useState("ALL");
   const [searchText, setSearchText] = useState("");
   const [selectedItemList, setSelectedItemList] = useState(["All"]);
@@ -12,7 +12,6 @@ export const useCategoryFilter = (getBoardList) => {
     getBoardList().then((res) => {
       originalData = res;
       setProjects(res);
-      console.log("originalData", originalData);
     });
   }, []);
   useEffect(() => {
@@ -77,7 +76,7 @@ export const useCategoryFilter = (getBoardList) => {
     selectedItemList,
     selectedPlatform,
     categoryList,
-    projets,
+    projects,
 
     onChangeSearchText,
     addSelectedItemList,

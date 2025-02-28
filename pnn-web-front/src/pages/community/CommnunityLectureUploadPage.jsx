@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { Dropdown } from "../../features/platform/OptionDropdown";
+
 import { ImageUpload } from "../../features/platform/ImageUpload";
 import { uploadImageToFirebase } from "../../shared/util/firebaseImg";
 import { categoryData } from "../../shared/data/categoryData";
@@ -245,7 +245,7 @@ const TITLE_LIMIT = 20;
 const SUBTITLE_LIMIT = 30;
 
 export const CommunityLectureUploadPage = ({ type }) => {
-  const { postStudyBoard, postAccountboard } = communityApi();
+  const { postAccountboard } = communityApi();
   const user = useUserStore((state) => state.user);
   const [isUploading, setIsUploading] = useState(false);
   const [image, setImage] = useState(null);
@@ -281,13 +281,12 @@ export const CommunityLectureUploadPage = ({ type }) => {
     setIsUploading(true);
     try {
       const imageUrl = await uploadImageToFirebase(image);
-      if (type === "study") {
-        postStudyBoard({
-          ...boardData,
-          userEmail: user.email,
-          imageUrl: imageUrl,
-        });
-      }
+
+      postAccountboard({
+        ...boardData,
+        name: user.email,
+        imageUrl: imageUrl,
+      });
 
       if (response.status === 200 && response.data) {
         alert("프로젝트가 성공적으로 업로드되었습니다!");

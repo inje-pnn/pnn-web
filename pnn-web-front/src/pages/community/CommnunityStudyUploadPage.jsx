@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { Dropdown } from "../../features/platform/OptionDropdown";
+import { OptionDropdown } from "../../features/platform/OptionDropdown";
 import { ImageUpload } from "../../features/platform/ImageUpload";
 import { uploadImageToFirebase } from "../../shared/util/firebaseImg";
 import { categoryData } from "../../shared/data/categoryData";
@@ -281,14 +281,11 @@ export const CommunityUploadPage = ({ type }) => {
     setIsUploading(true);
     try {
       const imageUrl = await uploadImageToFirebase(image);
-      if (type === "study") {
-        postStudyBoard({
-          ...boardData,
-          userEmail: user.email,
-          imageUrl: imageUrl,
-        });
-      }
-
+      postStudyBoard({
+        ...boardData,
+        userEmail: user.email,
+        imageUrl: imageUrl,
+      });
       if (response.status === 200 && response.data) {
         alert("프로젝트가 성공적으로 업로드되었습니다!");
         setBoardData({
@@ -394,7 +391,7 @@ export const CommunityUploadPage = ({ type }) => {
             <InputFrame>플랫폼</InputFrame>
             <SubInputFrame>
               <TagListFrame>
-                <Dropdown
+                <OptionDropdown
                   label="플랫폼 선택"
                   value={boardData.platform}
                   options={categoryData.product}
@@ -402,7 +399,7 @@ export const CommunityUploadPage = ({ type }) => {
                     handleBoardData(e.target.value, setBoardData, "platform")
                   }
                 />
-                <Dropdown
+                <OptionDropdown
                   label="프레임워크 선택"
                   value={boardData.projectType}
                   options={categoryData.framwork}

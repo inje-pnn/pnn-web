@@ -6,6 +6,7 @@ import { CommunityAccordianCard } from "../../features/community/CommunityAccord
 import { communityApi } from "../../shared/api/communityApi";
 import { useEffect, useState } from "react";
 import useUserStore from "../../shared/store/useUserStroe";
+import { CircularProgress } from "@mui/material";
 
 const Container = styled.div`
   display: flex;
@@ -82,19 +83,23 @@ const TitleImg = styled.img`
 `;
 
 export const CommunityLecturePage = () => {
-  const { getAccountBoardList } = communityApi();
+  const { getAccountBoardList, updateLectureBoard } = communityApi();
   const [boardList, setBoardList] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const user = useUserStore((state) => state.user);
   useEffect(() => {
     getAccountBoardList().then((res) => {
       setBoardList(res);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     });
   }, []);
+
   return (
     <Container>
       {user.authority === 0 || user.authority === 1 ? (
-        <UploadButton path={"/community/study/upload"} />
+        <UploadButton path={"/community/lecture/upload"} />
       ) : null}
       <ScrollToTopButton />
 
@@ -105,9 +110,17 @@ export const CommunityLecturePage = () => {
 
       <BoardContainer>
         <FloatingMenuBar />
-        {boardList?.map((v) => (
-          <CommunityAccordianCard data={v} />
-        ))}
+        {isLoading ? (
+          <CircularProgress style={{ marginTop: 50 }} />
+        ) : (
+          boardList?.map((v) => (
+            <CommunityAccordianCard
+              data={v}
+              user={user}
+              updateLectureBoard={updateLectureBoard}
+            />
+          ))
+        )}
       </BoardContainer>
     </Container>
   );

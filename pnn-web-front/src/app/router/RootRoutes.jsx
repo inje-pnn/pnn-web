@@ -47,7 +47,10 @@ export const RootRoutes = ({ user }) => {
         element={<Layout mainContent={<ShareDetail />} />}
       />
 
-      <Route path="/recruiting" element={<Layout mainContent={<RecruitingPage />} />} />
+      <Route
+        path="/recruiting"
+        element={<Layout mainContent={<RecruitingPage />} />}
+      />
 
       <Route
         path="/auth/regist"
@@ -71,7 +74,7 @@ export const RootRoutes = ({ user }) => {
         path="/community/study/upload"
         element={
           <ProtectedRoute user={user} type="member">
-            <Layout mainContent={<CommunityLectureUploadPage type="study" />} />
+            <Layout mainContent={<CommunityUploadPage type="lecture" />} />
           </ProtectedRoute>
         }
       />
@@ -79,7 +82,7 @@ export const RootRoutes = ({ user }) => {
         path="/community/lecture/upload"
         element={
           <ProtectedRoute user={user} type="member">
-            <Layout mainContent={<CommunityUploadPage type="lecture" />} />
+            <Layout mainContent={<CommunityLectureUploadPage type="study" />} />
           </ProtectedRoute>
         }
       />

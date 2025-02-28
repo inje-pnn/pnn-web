@@ -119,12 +119,17 @@ export const CommunityPage = () => {
     removeSelectedItemList,
     handleSelectedPlatform,
   } = useCategoryFilter(getStudyBoardList);
-  const [paginationList, setPaginationList] = useState(projets);
+  const [paginationList, setPaginationList] = useState(projects);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    setPaginationList(projets?.slice(0, 6));
-  }, [projets]);
+    if (projects)
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    setPaginationList(projects?.slice(0, 6));
+  }, [projects]);
   const handlePageNation = (e, v) => {
-    const arr = projets?.slice((v - 1) * 6, (v - 1) * 6 + 6);
+    const arr = projects?.slice((v - 1) * 6, (v - 1) * 6 + 6);
     setPaginationList(arr);
   };
   return (
@@ -164,14 +169,20 @@ export const CommunityPage = () => {
         <div className="grid-container">
           {paginationList?.map((v, index) => {
             if (index < 6) {
-              return <CardBoardItem item={v} key={`${v.serial_number}card`} />;
+              return (
+                <CardBoardItem
+                  isLoading={isLoading}
+                  item={v}
+                  key={`${v.serial_number}card`}
+                />
+              );
             }
           })}
         </div>
       </BoardContainer>
       <PageContainer>
         <Pagination
-          count={Math.round(projets?.length / 6) + 1}
+          count={Math.round(projects?.length / 6) + 1}
           onChange={handlePageNation}
         />
       </PageContainer>

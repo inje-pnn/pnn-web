@@ -1,4 +1,4 @@
-import { Chip } from "@mui/material";
+import { Chip, Skeleton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { styled as muiStyled } from "@mui/material/styles";
 import styled from "styled-components";
@@ -19,6 +19,7 @@ const CardContainer = styled.div`
   width: 40%;
   height: 100%;
   padding: 20px;
+
   overflow: hidden;
 `;
 const CardImage = styled.img`
@@ -78,11 +79,9 @@ const ChipContainer = styled.div`
   margin-bottom: 5px;
   overflow-x: auto;
   width: 100%;
-  height: auto;
+  height: 25px;
 `;
-export const CardBoardItem = ({ item }) => {
-  const navigation = useNavigate();
-  console.log(item);
+export const CardBoardItem = ({ isLoading, item }) => {
   const onClickCard = () => {
     window.location.href = item.content_link;
   };
@@ -94,27 +93,63 @@ export const CardBoardItem = ({ item }) => {
       "0"
     )}.${String(date.getDate()).padStart(2, "0")}`;
   };
+  const SkeletonBoard = () => {
+    return (
+      <Container className="card-item">
+        <CardContainer>
+          <Skeleton
+            animation="wave"
+            height={220}
+            width="90%"
+            style={{ marginTop: -40 }}
+          />
+        </CardContainer>
+        <CardContent>
+          <Skeleton animation="wave" height={30} width="80%" />
+          <Skeleton animation="wave" height={200} width="80%" />
+          <ChipContainer>
+            <Skeleton animation="wave" height={20} width="80%" />
+          </ChipContainer>
 
+          <CardInfoContainer>
+            <Skeleton animation="wave" height={10} width="30%" />
+            <Skeleton
+              animation="wave"
+              height={10}
+              width="30%"
+              style={{ marginRight: 85 }}
+            />
+          </CardInfoContainer>
+        </CardContent>
+      </Container>
+    );
+  };
   return (
-    <Container className="card-item" onClick={onClickCard}>
-      <CardContainer>
-        <CardImage src={item.imgae} />
-      </CardContainer>
-      <CardContent>
-        <h3>{item.title}</h3>
-        <CardDescription>{item.description}</CardDescription>
-        <ChipContainer>
-          {item.project_type.map((v) => {
-            return <CustomChip label={v} />;
-          })}
-        </ChipContainer>
-        <CardInfoContainer>
-          <span>
-            {item.category}WEB {formatDate(item.created_at)}
-          </span>
-          <span>Editor · {item.username}</span>
-        </CardInfoContainer>
-      </CardContent>
-    </Container>
+    <>
+      {isLoading ? (
+        <SkeletonBoard />
+      ) : (
+        <Container className="card-item" onClick={onClickCard}>
+          <CardContainer>
+            <CardImage src={item.imgae} />
+          </CardContainer>
+          <CardContent>
+            <h3>{item.title}</h3>
+            <CardDescription>{item.description}</CardDescription>
+            <ChipContainer>
+              {item.project_type.map((v) => {
+                return <CustomChip label={v} />;
+              })}
+            </ChipContainer>
+            <CardInfoContainer>
+              <span>
+                {item.category}WEB {formatDate(item.created_at)}
+              </span>
+              <span>Editor · {item.username}</span>
+            </CardInfoContainer>
+          </CardContent>
+        </Container>
+      )}
+    </>
   );
 };
