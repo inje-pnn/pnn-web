@@ -9,11 +9,21 @@ const FQAContainer = styled.div`
   align-items: center;
   width: 85%;
   margin-top: 120px;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-top: 40px;
+  }
 `;
 
 const FQATitle = styled.h2`
   font-size: 42px;
   margin-bottom: 40px;
+  
+  @media (max-width: 768px) {
+    font-size: 28px;
+    margin-bottom: 25px;
+  }
 `;
 
 const FQAList = styled.div`
@@ -21,6 +31,10 @@ const FQAList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 22px;
+  
+  @media (max-width: 768px) {
+    gap: 15px;
+  }
 `;
 
 const FQAItem = styled.div`
@@ -32,6 +46,11 @@ const FQAItem = styled.div`
   flex-direction: column;
   align-items: center;
   transition: all 0.3s ease;
+  
+  @media (max-width: 768px) {
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04);
+  }
 `;
 
 const QuestionButton = styled.button`
@@ -44,6 +63,10 @@ const QuestionButton = styled.button`
   border: none;
   cursor: pointer;
   text-align: left;
+  
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
 `;
 
 const QuestionText = styled.div`
@@ -52,17 +75,30 @@ const QuestionText = styled.div`
   gap: 16px;
   font-size: 20px;
   color: #525252;
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+    gap: 10px;
+  }
 `;
 
 const QMark = styled.span`
   color: #667eea;
   font-weight: bold;
   font-size: 28px;
+  
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 `;
 
 const ArrowIcon = styled(KeyboardArrowDownIcon)`
   transition: transform 0.3s ease;
   transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
+  
+  @media (max-width: 768px) {
+    font-size: 22px;
+  }
 `;
 
 const Answer = styled.div`
@@ -75,8 +111,17 @@ const Answer = styled.div`
   width: 95%;
   border-radius: 20px;
   margin: ${({ isOpen }) => (isOpen ? '10px 24px 24px 24px' : '0')};
+  overflow: auto;
+  
+  @media (max-width: 768px) {
+    font-size: 11px;
+    padding: ${({ isOpen }) => (isOpen ? '16px' : '0')};
+    max-height: ${({ isOpen }) => (isOpen ? '200px' : '0')};
+    border-radius: 12px;
+    width: 92%;
+    margin: ${({ isOpen }) => (isOpen ? '8px 16px 16px 16px' : '0')};
+  }
 `;
-
 
 export const FQABox = () => {
   const [openIndex, setOpenIndex] = useState(null);

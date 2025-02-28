@@ -7,9 +7,13 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 5vh;
+  padding: 7vh 0 7vh 0;
   height: auto;
   background-color: #f4f6fc;
+  
+  @media (max-width: 768px) {
+    padding: 7vh 0 7vh 0;
+  }
 `;
 
 const Frame = styled.div`
@@ -18,6 +22,10 @@ const Frame = styled.div`
   align-items: center;
   width: 80%;
   height: 100%;
+  
+  @media (max-width: 768px) {
+    width: 92%;
+  }
 `;
 
 const HeaderFrame = styled.div`
@@ -28,10 +36,21 @@ const HeaderFrame = styled.div`
   width: 100%;
   height: 200px;
   font-size: 42px;
+  
   span {
     font-size: 21px;
     padding-top: 20px;
     color: #525252;
+  }
+  
+  @media (max-width: 768px) {
+    height: 120px;
+    font-size: 28px;
+    
+    span {
+      font-size: 16px;
+      padding-top: 10px;
+    }
   }
 `;
 
@@ -40,6 +59,13 @@ const StepsContainer = styled.div`
   justify-content: space-between;
   width: 90%;
   margin-top: 20px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
+  }
 `;
 
 const StepContainer = styled.div`
@@ -48,6 +74,11 @@ const StepContainer = styled.div`
   align-items: center;
   width: 32%;
   text-align: center;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 380px;
+  }
 `;
 
 const StepCard = styled.div`
@@ -63,8 +94,14 @@ const StepCard = styled.div`
   font-weight: bold;
   position: relative;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  
+  @media (max-width: 768px) {
+    width: 120px;
+    height: 120px;
+    font-size: 18px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
 `;
-
 
 const StepText = styled.div`
   background: white;
@@ -74,9 +111,22 @@ const StepText = styled.div`
   width: 100%;
   height: 250px;
   text-align: left;
+  
   span {
     font-size: 19px;
     color: #525252;
+  }
+  
+  @media (max-width: 768px) {
+    margin-top: 20px;
+    padding: 20px;
+    height: auto;
+    min-height: 180px;
+    border-radius: 12px;
+    
+    span {
+      font-size: 15px;
+    }
   }
 `;
 
@@ -84,6 +134,11 @@ const StepTitle = styled.div`
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 8px;
+  
+  @media (max-width: 768px) {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
 `;
 
 const StepDivider = styled.div`
@@ -91,16 +146,25 @@ const StepDivider = styled.div`
   height: 1px;
   background: #667eea;
   margin: 15px 0 15px 0;
+  
+  @media (max-width: 768px) {
+    margin: 10px 0;
+  }
 `;
 
 const FQAContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 1000px;
+  height: auto;
   margin-top: 120px;
   font-size: 42px;
-`
+  
+  @media (max-width: 768px) {
+    margin-top: 50px;
+    font-size: 28px;
+  }
+`;
 
 export const RecruitingPage = () => {
   return (

@@ -5,17 +5,17 @@ import { FQABox } from "../../shared/components/fqa/FQABox";
 
 const Container = styled.div`
   width: 100%;
-  height: auto; // 높이를 자동으로 조정하여 컨텐츠가 모두 표시되도록 함
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #f4f6fc;
   position: relative;
   padding: 40px 20px;
-  overflow: visible; // overflow-x: hidden에서 visible로 변경
+  overflow: visible;
 
   @media (max-width: 768px) {
-    padding: 30px 15px;
+    padding: 20px 15px;
     height: auto;
   }
 `;
@@ -26,6 +26,10 @@ const SectionContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 95%;
+  }
 `;
 
 const HeaderFrame = styled.div`
@@ -38,7 +42,7 @@ const HeaderFrame = styled.div`
   text-align: center;
 
   @media (max-width: 768px) {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
   }
 `;
 
@@ -49,11 +53,8 @@ const Title = styled.h2`
   margin-bottom: 10px;
 
   @media (max-width: 768px) {
-    font-size: 32px;
-  }
-
-  @media (max-width: 480px) {
     font-size: 28px;
+    margin-bottom: 8px;
   }
 `;
 
@@ -63,10 +64,6 @@ const Subtitle = styled.span`
   text-align: center;
 
   @media (max-width: 768px) {
-    font-size: 18px;
-  }
-
-  @media (max-width: 480px) {
     font-size: 16px;
   }
 `;
@@ -80,7 +77,12 @@ const StepsContainer = styled.div`
   @media (max-width: 992px) {
     flex-direction: column;
     align-items: center;
-    gap: 50px;
+    gap: 35px;
+  }
+
+  @media (max-width: 768px) {
+    gap: 25px;
+    margin-top: 15px;
   }
 `;
 
@@ -94,6 +96,11 @@ const StepContainer = styled.div`
   @media (max-width: 992px) {
     width: 90%;
     max-width: 450px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 400px;
   }
 `;
 
@@ -111,16 +118,11 @@ const StepCard = styled.div`
   position: relative;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 
-  @media (max-width: 1200px) {
-    width: 160px;
-    height: 160px;
-    font-size: 20px;
-  }
-
   @media (max-width: 768px) {
-    width: 140px;
-    height: 140px;
-    font-size: 18px;
+    width: 120px;
+    height: 120px;
+    font-size: 16px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
   }
 `;
 
@@ -134,13 +136,12 @@ const StepText = styled.div`
   text-align: left;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 
-  @media (max-width: 1200px) {
-    padding: 20px;
-    min-height: 200px;
-  }
-
   @media (max-width: 768px) {
+    margin-top: 20px;
+    padding: 18px;
     min-height: auto;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
   }
 `;
 
@@ -150,7 +151,8 @@ const StepDescription = styled.span`
   line-height: 1.5;
 
   @media (max-width: 768px) {
-    font-size: 15px;
+    font-size: 14px;
+    line-height: 1.4;
   }
 `;
 
@@ -161,7 +163,8 @@ const StepTitle = styled.div`
   color: #333;
 
   @media (max-width: 768px) {
-    font-size: 20px;
+    font-size: 18px;
+    margin-bottom: 6px;
   }
 `;
 
@@ -170,6 +173,10 @@ const StepDivider = styled.div`
   height: 1px;
   background: #667eea;
   margin: 15px 0;
+
+  @media (max-width: 768px) {
+    margin: 10px 0;
+  }
 `;
 
 const FQAContainer = styled.div`
@@ -177,17 +184,16 @@ const FQAContainer = styled.div`
   justify-content: center;
   width: 100%;
   margin-top: 80px;
-  margin-bottom: 40px; // 하단 여백 추가
-  overflow: visible; // 오버플로우 문제 해결
+  margin-bottom: 40px;
+  overflow: visible;
 
   @media (max-width: 768px) {
-    margin-top: 60px;
-    margin-bottom: 30px;
-    width: 100%; // 너비 확실히 지정
+    margin-top: 40px;
+    margin-bottom: 20px;
+    width: 100%;
   }
 `;
 
-// FQABox를 감싸는 래퍼 추가
 const FQAWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -195,6 +201,136 @@ const FQAWrapper = styled.div`
   justify-content: center;
   max-width: 1200px;
   overflow: visible;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
+`;
+
+// 수정된 "이런 사람을 지향해요" 섹션을 위한 스타일 컴포넌트
+const PeopleContainer = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  background-color: #f8f8fa;
+  border-radius: 8px;
+  margin-top: 60px;
+  display: flex;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    margin-top: 40px;
+    flex-direction: column;
+  }
+`;
+
+const LeftColumn = styled.div`
+  width: 25%;
+  padding: 30px 20px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 20px;
+    font-size: 20px;
+  }
+`;
+
+const RightColumn = styled.div`
+  width: 75%;
+  padding: 30px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background-color: #a8a4e0;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 20px;
+
+    &::before {
+      top: 0;
+      left: 10%;
+      width: 80%;
+      height: 1px;
+    }
+  }
+`;
+
+const TypeRow = styled.div`
+  display: flex;
+  margin-bottom: 25px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 15px;
+  }
+`;
+
+const TypeTitle = styled.div`
+  width: 130px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #6b5ad1;
+  position: relative;
+  flex-shrink: 0;
+
+  ${(props) =>
+    props.highlighted &&
+    `
+    background-color: #e8e7f5;
+    padding: 5px 10px;
+    border-radius: 4px;
+  `}
+
+  @media (max-width: 768px) {
+    width: 100px;
+    font-size: 16px;
+  }
+`;
+
+const TypeDescription = styled.div`
+  font-size: 16px;
+  color: #525252;
+  line-height: 1.5;
+  flex-grow: 1;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+`;
+
+const MessageBox = styled.div`
+  width: 100%;
+  max-width: 600px;
+  background-color: #222;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin: 30px auto 0;
+  border-radius: 0;
+  font-size: 18px;
+  font-weight: 500;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding: 12px;
+    margin-top: 25px;
+  }
 `;
 
 const Section4 = () => {
@@ -218,6 +354,43 @@ const Section4 = () => {
             </StepContainer>
           ))}
         </StepsContainer>
+
+        <PeopleContainer>
+          <LeftColumn>
+            이런 사람을
+            <br />
+            지향해요
+          </LeftColumn>
+
+          <RightColumn>
+            <TypeRow>
+              <TypeTitle>자발적인</TypeTitle>
+              <TypeDescription>
+                학생들이 함께 만들어가는 서비스인 만큼 스스로 일을 찾아서 해야
+                해요. 본인이 필요한 능력을 직접 배우고 진행하고 싶은 부분을
+                알아서 제안해요.
+              </TypeDescription>
+            </TypeRow>
+
+            <TypeRow>
+              <TypeTitle>도전적인</TypeTitle>
+              <TypeDescription>
+                P&N에서 하는 일이 처음에는 어려워 보일 수 있어요. 하지만
+                도전하고 배우는 과정에서 성장한 자기 모습을 찾을 수 있을 거예요.
+              </TypeDescription>
+            </TypeRow>
+
+            <TypeRow>
+              <TypeTitle>공감하는</TypeTitle>
+              <TypeDescription>
+                P&N는 '음식대 학생들을 공감하며 최고의 서비스를 공임'하다는
+                한가지 미션을 바탕으로 팀원들과 함께 공부하고, 성장해요.
+              </TypeDescription>
+            </TypeRow>
+          </RightColumn>
+        </PeopleContainer>
+
+        <MessageBox>"함께하를 사랑하시는 여러분, 환영합니다."</MessageBox>
 
         <FQAContainer>
           <FQAWrapper>
