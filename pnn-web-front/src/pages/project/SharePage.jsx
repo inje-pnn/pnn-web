@@ -81,7 +81,6 @@ const InnerHeaderFrame = styled.div`
   }
 `;
 
-
 const ProjectNumber = styled.div`
   width: 100%;
   height: 50px;
@@ -111,30 +110,16 @@ const CardContainer = styled.div`
   }
 `;
 
-
 export const SharePage = () => {
   const [isLogin, setIsLogin] = useState(false);
-  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     const token = Cookies.get("user");
     setIsLogin(!!token);
   }, []);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const projectData = await projectApi.getProjects();
-        setProjects(projectData);
-      } catch (error) {
-        console.error("프로젝트 데이터를 불러오는 중 오류 발생:", error);
-      }
-    };
-
-    fetchProjects();
-  }, []);
-
   const {
+    projects,
     searchText,
     categoryList,
     selectedPlatform,
@@ -143,20 +128,22 @@ export const SharePage = () => {
     addSelectedItemList,
     removeSelectedItemList,
     handleSelectedPlatform,
-  } = useCategoryFilter(projects);
+  } = useCategoryFilter(projectApi.getProjects);
 
   return (
     <Container>
       <Frame>
-      <HeaderFrame>
-  <InnerHeaderFrame>
-    <h1>
-      <FolderOpenOutlinedIcon fontSize="large" color="primary" />
-      P&N에서 진행된 프로젝트 둘러보기
-    </h1>
-    <p>다양한 플랫폼에서 진행된 프로젝트를 확인하고, 영감을 얻어보세요.</p>
-  </InnerHeaderFrame>
-</HeaderFrame>
+        <HeaderFrame>
+          <InnerHeaderFrame>
+            <h1>
+              <FolderOpenOutlinedIcon fontSize="large" color="primary" />
+              P&N에서 진행된 프로젝트 둘러보기
+            </h1>
+            <p>
+              다양한 플랫폼에서 진행된 프로젝트를 확인하고, 영감을 얻어보세요.
+            </p>
+          </InnerHeaderFrame>
+        </HeaderFrame>
         <CommunityFilter
           title={"프로젝트"}
           searchText={searchText}
@@ -169,10 +156,10 @@ export const SharePage = () => {
           handleSelectedPlatform={handleSelectedPlatform}
         />
 
-        <ProjectNumber>{projects.length}개의 프로젝트</ProjectNumber>
+        <ProjectNumber>{projects?.length}개의 프로젝트</ProjectNumber>
 
         <CardContainer>
-          {projects.map((project) => (
+          {projects?.map((project) => (
             <CardFrame key={project.id} project={project} />
           ))}
         </CardContainer>
