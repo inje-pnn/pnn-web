@@ -179,7 +179,7 @@ export const SharePage = () => {
       </Frame>
 
       <ScrollToTopButton />
-      {isLogin && <UploadButton />}
+      {isLogin && <UploadButton path={"/share/upload"} />}
     </Container>
   );
 };

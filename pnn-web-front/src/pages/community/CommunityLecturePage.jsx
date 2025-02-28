@@ -3,12 +3,51 @@ import { FloatingMenuBar } from "../../features/community/FloatingMenuBar";
 import { UploadButton } from "../../features/platform/UploadButton";
 import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton";
 import { CommunityAccordianCard } from "../../features/community/CommunityAccordianCard";
+import { communityApi } from "../../shared/api/communityApi";
+import { useEffect, useState } from "react";
+import useUserStore from "../../shared/store/useUserStroe";
+import { CircularProgress } from "@mui/material";
 
 const Container = styled.div`
   display: flex;
-
+  padding: 16px;
+  margin-top: 50px;
   width: 100%;
   flex-direction: column;
+`;
+const HeaderFrame = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20%;
+  margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    padding: 20px 0;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    color: #666;
+    margin-top: 8px;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
 `;
 const BoardTitleContainer = styled.div`
   display: flex;
@@ -44,24 +83,44 @@ const TitleImg = styled.img`
 `;
 
 export const CommunityLecturePage = () => {
+  const { getAccountBoardList, updateLectureBoard } = communityApi();
+  const [boardList, setBoardList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const user = useUserStore((state) => state.user);
+  useEffect(() => {
+    getAccountBoardList().then((res) => {
+      setBoardList(res);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    });
+  }, []);
+
   return (
     <Container>
-      <UploadButton />
+      {user.authority === 0 || user.authority === 1 ? (
+        <UploadButton path={"/community/lecture/upload"} />
+      ) : null}
       <ScrollToTopButton />
-      <BoardTitleContainer>
-        <h1>
-          강의 페이지입니다.
-          <br />
-          정보를 공유 해봐요.
-        </h1>
-        <TitleImg src="src/assets/images/community_test.png" />
-      </BoardTitleContainer>
+
+      <HeaderFrame>
+        <h1>IT 강의 계정 </h1>
+        <p>IT의 다양한 지식을 공유하고, 지식을 얻어가세요.</p>
+      </HeaderFrame>
 
       <BoardContainer>
         <FloatingMenuBar />
-        {[...new Array(5)].map(() => (
-          <CommunityAccordianCard />
-        ))}
+        {isLoading ? (
+          <CircularProgress style={{ marginTop: 50 }} />
+        ) : (
+          boardList?.map((v) => (
+            <CommunityAccordianCard
+              data={v}
+              user={user}
+              updateLectureBoard={updateLectureBoard}
+            />
+          ))
+        )}
       </BoardContainer>
     </Container>
   );

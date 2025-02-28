@@ -5,6 +5,7 @@ import { RegistFormBox } from "../../features/auth/RegistFormBox";
 import useUserStore from "../../shared/store/useUserStroe";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { RegistUserImage } from "../../features/auth/RegistUserImage";
 
 const Container = styled.div`
   width: 100%;

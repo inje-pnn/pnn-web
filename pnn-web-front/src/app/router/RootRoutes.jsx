@@ -15,6 +15,9 @@ import { CommunityLecturePage } from "../../pages/community/CommunityLecturePage
 import { RecruitingPage } from "../../pages/recruiting/RecruitingPage";
 import useUserStore from "../../shared/store/useUserStroe";
 import { useAuth } from "../../shared/hooks/auth/useAuth";
+import { CommunityUploadPage } from "../../pages/community/CommnunityStudyUploadPage";
+import { CommunityDetailPage } from "../../pages/community/CommunityDetailPage";
+import { CommunityLectureUploadPage } from "../../pages/community/CommnunityLectureUploadPage";
 
 export const RootRoutes = ({ user }) => {
   return (
@@ -44,7 +47,10 @@ export const RootRoutes = ({ user }) => {
         element={<Layout mainContent={<ShareDetail />} />}
       />
 
-      <Route path="/recruiting" element={<Layout mainContent={<RecruitingPage />} />} />
+      <Route
+        path="/recruiting"
+        element={<Layout mainContent={<RecruitingPage />} />}
+      />
 
       <Route
         path="/auth/regist"
@@ -52,12 +58,8 @@ export const RootRoutes = ({ user }) => {
       />
 
       <Route
-        path="/community"
-        element={
-          <ProtectedRoute user={user} type="member">
-            <Layout mainContent={<CommunityPage />} />
-          </ProtectedRoute>
-        }
+        path="/community/study"
+        element={<Layout mainContent={<CommunityPage />} />}
       />
 
       <Route
@@ -68,6 +70,23 @@ export const RootRoutes = ({ user }) => {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/community/study/upload"
+        element={
+          <ProtectedRoute user={user} type="member">
+            <Layout mainContent={<CommunityUploadPage type="lecture" />} />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/community/lecture/upload"
+        element={
+          <ProtectedRoute user={user} type="member">
+            <Layout mainContent={<CommunityLectureUploadPage type="study" />} />
+          </ProtectedRoute>
+        }
+      />
+
       {/* 관리자 페이지 라우트 */}
       <Route path="/admin" element={<Layout mainContent={<AdminPage />} />} />
 

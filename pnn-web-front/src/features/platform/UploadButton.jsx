@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useNavigate } from "react-router-dom";
+import useUserStore from "../../shared/store/useUserStroe";
 
 const StyledButton = styled(Button)`
   background-color: #667eea;
@@ -29,11 +30,10 @@ const StyledButton = styled(Button)`
   }
 `;
 
-export const UploadButton = () => {
+export const UploadButton = ({ path }) => {
   const navigate = useNavigate();
-
   const onClickUpload = () => {
-    navigate("/share/upload");
+    navigate(path);
   };
 
   return (
