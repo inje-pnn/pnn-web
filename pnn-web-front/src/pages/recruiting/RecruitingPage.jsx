@@ -65,7 +65,6 @@ const StepCard = styled.div`
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 `;
 
-
 const StepText = styled.div`
   background: white;
   margin-top: 40px;
@@ -100,7 +99,7 @@ const FQAContainer = styled.div`
   height: 1000px;
   margin-top: 120px;
   font-size: 42px;
-`
+`;
 
 export const RecruitingPage = () => {
   return (
@@ -125,7 +124,7 @@ export const RecruitingPage = () => {
         </StepsContainer>
 
         <FQAContainer>
-          <FQABox/>
+          <FQABox />
         </FQAContainer>
       </Frame>
     </Container>

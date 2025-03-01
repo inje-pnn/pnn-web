@@ -44,7 +44,10 @@ export const RootRoutes = ({ user }) => {
         element={<Layout mainContent={<ShareDetail />} />}
       />
 
-      <Route path="/recruiting" element={<Layout mainContent={<RecruitingPage />} />} />
+      <Route
+        path="/recruiting"
+        element={<Layout mainContent={<RecruitingPage />} />}
+      />
 
       <Route
         path="/auth/regist"
@@ -68,6 +71,7 @@ export const RootRoutes = ({ user }) => {
           </ProtectedRoute>
         }
       />
+
       {/* 관리자 페이지 라우트 */}
       <Route path="/admin" element={<Layout mainContent={<AdminPage />} />} />
 

@@ -3,6 +3,7 @@ import { useState } from "react";
 import Introduce from "../features/about/component/Introuduce";
 import Learning from "../features/about/Learning";
 import Member from "../features/about/component/Member";
+import Contact from "../features/about/Contact";
 
 const Container = styled.div`
   width: 100%;
@@ -149,6 +150,7 @@ const AboutUs = () => {
     { id: 0, label: "인사말" },
     { id: 1, label: "행사/활동" },
     { id: 2, label: "팀원소개" },
+    { id: 3, label: "오시는길" },
   ];
 
   const renderContent = () => {
@@ -159,6 +161,8 @@ const AboutUs = () => {
         return <Learning />;
       case 2:
         return <Member />;
+      case 3:
+        return <Contact />;
       default:
         return <Introduce />;
     }

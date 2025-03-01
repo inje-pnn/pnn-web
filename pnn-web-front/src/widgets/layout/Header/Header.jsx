@@ -29,14 +29,15 @@ export default function Header() {
         zIndex: "9999",
       }}
     >
-      <AppBar 
-        position="static" 
-        sx={{ 
-          height: "100%", 
-          backgroundColor: 'rgba(211, 211, 211, 0.5)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-        }}>
+      <AppBar
+        position="static"
+        sx={{
+          height: "100%",
+          backgroundColor: "rgba(211, 211, 211, 0.5)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+        }}
+      >
         <Toolbar
           sx={{
             height: "100%",
@@ -46,10 +47,7 @@ export default function Header() {
           }}
         >
           {/* 로고 (항상 왼쪽) */}
-          <Typography 
-            variant="h6" 
-            component="div"
-          >
+          <Typography variant="h6" component="div">
             <Link to="/">
               <Box
                 component="img"
@@ -71,33 +69,44 @@ export default function Header() {
           <Box
             sx={{
               width: "60%",
-              display: { xs: 'none', md: 'flex' },
+              display: { xs: "none", md: "flex" },
               alignItems: "center",
               justifyContent: "space-around",
               gap: "10rem",
             }}
           >
-            <Link to="/aboutus" style={{ textDecoration: "none", color: "black" }}>
+            <Link
+              to="/aboutus"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               <Button color="inherit">About Us</Button>
             </Link>
-            <Link to="/share" style={{ textDecoration: "none", color: "black" }}>
+            <Link
+              to="/share"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               <Button color="inherit">프로젝트</Button>
             </Link>
-            <Link to="/aboutus" style={{ textDecoration: "none", color: "black" }}>
-              <Button color="inherit">팀원소개</Button>
-            </Link>
-            <Link to="/community" style={{ textDecoration: "none", color: "black" }}>
+            <Link
+              to="/community"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               <Button color="inherit">커뮤니티</Button>
             </Link>
-            <Link to="/recruiting" style={{ textDecoration: "none", color: "black" }}>
+            <Link
+              to="/recruiting"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               <Button color="inherit">지원하기</Button>
             </Link>
           </Box>
 
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center',
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <DropPofileList />
             <IconButton
               size="large"
@@ -105,8 +114,8 @@ export default function Header() {
               color="inherit"
               aria-label="menu"
               onClick={onClickMenuButton}
-              sx={{ 
-                display: { xs: 'flex', md: 'none' }
+              sx={{
+                display: { xs: "flex", md: "none" },
               }}
             >
               <MenuIcon />
