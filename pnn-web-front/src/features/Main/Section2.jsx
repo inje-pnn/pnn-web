@@ -1,7 +1,7 @@
 // sections/Section2.jsx
 import styled, { keyframes } from "styled-components";
 import { useEffect, useRef } from "react";
-
+import sectionCardImage from "../../assets/images/main_section_card.png";
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -22,7 +22,7 @@ const Container = styled.div`
   justify-content: center;
   background-color: #f8f8f8;
   position: relative;
-  padding: 0 20px;
+  padding: 20px 20px;
 `;
 
 const SectionContent = styled.div`
@@ -70,14 +70,14 @@ const FeatureGrid = styled.div`
   grid-template-columns: 1fr;
   gap: 30px;
   width: 100%;
-  margin-top: 30px;
+  margin-top: 60px;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
@@ -126,34 +126,54 @@ const FeatureDesc = styled.p`
   color: #666;
 `;
 
+const CardContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 200px;
+  background-position-y: center;
+  background-repeat: no-repeat;
+  flex-direction: column;
+  background-color: white;
+  border-color: #ddd;
+  border-width: 0.2px solid black;
+  border-radius: 20px;
+  flex-direction: row;
+  position: relative;
+  background-image: ${(prop) => `url("${prop.src}")`};
+  background-size: 100%;
+  @media (min-width: 1024px) {
+    width: 70%;
+    height: 400px;
+  }
+`;
+
 const Section2 = () => {
   // 예시 데이터
   const features = [
     {
-      icon: "🚀",
-      title: "빠른 서비스",
-      description:
-        "최첨단 기술을 활용하여 빠르고 안정적인a 서비스를 제공합니다.",
-    },
-    {
       icon: "💻",
-      title: "다양한 기능",
-      description: "사용자 요구에 맞춰 다양한 기능과 서비스를 지원합니다.",
+      title: "Programming",
+      description:
+        "코드를 작성하며 프로젝트를 진행하여 개발자로서 역량을 키웁니다.",
     },
     {
-      icon: "🔒",
-      title: "안전한 보안",
-      description:
-        "철저한 보안 시스템으로 사용자의 데이터를 안전하게 보호합니다.",
+      icon: "🚀",
+      title: "Network",
+      description: "함께 어울리며 즐거운 대학 생활을 함께 이루어 갑니다.",
     },
   ];
 
+  const ImageCard = () => {
+    return <CardContainer src={sectionCardImage}></CardContainer>;
+  };
   return (
     <Container>
       <SectionContent>
-        <Title>P&N 서비스</Title>
-        <Subtitle>혁신적인 기술로 더 나은 서비스를 제공합니다</Subtitle>
-
+        <Title>P&N</Title>
+        <Subtitle>
+          함께 어울리며 성장해나가는 인제대학교 학술동아리입니다.
+        </Subtitle>
+        <ImageCard />
         <FeatureGrid>
           {features.map((feature, index) => (
             <FeatureCard key={index} index={index}>

@@ -16,7 +16,7 @@ export const FloatingMenuBar = () => {
       id: 0,
       title: "스터디",
       isFocus: true,
-      link: "/community",
+      link: "/community/study",
     },
     {
       id: 1,

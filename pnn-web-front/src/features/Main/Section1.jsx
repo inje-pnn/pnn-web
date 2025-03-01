@@ -18,15 +18,14 @@ const Container = styled.div`
   @media (max-width: 768px) {
     height: auto;
     min-height: 100%;
+    height: 100dvh;
     justify-content: flex-start;
-    padding-top: 15vh; /* 상단 여백 조정 */
-    padding-bottom: 100px; /* 와이어 이미지를 위한 하단 여백 */
   }
 `;
 
 const TitleText = styled.h1`
   position: relative; /* 모바일에서는 절대 위치 대신 상대 위치 사용 */
-  top: 0;
+  top: 150px;
   left: 0;
   transform: none;
   font-size: 50px;
@@ -34,14 +33,15 @@ const TitleText = styled.h1`
   font-family: "Arial", sans-serif;
   text-align: center;
   width: 90%;
-  z-index: 10;
+  z-index: 1111;
   margin: 0 auto 50px auto; /* 상대 위치로 마진 추가 */
+  color: #333;
 
   /* 모바일에서 위치 조정 */
   @media (max-width: 480px) {
     font-size: 42px;
     width: 95%;
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
   }
 
   @media (min-width: 480px) and (max-width: 767px) {
@@ -65,7 +65,7 @@ const TitleText = styled.h1`
 
   @media (min-width: 1024px) {
     font-size: 110px;
-    top: 25vh;
+    top: 18vh;
   }
 
   @media (min-width: 1440px) {
@@ -85,8 +85,7 @@ const WireImage = styled.img`
 
   /* 모바일에서 크기 및 위치 조정 */
   @media (max-width: 480px) {
-    width: 250px;
-    margin-top: 30px;
+    width: 400px;
   }
 
   /* 태블릿 이상에서는 원래 절대 위치로 복원 */
@@ -171,6 +170,15 @@ const IconItem = styled.div`
   }
 `;
 
+const Film = styled.div`
+  display: flex;
+  position: absolute;
+  z-index: 5555;
+  background-color: white;
+  opacity: 0.3;
+  width: 100vw;
+  height: 100vh;
+`;
 // 모바일 전용 상단 여백 컴포넌트
 // 모바일 전용 상단 여백 제거 - 컨테이너에 패딩으로 대체
 
@@ -206,6 +214,7 @@ const Section1 = () => {
         <br />
         환영합니다
       </TitleText>
+
       <WireImage src={wire} alt="와이어 이미지" />
       {/* <IconSlider>
         <IconFrame>

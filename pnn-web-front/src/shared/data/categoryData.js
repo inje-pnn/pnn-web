@@ -1,23 +1,23 @@
 export const categoryData = {
   product: [
     {
-      title: "All",
+      title: "ALL",
       imgSrc: "",
     },
     {
-      title: "Web",
+      title: "WEB",
       imgSrc: "",
     },
     {
-      title: "Ai",
+      title: "AI",
       imgSrc: "",
     },
     {
-      title: "App",
+      title: "APP",
       imgSrc: "",
     },
     {
-      title: "Game",
+      title: "GAME",
       imgSrc: "",
     },
   ],

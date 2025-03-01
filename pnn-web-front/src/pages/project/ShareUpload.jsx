@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { OptionDropdown } from "../../features/platform/OptionDropdown";
 import { ImageUpload } from "../../features/platform/ImageUpload";
 import { fetchGitHubReadme } from "../../shared/api/githubApi";
-import { uploadImageToFirebase  } from "../../shared/util/firebaseImg";
+import { uploadImageToFirebase } from "../../shared/util/firebaseImg";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -263,8 +263,12 @@ const Spinner = styled.div`
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 `;
 
@@ -337,7 +341,16 @@ export const ShareUpload = () => {
       isUploading;
 
     setIsUploadDisabled(isDisabled);
-  }, [title, subtitle, platform, projectType, projectTag, image, githubUrl, isUploading]);
+  }, [
+    title,
+    subtitle,
+    platform,
+    projectType,
+    projectTag,
+    image,
+    githubUrl,
+    isUploading,
+  ]);
 
   const handleTitleChange = (e) => {
     const input = e.target.value;
@@ -392,17 +405,20 @@ export const ShareUpload = () => {
 
   const handlePostUpload = async () => {
     setIsUploading(true);
-  
+
     try {
       const imageUrl = await uploadImageToFirebase(image);
-  
+
       const now = new Date();
-      const createData = now.toLocaleDateString("ko-KR", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).replace(/. /g, "-").replace(".", ""); // "YYYY-MM-DD" 형식으로 변환
-  
+      const createData = now
+        .toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })
+        .replace(/. /g, "-")
+        .replace(".", ""); // "YYYY-MM-DD" 형식으로 변환
+
       const response = await axios.post(
         "https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/project/create",
         {
@@ -417,7 +433,7 @@ export const ShareUpload = () => {
           create_data: createData,
         }
       );
-  
+
       if (response.status === 200 && response.data) {
         alert("프로젝트가 성공적으로 업로드되었습니다!");
         setTitle("");
@@ -428,7 +444,7 @@ export const ShareUpload = () => {
         setImage(null);
         setGithubUrl("");
         setReadmeContent("");
-  
+
         navigate("/share");
       } else {
         throw new Error("업로드 실패");
@@ -507,7 +523,7 @@ export const ShareUpload = () => {
                   value={projectTag}
                   options={tagOptions}
                   onChange={handleProjectTagChange}
-                />                
+                />
               </TagListFrame>
             </SubInputFrame>
           </WrapperFrame>
@@ -591,11 +607,11 @@ export const ShareUpload = () => {
         </ReadMeFrame>
 
         <UploadButton onClick={handlePostUpload} disabled={isUploadDisabled}>
-        <ButtonContent>
-          {isUploading && <Spinner />}
-          업로드 하기
-        </ButtonContent>
-      </UploadButton>
+          <ButtonContent>
+            {isUploading && <Spinner />}
+            업로드 하기
+          </ButtonContent>
+        </UploadButton>
       </ContentContainer>
     </Container>
   );
