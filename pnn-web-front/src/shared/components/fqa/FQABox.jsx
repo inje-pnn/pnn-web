@@ -113,7 +113,8 @@ const Answer = styled.div`
   border-radius: 20px;
   margin: ${({ isOpen }) => (isOpen ? '10px 24px 24px 24px' : '0')};
   overflow: auto;
-  
+  font-family: sans-serif;
+
   @media (max-width: 768px) {
     font-size: 11px;
     padding: ${({ isOpen }) => (isOpen ? '16px' : '0')};
@@ -123,6 +124,7 @@ const Answer = styled.div`
     margin: ${({ isOpen }) => (isOpen ? '8px 16px 16px 16px' : '0')};
   }
 `;
+
 
 export const FQABox = () => {
   const [openIndex, setOpenIndex] = useState(null);
