@@ -174,7 +174,7 @@ export const CoreValues = () => {
         </RightColumn>
       </PeopleContainer>
 
-      <MessageBox>"컴퓨터를 사랑하시는 여러분, 환영합니다."</MessageBox>
+      <MessageBox>"컴퓨터와 기술에 열정을 가진 여러분, 환영합니다!"</MessageBox>
     </>
   );
 };
