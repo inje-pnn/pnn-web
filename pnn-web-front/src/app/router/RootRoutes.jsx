@@ -64,11 +64,7 @@ export const RootRoutes = ({ user }) => {
 
       <Route
         path="/community/lecture"
-        element={
-          <ProtectedRoute user={user} type="member">
-            <Layout mainContent={<CommunityLecturePage />} />
-          </ProtectedRoute>
-        }
+        element={<Layout mainContent={<CommunityLecturePage />} />}
       />
       <Route
         path="/community/study/upload"

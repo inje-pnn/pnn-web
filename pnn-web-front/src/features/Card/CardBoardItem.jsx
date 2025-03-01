@@ -81,7 +81,7 @@ const ChipContainer = styled.div`
   width: 100%;
   height: 25px;
 `;
-export const CardBoardItem = ({ isLoading, item }) => {
+export const CardBoardItem = ({ item }) => {
   const onClickCard = () => {
     window.location.href = item.content_link;
   };
@@ -93,63 +93,27 @@ export const CardBoardItem = ({ isLoading, item }) => {
       "0"
     )}.${String(date.getDate()).padStart(2, "0")}`;
   };
-  const SkeletonBoard = () => {
-    return (
-      <Container className="card-item">
-        <CardContainer>
-          <Skeleton
-            animation="wave"
-            height={220}
-            width="90%"
-            style={{ marginTop: -40 }}
-          />
-        </CardContainer>
-        <CardContent>
-          <Skeleton animation="wave" height={30} width="80%" />
-          <Skeleton animation="wave" height={200} width="80%" />
-          <ChipContainer>
-            <Skeleton animation="wave" height={20} width="80%" />
-          </ChipContainer>
 
-          <CardInfoContainer>
-            <Skeleton animation="wave" height={10} width="30%" />
-            <Skeleton
-              animation="wave"
-              height={10}
-              width="30%"
-              style={{ marginRight: 85 }}
-            />
-          </CardInfoContainer>
-        </CardContent>
-      </Container>
-    );
-  };
   return (
-    <>
-      {isLoading ? (
-        <SkeletonBoard />
-      ) : (
-        <Container className="card-item" onClick={onClickCard}>
-          <CardContainer>
-            <CardImage src={item.imgae} />
-          </CardContainer>
-          <CardContent>
-            <h3>{item.title}</h3>
-            <CardDescription>{item.description}</CardDescription>
-            <ChipContainer>
-              {item.project_type.map((v) => {
-                return <CustomChip label={v} />;
-              })}
-            </ChipContainer>
-            <CardInfoContainer>
-              <span>
-                {item.category}WEB {formatDate(item.created_at)}
-              </span>
-              <span>Editor · {item.username}</span>
-            </CardInfoContainer>
-          </CardContent>
-        </Container>
-      )}
-    </>
+    <Container className="card-item" onClick={onClickCard}>
+      <CardContainer>
+        <CardImage src={item.imgae} />
+      </CardContainer>
+      <CardContent>
+        <h3>{item.title}</h3>
+        <CardDescription>{item.description}</CardDescription>
+        <ChipContainer>
+          {item.project_type.map((v) => {
+            return <CustomChip label={v} />;
+          })}
+        </ChipContainer>
+        <CardInfoContainer>
+          <span>
+            {item.category}WEB {formatDate(item.created_at)}
+          </span>
+          <span>Editor · {item.username}</span>
+        </CardInfoContainer>
+      </CardContent>
+    </Container>
   );
 };

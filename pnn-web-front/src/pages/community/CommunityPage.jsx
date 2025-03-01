@@ -9,6 +9,7 @@ import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton"
 import { useCategoryFilter } from "../../shared/hooks/useCategoryFilter";
 import { communityApi } from "../../shared/api/communityApi";
 import { Pagination } from "@mui/material";
+import { CardBoardSkeleton } from "../../features/Card/CardBoardSkelecton";
 
 const Container = styled.div`
   display: flex;
@@ -106,7 +107,6 @@ const HeaderFrame = styled.div`
 export const CommunityPage = () => {
   const user = useUserStore((state) => state.user);
 
-  const [page, setPage] = useState(0);
   const { getStudyBoardList } = communityApi();
   const {
     projects,
@@ -167,17 +167,16 @@ export const CommunityPage = () => {
       </FilterContainer>
       <BoardContainer>
         <div className="grid-container">
-          {paginationList?.map((v, index) => {
-            if (index < 6) {
-              return (
-                <CardBoardItem
-                  isLoading={isLoading}
-                  item={v}
-                  key={`${v.serial_number}card`}
-                />
-              );
-            }
-          })}
+          {isLoading
+            ? [...new Array(6)].map(() => <CardBoardSkeleton />)
+            : paginationList?.map((v, index) => {
+                if (index < 6) {
+                  return (
+                    <CardBoardItem item={v} key={`${v.serial_number}card`} />
+                  );
+                }
+              })}
+          {}
         </div>
       </BoardContainer>
       <PageContainer>

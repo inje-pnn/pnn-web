@@ -27,15 +27,14 @@ export default function Header() {
         top: "0",
         zIndex: "9999",
       }}
-    >\
-      <AppBar 
-        position="static" 
-        sx={{ 
-          height: "100%", 
-          backgroundColor: 'rgba(211, 211, 211, 0.5)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-
+    >
+      <AppBar
+        position="static"
+        sx={{
+          height: "100%",
+          backgroundColor: "rgba(211, 211, 211, 0.5)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
         }}
       >
         <Toolbar
@@ -75,17 +74,53 @@ export default function Header() {
               gap: "3rem", // 버튼 간 간격 조정
             }}
           >
-            <Link to="/aboutus" style={{ textDecoration: "none", color: "black" }}>
-              <Button color="inherit" sx={{ fontSize: "16px", fontWeight: "600" }}>소개</Button> {/* 폰트 크기 및 굵기 증가 */}
+            <Link
+              to="/aboutus"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Button
+                color="inherit"
+                sx={{ fontSize: "16px", fontWeight: "600" }}
+              >
+                소개
+              </Button>{" "}
+              {/* 폰트 크기 및 굵기 증가 */}
             </Link>
-            <Link to="/share" style={{ textDecoration: "none", color: "black" }}>
-              <Button color="inherit" sx={{ fontSize: "16px", fontWeight: "600" }}>프로젝트</Button> {/* 폰트 크기 및 굵기 증가 */}
+            <Link
+              to="/share"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Button
+                color="inherit"
+                sx={{ fontSize: "16px", fontWeight: "600" }}
+              >
+                프로젝트
+              </Button>{" "}
+              {/* 폰트 크기 및 굵기 증가 */}
             </Link>
-            <Link to="/community" style={{ textDecoration: "none", color: "black" }}>
-              <Button color="inherit" sx={{ fontSize: "16px", fontWeight: "600" }}>커뮤니티</Button> {/* 폰트 크기 및 굵기 증가 */}
+            <Link
+              to="/community/study"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Button
+                color="inherit"
+                sx={{ fontSize: "16px", fontWeight: "600" }}
+              >
+                커뮤니티
+              </Button>{" "}
+              {/* 폰트 크기 및 굵기 증가 */}
             </Link>
-            <Link to="/recruiting" style={{ textDecoration: "none", color: "black" }}>
-              <Button color="inherit" sx={{ fontSize: "16px", fontWeight: "600" }}>지원하기</Button> {/* 폰트 크기 및 굵기 증가 */}
+            <Link
+              to="/recruiting"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Button
+                color="inherit"
+                sx={{ fontSize: "16px", fontWeight: "600" }}
+              >
+                지원하기
+              </Button>{" "}
+              {/* 폰트 크기 및 굵기 증가 */}
             </Link>
           </Box>
 
