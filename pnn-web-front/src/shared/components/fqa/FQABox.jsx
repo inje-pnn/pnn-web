@@ -74,7 +74,7 @@ const QuestionText = styled.div`
   align-items: center;
   gap: 16px;
   font-size: 20px;
-  color: #525252;
+  font-weight: bold;
   
   @media (max-width: 768px) {
     font-size: 15px;
@@ -108,6 +108,7 @@ const Answer = styled.div`
   transition: all 0.3s ease;
   opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
   background-color: #f4f6fc;
+  color: #525252;
   width: 95%;
   border-radius: 20px;
   margin: ${({ isOpen }) => (isOpen ? '10px 24px 24px 24px' : '0')};

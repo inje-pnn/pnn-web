@@ -1,69 +1,67 @@
 import styled from "styled-components";
 import { CoreValues } from "../about/component/CoreValues";
-import { FQABox } from "../../shared/components/fqa/FQABox";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
-  width: 100%;
-  height: auto;
   display: flex;
+  height: 100vh;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  background-color: #f5f5f5;
+  background-color: #f4f6fc;
   position: relative;
   padding: 40px 20px;
-  overflow: visible;
 
   @media (max-width: 768px) {
-    padding: 20px 15px;
+    padding: 30px 15px;
     height: auto;
   }
 `;
 
-const CoreValuesContent = styled.div`
+const SectionContent = styled.div`
+  width: 90%;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 70%;
 `;
 
-const SectionContent = styled.div`
-  width: 100%;
+const RecruitingButton = styled.button`
+  width: 220px;
+  height: 60px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #4a90e2, #667eea);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 
   @media (max-width: 768px) {
-    width: 95%;
+    width: 180px;
+    height: 50px;
+    font-size: 16px;
   }
 `;
 
-const FQAContent = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  background-color: #f4f6fc;
-`;
-
-const FQAFrame = styled.div`
-  width: 80%;
-  display: flex;
-  justify-content: center;
-`;
-
 const Section4 = () => {
+  const navigate = useNavigate();
+
+  const handleRecruitingButtonClick = () => {
+    navigate("/recruiting");
+  };
+
   return (
     <Container>
       <SectionContent>
-        <CoreValuesContent>
-          <CoreValues />
-        </CoreValuesContent>
-
-        <FQAContent>
-          <FQAFrame>
-            <FQABox />
-          </FQAFrame>
-        </FQAContent>
+        <CoreValues />
       </SectionContent>
+      <RecruitingButton onClick={handleRecruitingButtonClick}>
+        지원하기
+      </RecruitingButton>
     </Container>
   );
 };

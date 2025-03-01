@@ -81,7 +81,6 @@ const InnerHeaderFrame = styled.div`
   }
 `;
 
-
 const ProjectNumber = styled.div`
   width: 100%;
   height: 50px;
@@ -111,10 +110,78 @@ const CardContainer = styled.div`
   }
 `;
 
+// 스켈레톤 UI 컴포넌트 스타일링
+const SkeletonCard = styled.div`
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  border-radius: 8px;
+  animation: pulse 1.5s ease-in-out infinite;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @keyframes pulse {
+    0% {
+      background-position: 0% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+`;
+
+const SkeletonText = styled.div`
+  width: ${props => props.width || "100%"};
+  height: ${props => props.height || "16px"};
+  margin: ${props => props.margin || "0"};
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: pulse 1.5s ease-in-out infinite;
+
+  @keyframes pulse {
+    0% {
+      background-position: 0% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+`;
+
+// 스켈레톤 카드 컴포넌트
+const SkeletonCardFrame = () => {
+  return <SkeletonCard />;
+};
+
+// 프로젝트 숫자 스켈레톤
+const SkeletonProjectNumber = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    align-items: center;
+  }
+`;
 
 export const SharePage = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = Cookies.get("user");
@@ -123,11 +190,15 @@ export const SharePage = () => {
 
   useEffect(() => {
     const fetchProjects = async () => {
+      setLoading(true);
       try {
         const projectData = await projectApi.getProjects();
         setProjects(projectData);
       } catch (error) {
         console.error("프로젝트 데이터를 불러오는 중 오류 발생:", error);
+      } finally {
+        // 데이터 로딩 완료 후 로딩 상태 변경
+        setLoading(false);
       }
     };
 
@@ -145,18 +216,24 @@ export const SharePage = () => {
     handleSelectedPlatform,
   } = useCategoryFilter(projects);
 
+  // 스켈레톤 카드 배열 생성 (로딩 중일 때 표시할 개수)
+  const skeletonCards = Array(8).fill(0);
+
   return (
     <Container>
       <Frame>
-      <HeaderFrame>
-  <InnerHeaderFrame>
-    <h1>
-      <FolderOpenOutlinedIcon fontSize="large" color="primary" />
-      P&N에서 진행된 프로젝트 둘러보기
-    </h1>
-    <p>다양한 플랫폼에서 진행된 프로젝트를 확인하고, 영감을 얻어보세요.</p>
-  </InnerHeaderFrame>
-</HeaderFrame>
+        <HeaderFrame>
+          <InnerHeaderFrame>
+            <h1>
+              <FolderOpenOutlinedIcon fontSize="large" color="primary" />
+              P&N에서 진행된 프로젝트 둘러보기
+            </h1>
+            <p>
+              다양한 플랫폼에서 진행된 프로젝트를 확인하고, 영감을 얻어보세요.
+            </p>
+          </InnerHeaderFrame>
+        </HeaderFrame>
+        
         <CommunityFilter
           title={"프로젝트"}
           searchText={searchText}
@@ -169,12 +246,22 @@ export const SharePage = () => {
           handleSelectedPlatform={handleSelectedPlatform}
         />
 
-        <ProjectNumber>{projects.length}개의 프로젝트</ProjectNumber>
+        {loading ? (
+          <SkeletonProjectNumber>
+            <SkeletonText width="120px" height="20px" />
+          </SkeletonProjectNumber>
+        ) : (
+          <ProjectNumber>{projects.length}개의 프로젝트</ProjectNumber>
+        )}
 
         <CardContainer>
-          {projects.map((project) => (
-            <CardFrame key={project.id} project={project} />
-          ))}
+          {loading
+            ? skeletonCards.map((_, index) => (
+                <SkeletonCardFrame key={`skeleton-${index}`} />
+              ))
+            : projects.map((project) => (
+                <CardFrame key={project.id} project={project} />
+              ))}
         </CardContainer>
       </Frame>
 

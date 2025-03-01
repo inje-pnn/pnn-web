@@ -358,7 +358,12 @@ export const ShareUpload = () => {
   };
 
   const handleProjectTypeChange = (e) => {
-    setProjectType(e.target.value);
+    const selectedOptions = e.target.value;
+    if (selectedOptions.length <= 6) {
+      setProjectType(selectedOptions);
+    } else {
+      alert("최대 6개까지만 선택할 수 있습니다.");
+    }
   };
 
   const handleProjectTagChange = (e) => {
