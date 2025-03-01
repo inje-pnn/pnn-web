@@ -4,7 +4,7 @@ import pnn1 from "../../assets/images/pnn1.jpeg";
 import pnn2 from "../../assets/images/pnn2.jpeg";
 import pnn3 from "../../assets/images/pnn3.jpeg";
 import pnn4 from "../../assets/images/pnn4.jpeg";
-import pnn5 from "../../assets/images/pnn5.jpeg";
+import pnn5 from "../../assets/images/hackerton.png";
 import pnn6 from "../../assets/images/pnn6.jpeg";
 
 // IntersectionObserver 훅 구현
@@ -44,6 +44,7 @@ const Container = styled.div`
   padding: 40px 20px; /* 상하 패딩 추가 */
   /* overflow-y 스크롤 제거 */
   overflow: visible;
+  margin-top: -40px;
 `;
 
 const ContentContainer = styled.div`
@@ -138,7 +139,6 @@ const Card = styled.div`
 const CardImage = styled.div`
   width: 100%;
   height: 200px;
-
   @media (min-width: 1200px) {
     height: 220px;
   }

@@ -25,7 +25,6 @@ export const RegistBanner = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    console.log(Cookies.get("banner"));
     setIsVisible(Cookies.get("banner"));
   }, []);
   const onClcikTodayCloseButton = () => {

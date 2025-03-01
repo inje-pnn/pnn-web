@@ -1,6 +1,12 @@
 import React from "react";
-import { FormControl, InputLabel, Select, MenuItem, Chip, Box } from "@mui/material";
-import { getImage } from "../../shared/util/image";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Chip,
+  Box,
+} from "@mui/material";
 import styled from "styled-components";
 
 const StyledFormControl = styled(FormControl)`
@@ -31,9 +37,10 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 const StyledChip = styled(Chip)`
-  background-color: ${(props) => props.bgcolor || "#f5f5f5"};
+  background-color: #f5f5f5;
+
   &:hover {
-    background-color: ${(props) => props.bgcolor || "#e0e0e0"};
+    background-color: #e0e0e0;
   }
 `;
 
@@ -47,7 +54,13 @@ const menuProps = {
   disableScrollLock: true,
 };
 
-export const OptionDropdown = ({ label, options, value, onChange, multiple = false }) => (
+export const OptionDropdown = ({
+  label,
+  options,
+  value,
+  onChange,
+  multiple = false,
+}) => (
   <StyledFormControl variant="outlined">
     <InputLabel>{label}</InputLabel>
     <Select
@@ -56,14 +69,17 @@ export const OptionDropdown = ({ label, options, value, onChange, multiple = fal
       onChange={onChange}
       label={label}
       MenuProps={menuProps}
-      renderValue={multiple ? (selected) => (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-          {selected.map((val) => {
-            const { color } = getImage(val) || {};
-            return <StyledChip key={val} label={val} bgcolor={color} />;
-          })}
-        </Box>
-      ) : undefined}
+      renderValue={
+        multiple
+          ? (selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value) => (
+                  <StyledChip key={value} label={value} />
+                ))}
+              </Box>
+            )
+          : undefined
+      }
     >
       {!multiple && (
         <MenuItem value="" disabled>
@@ -71,8 +87,8 @@ export const OptionDropdown = ({ label, options, value, onChange, multiple = fal
         </MenuItem>
       )}
       {options.map((option, index) => (
-        <MenuItem key={index} value={option}>
-          {option}
+        <MenuItem key={index} value={option.title}>
+          {option.title}
         </MenuItem>
       ))}
     </Select>

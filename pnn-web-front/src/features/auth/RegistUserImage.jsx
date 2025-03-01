@@ -51,8 +51,7 @@ const ErrorText = styled.p`
   color: red;
   font-size: 16px;
 `;
-
-export const RegistFormBox = ({ user }) => {
+export const RegistUserImage = ({ user }) => {
   const {
     userFormData,
     handleUserFormData,
@@ -75,43 +74,8 @@ export const RegistFormBox = ({ user }) => {
   return (
     <Container>
       <Text>{"P&N에 가입하고\n 다양한 활동을 해보세요."}</Text>
+      <Text>{"프로필 이미지를 선택해주세요."}</Text>
 
-      <CustomTextFeild
-        name="grade"
-        id="fullWidth"
-        label="학년"
-        error={hasError.grade}
-        value={userFormData.grade}
-        onChange={onChangeInputValue}
-      />
-      <CustomTextFeild
-        name="studentNumber"
-        id="fullWidth"
-        label="학번"
-        error={hasError.studentNumber}
-        value={userFormData.studentNumber}
-        onChange={onChangeInputValue}
-      />
-      <CustomTextFeild
-        name="name"
-        id="fullWidth"
-        label="이름"
-        error={hasError.name}
-        value={userFormData.name}
-        onChange={onChangeInputValue}
-      />
-      <CustomTextFeild
-        name="gitHub"
-        id="fullWidth"
-        label="깃허브 주소"
-        error={hasError.gitHub}
-        value={userFormData.gitHub}
-        onChange={onChangeInputValue}
-      />
-      <CustomButton variant="contained" onClick={onClickSubmitButton}>
-        등록
-      </CustomButton>
-      {hasError.message && <ErrorText>{hasError.message}.</ErrorText>}
       <InfoText>관리자에게 권한을 받은 이후 자유롭게 이용가능합니다.</InfoText>
     </Container>
   );

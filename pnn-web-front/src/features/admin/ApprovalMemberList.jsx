@@ -48,7 +48,6 @@ export const ApprovalMemberList = ({
       handlePendingUserList(v);
     });
   };
-  console.log(pendingUsersList);
   return (
     <CustomCard>
       <CardHeader title={"가입 대기 명단"} />

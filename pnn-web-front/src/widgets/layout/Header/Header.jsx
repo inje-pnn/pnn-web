@@ -27,7 +27,7 @@ export default function Header() {
         top: "0",
         zIndex: "9999",
       }}
-    >
+    >\
       <AppBar 
         position="static" 
         sx={{ 
@@ -35,6 +35,7 @@ export default function Header() {
           backgroundColor: 'rgba(211, 211, 211, 0.5)',
           backdropFilter: 'blur(10px)',
           WebkitBackdropFilter: 'blur(10px)',
+
         }}
       >
         <Toolbar
@@ -68,7 +69,7 @@ export default function Header() {
           <Box
             sx={{
               width: "60%",
-              display: { xs: 'none', md: 'flex' },
+              display: { xs: "none", md: "flex" },
               alignItems: "center",
               justifyContent: "flex-end", // 메뉴 아이템들을 우측으로 정렬
               gap: "3rem", // 버튼 간 간격 조정
@@ -88,10 +89,12 @@ export default function Header() {
             </Link>
           </Box>
 
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center',
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <DropPofileList />
             <IconButton
               size="large"
@@ -99,8 +102,8 @@ export default function Header() {
               color="inherit"
               aria-label="menu"
               onClick={onClickMenuButton}
-              sx={{ 
-                display: { xs: 'flex', md: 'none' }
+              sx={{
+                display: { xs: "flex", md: "none" },
               }}
             >
               <MenuIcon />

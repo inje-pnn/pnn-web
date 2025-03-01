@@ -110,6 +110,7 @@ const CardContainer = styled.div`
   }
 `;
 
+
 // 스켈레톤 UI 컴포넌트 스타일링
 const SkeletonCard = styled.div`
   width: 100%;
@@ -180,32 +181,25 @@ const SkeletonProjectNumber = styled.div`
 
 export const SharePage = () => {
   const [isLogin, setIsLogin] = useState(false);
-  const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const token = Cookies.get("user");
     setIsLogin(!!token);
   }, []);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      setLoading(true);
-      try {
-        const projectData = await projectApi.getProjects();
-        setProjects(projectData);
-      } catch (error) {
-        console.error("프로젝트 데이터를 불러오는 중 오류 발생:", error);
-      } finally {
-        // 데이터 로딩 완료 후 로딩 상태 변경
-        setLoading(false);
-      }
-    };
 
-    fetchProjects();
-  }, []);
+
+  useEffect(() => {
+    if (projects)
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+  }, [projects]);
 
   const {
+    projects,
     searchText,
     categoryList,
     selectedPlatform,
@@ -214,7 +208,7 @@ export const SharePage = () => {
     addSelectedItemList,
     removeSelectedItemList,
     handleSelectedPlatform,
-  } = useCategoryFilter(projects);
+  } = useCategoryFilter(projectApi.getProjects);
 
   // 스켈레톤 카드 배열 생성 (로딩 중일 때 표시할 개수)
   const skeletonCards = Array(8).fill(0);
@@ -233,7 +227,6 @@ export const SharePage = () => {
             </p>
           </InnerHeaderFrame>
         </HeaderFrame>
-        
         <CommunityFilter
           title={"프로젝트"}
           searchText={searchText}
@@ -262,11 +255,12 @@ export const SharePage = () => {
             : projects.map((project) => (
                 <CardFrame key={project.id} project={project} />
               ))}
+
         </CardContainer>
       </Frame>
 
       <ScrollToTopButton />
-      {isLogin && <UploadButton />}
+      {isLogin && <UploadButton path={"/share/upload"} />}
     </Container>
   );
 };

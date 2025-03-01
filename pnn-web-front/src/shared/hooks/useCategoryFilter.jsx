@@ -1,33 +1,36 @@
 import { useEffect, useState } from "react";
 import { categoryData } from "../data/categoryData";
-
-export const useCategoryFilter = (data) => {
-  const originalData = data;
-  const [projects, setProjects] = useState(originalData);
+let originalData;
+export const useCategoryFilter = (getBoardList) => {
+  const [projects, setProjects] = useState([]);
   const [selectedPlatform, setSelectedPlatform] = useState("ALL");
   const [searchText, setSearchText] = useState("");
   const [selectedItemList, setSelectedItemList] = useState(["All"]);
   const [categoryList, setCategoryList] = useState(categoryData.framwork);
 
   useEffect(() => {
+    getBoardList().then((res) => {
+      originalData = res;
+      setProjects(res);
+    });
+  }, []);
+  useEffect(() => {
     let filteringData;
+
     if (selectedPlatform === "ALL") {
       filteringData = originalData;
     } else {
       filteringData = originalData.filter(
-        (data) => data.category === selectedPlatform
+        (data) => data.project_category === selectedPlatform
       );
     }
-
     if (selectedItemList && selectedItemList[0] !== "All") {
       filteringData = filteringData.filter((data) =>
-        data.type.some((type) => selectedItemList.includes(type))
+        data.project_type.some((type) => selectedItemList.includes(type))
       );
     }
     setProjects(filteringData);
   }, [selectedItemList, selectedPlatform]);
-
-  const handleSetCategorys = () => {};
 
   const addSelectedItemList = (data) => {
     if (selectedItemList[0] === "All") selectedItemList.pop();
@@ -74,7 +77,7 @@ export const useCategoryFilter = (data) => {
     selectedPlatform,
     categoryList,
     projects,
-    handleSetCategorys,
+
     onChangeSearchText,
     addSelectedItemList,
     removeSelectedItemList,
