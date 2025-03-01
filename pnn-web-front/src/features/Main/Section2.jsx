@@ -1,7 +1,7 @@
 // sections/Section2.jsx
 import styled, { keyframes } from "styled-components";
 import { useEffect, useRef } from "react";
-
+import sectionCardImage from "../../assets/images/main_section_card.png";
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -139,7 +139,7 @@ const CardContainer = styled.div`
   border-radius: 20px;
   flex-direction: row;
   position: relative;
-  background-image: url("src/assets/icons/framworks/testimage3.png");
+  background-image: ${(prop) => `url("${prop.src}")`};
   background-size: 100%;
   @media (min-width: 1024px) {
     width: 70%;
@@ -164,7 +164,7 @@ const Section2 = () => {
   ];
 
   const ImageCard = () => {
-    return <CardContainer></CardContainer>;
+    return <CardContainer src={sectionCardImage}></CardContainer>;
   };
   return (
     <Container>

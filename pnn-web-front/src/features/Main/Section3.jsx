@@ -4,7 +4,7 @@ import pnn1 from "../../assets/images/pnn1.jpeg";
 import pnn2 from "../../assets/images/pnn2.jpeg";
 import pnn3 from "../../assets/images/pnn3.jpeg";
 import pnn4 from "../../assets/images/pnn4.jpeg";
-import pnn5 from "../../assets/images/pnn5.jpeg";
+import pnn5 from "../../assets/images/hackerton.png";
 import pnn6 from "../../assets/images/pnn6.jpeg";
 
 // IntersectionObserver 훅 구현
@@ -227,7 +227,7 @@ const Section3 = () => {
               text="매년 말 컴퓨터공학부 동아리들의 축제! 1년간의 성과를 공유하고 서로의 발전을 평가하는 뜻깊은 연례행사입니다."
             />
             <ImageBox
-              img={"src/assets/icons/framworks/hackerton.png"}
+              img={pnn5}
               title="해커톤"
               text="동아리가 주최하는 해커톤에서는 밤새 코딩하며 아이디어를 현실로 만드는 열정 가득한 순간을 경험할 수 있습니다."
             />
