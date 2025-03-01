@@ -14,12 +14,13 @@ const TopInfoContainer = styled.div`
   font-size: 18px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  
+  margin: 40px 0;
+
   @media (max-width: 768px) {
     margin-top: 4vh;
     flex-direction: column;
     align-items: center;
-    font-size: 13px;
+    font-size: 14px;
     padding: 15px;
   }
 `;
@@ -27,7 +28,7 @@ const TopInfoContainer = styled.div`
 const InfoText = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 
   @media (max-width: 768px) {
     align-items: center;
@@ -37,8 +38,27 @@ const InfoText = styled.div`
 
 const InfoItem = styled.p`
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 16px;
+  line-height: 1.4;
+
+  svg {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  span {
+    flex: 1;
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    svg {
+      font-size: 16px;
+    }
+  }
 `;
 
 const QRCodeWrapper = styled.div`
@@ -66,7 +86,7 @@ const QRCodeContainer = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  
+
   @media (max-width: 768px) {
     width: 80px;
     height: 80px;
@@ -87,7 +107,7 @@ const Container = styled.div`
   padding: 7vh 0;
   height: auto;
   background-color: #eef2ff;
-  
+
   @media (max-width: 768px) {
     padding: 7vh 0;
   }
@@ -99,7 +119,7 @@ const Frame = styled.div`
   align-items: center;
   width: 80%;
   height: 100%;
-  
+
   @media (max-width: 768px) {
     width: 92%;
   }
@@ -112,7 +132,7 @@ const FQAContainer = styled.div`
   height: auto;
   margin-top: 120px;
   font-size: 42px;
-  
+
   @media (max-width: 768px) {
     margin-top: 50px;
     font-size: 28px;
@@ -124,10 +144,20 @@ export const RecruitingPage = () => {
     <Container>
       <TopInfoContainer>
         <InfoText>
-          <InfoItem><FaClock /> 지원 기간: 2025년 3월 1일 ~ 2025년 3월 8일</InfoItem>
-          <InfoItem><FaCalendarCheck /> 면접 일정: 2025년 3월 10일 ~ 2025년 3월 12일</InfoItem>
-          <InfoItem><FaPhone /> 지원방법: 010-3671-3392 (학번/이름 문자 전송)</InfoItem>
+          <InfoItem>
+            <FaClock />
+            <span>지원 기간: 2025년 3월 1일 ~ 2025년 3월 8일</span>
+          </InfoItem>
+          <InfoItem>
+            <FaCalendarCheck />
+            <span>면접 일정: 2025년 3월 10일 ~ 2025년 3월 12일</span>
+          </InfoItem>
+          <InfoItem>
+            <FaPhone />
+            <span>지원방법: 010-3671-3392 (학번/이름 문자 전송)</span>
+          </InfoItem>
         </InfoText>
+
         <QRCodeWrapper>
           <QRTitle>문의사항</QRTitle>
           <QRCodeContainer>
@@ -137,7 +167,7 @@ export const RecruitingPage = () => {
       </TopInfoContainer>
 
       <Frame>
-        <Journey/>
+        <Journey />
         <FQAContainer>
           <FQABox />
         </FQAContainer>

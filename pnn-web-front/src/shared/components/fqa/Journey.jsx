@@ -108,6 +108,7 @@ const StepTitle = styled.div`
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 8px;
+  text-align: center;
   
   @media (max-width: 768px) {
     font-size: 20px;
