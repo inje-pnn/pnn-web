@@ -85,7 +85,7 @@ const WireImage = styled.img`
 
   /* 모바일에서 크기 및 위치 조정 */
   @media (max-width: 480px) {
-    width: 250px;
+    width: 400px;
   }
 
   /* 태블릿 이상에서는 원래 절대 위치로 복원 */

@@ -91,7 +91,7 @@ export const CommunityLecturePage = () => {
     getAccountBoardList().then((res) => {
       setBoardList(res);
       setTimeout(() => {
-        setIsLoading(false);
+        // setIsLoading(false);
       }, 1000);
     });
   }, []);
