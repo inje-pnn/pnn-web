@@ -308,7 +308,6 @@ export const CommunityUploadPage = ({ type }) => {
   };
 
   const handleBoardData = (data, setData, type) => {
-    console.log(data, setData, type);
     setData((prev) => ({ ...prev, [type]: data }));
   };
 

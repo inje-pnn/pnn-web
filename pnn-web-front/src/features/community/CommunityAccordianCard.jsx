@@ -78,18 +78,15 @@ export const CommunityAccordianCard = ({ data, user, updateLectureBoard }) => {
   const [userList, setUserList] = useState([...data.username]);
   const [isCheckin, setIsCheckin] = useState(false);
   useEffect(() => {
-    console.log(data);
     const name = data.username.find((v) => v === user.name);
     if (name) {
       setIsCheckin(true);
     }
   }, []);
   const onClickCheckInButton = () => {
-    console.log(user);
     const newArr = isCheckin
       ? userList.filter((v) => v !== user.name)
       : [...userList, user.name];
-    console.log("list", newArr);
     const putData = {
       boardId: data.serial_number,
       user: newArr,

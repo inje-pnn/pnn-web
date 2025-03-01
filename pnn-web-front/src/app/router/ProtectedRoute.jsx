@@ -4,7 +4,6 @@ import { Navigate, useLocation } from "react-router-dom";
 // type admin member guest
 const ProtectedRoute = ({ children, user, type }) => {
   const location = useLocation();
-  console.log("log", user);
   if (user?.length && type === "sign") {
     // 이미 로그인 상태라면 이전 페이지로 리다이렉트
     return <Navigate to={location.state?.from || "/"} replace />;

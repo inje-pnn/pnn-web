@@ -216,11 +216,11 @@ export const MainPage = () => {
         <Section3 />
       </Section>
 
-      <Section ref={sectionRefs[3]} id="section4">
+      {/* <Section ref={sectionRefs[3]} id="section4">
         <Section4 />
-      </Section>
+      </Section> */}
 
-      <PageNavigation>
+      {/* <PageNavigation>
         {[0, 1, 2, 3].map((index) => (
           <NavDot
             key={index}
@@ -228,7 +228,7 @@ export const MainPage = () => {
             onClick={() => scrollToSection(index)}
           />
         ))}
-      </PageNavigation>
+      </PageNavigation> */}
 
       <FooterWrapper>
         <Footer />
