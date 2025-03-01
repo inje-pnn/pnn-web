@@ -75,7 +75,7 @@ export default function Header() {
               gap: "10rem",
             }}
           >
-            <Link
+            {/* <Link
               to="/aboutus"
               style={{ textDecoration: "none", color: "black" }}
             >
@@ -98,10 +98,10 @@ export default function Header() {
               style={{ textDecoration: "none", color: "black" }}
             >
               <Button color="inherit">지원하기</Button>
-            </Link>
+            </Link> */}
           </Box>
 
-          <Box
+          {/* <Box
             sx={{
               display: "flex",
               alignItems: "center",
@@ -120,7 +120,7 @@ export default function Header() {
             >
               <MenuIcon />
             </IconButton>
-          </Box>
+          </Box> */}
         </Toolbar>
       </AppBar>
 

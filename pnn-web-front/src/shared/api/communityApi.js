@@ -4,7 +4,6 @@ export const communityApi = () => {
   const path =
     "https://port-0-pnn-web-backend-m5m6xltec2c87be9.sel4.cloudtype.app/";
   const postStudyBoard = async (data) => {
-    console.log(data);
     const postData = {
       title: data.title,
       project_category: data.platform,
@@ -51,7 +50,6 @@ export const communityApi = () => {
   const getAccountBoardList = async () => {
     try {
       const res = await axios.get(path + "post/get_accountboardlist");
-      console.log(res.data);
       return res.data;
     } catch {}
   };

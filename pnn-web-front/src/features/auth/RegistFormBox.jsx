@@ -52,7 +52,6 @@ const ErrorText = styled.p`
   font-size: 16px;
 `;
 
-const ImageSelectBox = styled.div``;
 export const RegistFormBox = ({ user }) => {
   const {
     userFormData,
@@ -69,7 +68,6 @@ export const RegistFormBox = ({ user }) => {
 
   const onClickSubmitButton = () => {
     const res = checkHasInvaildValue();
-    console.log(res);
     if (!res) {
       fetchUserData();
     }
@@ -77,7 +75,7 @@ export const RegistFormBox = ({ user }) => {
   return (
     <Container>
       <Text>{"P&N에 가입하고\n 다양한 활동을 해보세요."}</Text>
-      <ImageSelectBox />
+
       <CustomTextFeild
         name="grade"
         id="fullWidth"

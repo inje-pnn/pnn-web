@@ -67,7 +67,6 @@ export const RegistUserImage = ({ user }) => {
 
   const onClickSubmitButton = () => {
     const res = checkHasInvaildValue();
-    console.log(res);
     if (!res) {
       fetchUserData();
     }

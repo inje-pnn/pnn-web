@@ -44,6 +44,7 @@ const Container = styled.div`
   padding: 40px 20px; /* 상하 패딩 추가 */
   /* overflow-y 스크롤 제거 */
   overflow: visible;
+  margin-top: -40px;
 `;
 
 const ContentContainer = styled.div`
@@ -138,7 +139,6 @@ const Card = styled.div`
 const CardImage = styled.div`
   width: 100%;
   height: 200px;
-
   @media (min-width: 1200px) {
     height: 220px;
   }
@@ -227,7 +227,7 @@ const Section3 = () => {
               text="매년 말 컴퓨터공학부 동아리들의 축제! 1년간의 성과를 공유하고 서로의 발전을 평가하는 뜻깊은 연례행사입니다."
             />
             <ImageBox
-              img={pnn5}
+              img={"src/assets/icons/framworks/hackerton.png"}
               title="해커톤"
               text="동아리가 주최하는 해커톤에서는 밤새 코딩하며 아이디어를 현실로 만드는 열정 가득한 순간을 경험할 수 있습니다."
             />
