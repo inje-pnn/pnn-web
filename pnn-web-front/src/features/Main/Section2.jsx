@@ -20,7 +20,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f8f8f8;
+  background-color: #f4f6fc;
   position: relative;
   padding: 20px 20px;
 `;
@@ -121,7 +121,7 @@ const FeatureTitle = styled.h4`
 `;
 
 const FeatureDesc = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.6;
   color: #666;
 `;
@@ -141,6 +141,7 @@ const CardContainer = styled.div`
   position: relative;
   background-image: ${(prop) => `url("${prop.src}")`};
   background-size: 100%;
+
   @media (min-width: 1024px) {
     width: 70%;
     height: 400px;

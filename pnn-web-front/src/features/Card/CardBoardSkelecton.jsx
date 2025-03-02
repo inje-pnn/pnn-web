@@ -13,6 +13,10 @@ const Container = styled.div`
   flex-direction: row;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 120px;
+  }
 `;
 const CardContainer = styled.div`
   width: 40%;
@@ -51,16 +55,29 @@ const ChipContainer = styled.div`
   width: 100%;
   height: 25px;
 `;
+
+const ResponsiveSkeleton = muiStyled(Skeleton)(({ theme }) => ({
+  marginTop: -40,
+  height: 220,
+  width: "90%",
+
+  [theme.breakpoints.down("md")]: {
+    height: 180,
+    width: "100%",
+    marginTop: -40,
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    height: 150,
+    width: "100%",
+    marginTop: -40,
+  },
+}));
 export const CardBoardSkeleton = () => {
   return (
     <Container className="card-item">
       <CardContainer>
-        <Skeleton
-          animation="wave"
-          height={220}
-          width="90%"
-          style={{ marginTop: -40 }}
-        />
+        <ResponsiveSkeleton animation="wave" />
       </CardContainer>
       <CardContent>
         <Skeleton animation="wave" height={30} width="80%" />

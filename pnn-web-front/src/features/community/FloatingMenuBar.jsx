@@ -3,12 +3,16 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
+  display: auto;
   position: fixed;
   width: 100px;
   height: 100px;
   left: 25px;
   top: 40%;
   cursor: pointer;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 export const FloatingMenuBar = () => {
   const [menuList, setMenuList] = useState([

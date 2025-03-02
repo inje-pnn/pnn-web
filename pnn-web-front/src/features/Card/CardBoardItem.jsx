@@ -14,6 +14,11 @@ const Container = styled.div`
   flex-direction: row;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 140px;
+  }
 `;
 const CardContainer = styled.div`
   width: 40%;
@@ -44,18 +49,20 @@ const CardContent = styled.div`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 `;
-const CustomChip = muiStyled(Chip)(({ color }) => ({
+const CustomChip = muiStyled(Chip)(({ theme, color }) => ({
   display: "relative",
   width: "auto",
   height: 20,
   backgroundColor: `${color}`,
   marginRight: "5px",
   fontSize: "12px",
+  [theme.breakpoints.down("sm")]: {
+    height: 18,
+    fontSize: "10px",
+  },
 }));
-const Text = styled.div`
-  font-size: 15px;
-  font-weight: 300;
-  color: #666;
+const TitleText = styled.div`
+  font-size: 16px;
 `;
 const CardDescription = styled.div`
   display: flex;
@@ -63,6 +70,11 @@ const CardDescription = styled.div`
   height: 60%;
   font-size: 15px;
   color: #444;
+  text-align: start;
+  margin-top: 5px;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 const CardInfoContainer = styled.div`
   display: flex;
@@ -77,10 +89,13 @@ const ChipContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 5px;
-  overflow-x: auto;
   width: 100%;
   height: 25px;
+  @media (max-width: 768px) {
+    margin-bottom: 0px;
+  }
 `;
+
 export const CardBoardItem = ({ item }) => {
   const onClickCard = () => {
     window.location.href = item.content_link;
@@ -100,7 +115,7 @@ export const CardBoardItem = ({ item }) => {
         <CardImage src={item.imgae} />
       </CardContainer>
       <CardContent>
-        <h3>{item.title}</h3>
+        <TitleText>{item.title}</TitleText>
         <CardDescription>{item.description}</CardDescription>
         <ChipContainer>
           {item.project_type.map((v) => {

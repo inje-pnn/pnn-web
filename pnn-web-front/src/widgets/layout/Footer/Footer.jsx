@@ -15,7 +15,7 @@ const Container = styled.div`
   justify-content: center;
   padding: 2rem;
   border-top: 1px solid lightGray;
-
+  background-color: white;
   @media (max-width: 768px) {
     padding: 1rem;
   }

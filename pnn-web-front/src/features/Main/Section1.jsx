@@ -9,7 +9,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgba(237, 235, 236, 1);
+  background-color: #ffffff;
+  /* background-color: rgba(237, 235, 236, 1); */
   position: relative;
   overflow: hidden;
   padding: 0 15px;

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useIntersectionObserver } from "../../shared/hooks/animation/useIntersectionObserver";
-import pnn1 from "../../assets/images/pnn1.jpeg";
+import pnn1 from "../../assets/images/seminar.jpg";
 import pnn2 from "../../assets/images/pnn2.jpeg";
 import pnn3 from "../../assets/images/pnn3.jpeg";
 import pnn4 from "../../assets/images/pnn4.jpeg";
-import pnn5 from "../../assets/images/pnn5.jpeg";
+import pnn5 from "../../assets/images/hackathon_pt.jpeg";
 import pnn6 from "../../assets/images/pnn6.jpeg";
 
 const Container = styled.div`

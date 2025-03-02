@@ -15,6 +15,8 @@ const Container = styled.div`
   @media (max-width: 768px) {
     padding: 30px 15px;
     height: auto;
+    margin-bottom: -40px;
+    margin-top: -40px;
   }
 `;
 
@@ -30,7 +32,11 @@ const RecruitingButton = styled.button`
   width: 220px;
   height: 60px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #4a90e2, #667eea);
+  background: linear-gradient(
+    to right,
+    #6b5ad1,
+    #5a49be
+  ); /* 원래 색상 그대로 유지 */
   color: white;
   font-size: 18px;
   font-weight: bold;
@@ -42,7 +48,7 @@ const RecruitingButton = styled.button`
 
   @media (max-width: 768px) {
     width: 180px;
-    height: 50px;
+    height: 38px;
     font-size: 16px;
   }
 `;

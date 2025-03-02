@@ -148,7 +148,7 @@ const AboutUs = () => {
   const tabs = [
     { id: 0, label: "인사말" },
     { id: 1, label: "행사/활동" },
-    { id: 2, label: "팀원소개" },
+    // { id: 2, label: "팀원소개" },
   ];
 
   const renderContent = () => {
@@ -157,8 +157,8 @@ const AboutUs = () => {
         return <Introduce />;
       case 1:
         return <Learning />;
-      case 2:
-        return <Member />;
+      // case 2:
+      //   return <Member />;
       default:
         return <Introduce />;
     }
