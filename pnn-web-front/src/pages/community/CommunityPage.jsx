@@ -148,7 +148,7 @@ export const CommunityPage = () => {
   return (
     <Container>
       {/* <FloatingMenuBar /> */}
-      {user.authority === 0 || user.authority === 1 ? (
+      {user?.authority === 0 || user?.authority === 1 ? (
         <UploadButton path={"/community/study/upload"} />
       ) : null}
 

@@ -16,7 +16,7 @@ export const useCategoryFilter = (getBoardList) => {
   }, []);
   useEffect(() => {
     let filteringData;
-
+    if (!projects) return;
     if (selectedPlatform === "ALL") {
       filteringData = originalData;
     } else {
