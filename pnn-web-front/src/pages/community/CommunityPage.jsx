@@ -66,6 +66,7 @@ const BoardContainer = styled.div`
 `;
 const FilterContainer = styled.div`
   display: flex;
+  position: relative;
   width: 60%;
   height: auto;
   align-self: center;

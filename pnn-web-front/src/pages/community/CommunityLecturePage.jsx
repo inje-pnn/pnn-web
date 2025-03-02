@@ -98,7 +98,7 @@ export const CommunityLecturePage = () => {
 
   return (
     <Container>
-      {user.authority === 0 || user.authority === 1 ? (
+      {user?.authority === 0 || user?.authority === 1 ? (
         <UploadButton path={"/community/lecture/upload"} />
       ) : null}
       <ScrollToTopButton />

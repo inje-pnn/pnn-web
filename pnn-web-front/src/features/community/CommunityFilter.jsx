@@ -28,7 +28,7 @@ const SearchBoxContainer = muiStyled(Box)(({ top, left }) => ({
   height: "250px",
   borderRadius: "8px",
   backgroundColor: "var(--default-background)",
-  zIndex: "9999",
+  zIndex: "8888",
   top: `${top}px`, // 부모 기준으로 설정
   left: `${left}px`,
   border: "var(--default-card-border)",

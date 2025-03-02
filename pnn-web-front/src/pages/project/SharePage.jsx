@@ -16,7 +16,7 @@ const Container = styled.div`
   height: auto;
   padding: 16px;
   margin-top: 30px;
-
+  position: relative;
   @media (max-width: 768px) {
     margin-top: 8vh;
     padding: 8px;
@@ -167,7 +167,7 @@ const SkeletonProjectNumber = styled.div`
     align-items: center;
   }
 `;
-
+const FilterContainer = styled.div``;
 export const SharePage = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -211,6 +211,7 @@ export const SharePage = () => {
             </p>
           </InnerHeaderFrame>
         </HeaderFrame>
+
         <CommunityFilter
           title={"프로젝트"}
           searchText={searchText}
