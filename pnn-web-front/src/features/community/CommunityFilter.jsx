@@ -16,9 +16,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Filter } from "../../features/platform/components/Filter";
-import { useCategoryFilter } from "../../shared/hooks/useCategoryFilter";
 import { getImage } from "../../shared/util/image";
-import { boardData } from "../../shared/data/boardData";
 
 const Container = styled.div`
   width: 100%;
@@ -59,6 +57,10 @@ const CustomChip = muiStyled(Chip)(({ color }) => ({
   height: 25,
   backgroundColor: `${color}`,
   marginRight: "5px",
+
+  "@media (max-width: 768px)": {
+    marginRight: "3px",
+  },
 }));
 
 const TitleContainer = styled.div`
@@ -67,6 +69,10 @@ const TitleContainer = styled.div`
 `;
 const FliterChipContainer = styled.div`
   height: 40%;
+`;
+
+const TitleText = styled.p`
+  font-size: 24px;
 `;
 const FramworkIcon = styled.img``;
 export const CommunityFilter = ({
@@ -136,7 +142,7 @@ export const CommunityFilter = ({
   return (
     <Container>
       <TitleContainer>
-        <h1>{title}</h1>
+        <TitleText>{title}</TitleText>
         <Filter
           selectedPlatform={selectedPlatform}
           handleSelectedPlatform={handleSelectedPlatform}

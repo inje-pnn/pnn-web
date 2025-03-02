@@ -120,14 +120,21 @@ const TypeDescription = styled.div`
 const MessageBox = styled.div`
   width: 100%;
   max-width: 600px;
-  background-color: #222;
+  background: linear-gradient(
+    to bottom,
+    #6b5ad1,
+    #5a49be
+  ); /* 원래 색상 그대로 유지 */
   color: white;
   text-align: center;
   padding: 15px;
-  margin: 50px 0 170px 0;
-  border-radius: 0;
+  margin: 50px 0 80px 0;
+  border-radius: 8px;
   font-size: 18px;
   font-weight: 500;
+  box-shadow: none; /* 광택 효과 없애기 */
+
+  transition: background 0.3s ease, transform 0.2s ease;
 
   @media (max-width: 768px) {
     font-size: 13px;
@@ -141,7 +148,9 @@ export const CoreValues = () => {
     <>
       <PeopleContainer>
         <LeftColumn>
-          이런 사람을<br />지향해요
+          이런 사람을
+          <br />
+          지향해요
         </LeftColumn>
 
         <RightColumn>
@@ -150,7 +159,8 @@ export const CoreValues = () => {
               <FaLightbulb size={20} color="#6b5ad1" /> 창의적
             </TypeTitle>
             <TypeDescription>
-            새로운 아이디어를 탐색하고, 웹/앱/게임 개발을 통해 창의력을 발휘하는 것을 좋아해요.
+              새로운 아이디어를 탐색하고, 웹/앱/게임 개발을 통해 창의력을
+              발휘하는 것을 좋아해요.
             </TypeDescription>
           </TypeRow>
 
@@ -159,7 +169,8 @@ export const CoreValues = () => {
               <FaRocket size={20} color="#6b5ad1" /> 성장형
             </TypeTitle>
             <TypeDescription>
-            최신 기술을 배우고, 프로젝트를 통해 실력을 쌓으며 성장하는 개발자를 지향해요.
+              최신 기술을 배우고, 프로젝트를 통해 실력을 쌓으며 성장하는
+              개발자를 지향해요.
             </TypeDescription>
           </TypeRow>
 
@@ -168,13 +179,14 @@ export const CoreValues = () => {
               <FaHeart size={20} color="#6b5ad1" /> 팀워크
             </TypeTitle>
             <TypeDescription>
-            함께 개발하고 토론하며 더 나은 결과를 만들어내는 문화를 중요하게 생각해요.
+              함께 개발하고 토론하며 더 나은 결과를 만들어내는 문화를 중요하게
+              생각해요.
             </TypeDescription>
           </TypeRow>
         </RightColumn>
       </PeopleContainer>
 
-      <MessageBox>"컴퓨터를 사랑하시는 여러분, 환영합니다."</MessageBox>
+      <MessageBox>"컴퓨터와 기술에 열정을 가진 여러분, 환영합니다!"</MessageBox>
     </>
   );
 };

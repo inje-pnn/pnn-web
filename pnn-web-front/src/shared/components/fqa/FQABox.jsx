@@ -74,7 +74,7 @@ const QuestionText = styled.div`
   align-items: center;
   gap: 16px;
   font-size: 20px;
-  color: #525252;
+  font-weight: bold;
   
   @media (max-width: 768px) {
     font-size: 15px;
@@ -108,11 +108,13 @@ const Answer = styled.div`
   transition: all 0.3s ease;
   opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
   background-color: #f4f6fc;
+  color: #525252;
   width: 95%;
   border-radius: 20px;
   margin: ${({ isOpen }) => (isOpen ? '10px 24px 24px 24px' : '0')};
   overflow: auto;
-  
+  font-family: sans-serif;
+
   @media (max-width: 768px) {
     font-size: 11px;
     padding: ${({ isOpen }) => (isOpen ? '16px' : '0')};
@@ -122,6 +124,7 @@ const Answer = styled.div`
     margin: ${({ isOpen }) => (isOpen ? '8px 16px 16px 16px' : '0')};
   }
 `;
+
 
 export const FQABox = () => {
   const [openIndex, setOpenIndex] = useState(null);

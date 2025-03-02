@@ -9,29 +9,36 @@ import { ScrollToTopButton } from "../../features/ScrollToTop/ScrollToTopButton"
 import { useCategoryFilter } from "../../shared/hooks/useCategoryFilter";
 import { communityApi } from "../../shared/api/communityApi";
 import { Pagination } from "@mui/material";
+import { CardBoardSkeleton } from "../../features/Card/CardBoardSkelecton";
+import ComputerIcon from "@mui/icons-material/Computer";
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   height: auto;
-  padding: 16px;
+
   margin-top: 50px;
   background-color: #f2f5f8;
   flex-direction: column;
+
   @media (max-width: 768px) {
-    margin-top: 8vh;
     padding: 8px;
+    height: auto;
   }
 `;
-const BoardTitleContainer = styled.div`
+const BodyContainer = styled.div`
   display: flex;
-  height: 420px;
+  flex: 1;
+  flex-direction: column;
   width: 100%;
-
-  padding-left: 20%;
-  padding-right: 20%;
-  align-items: center;
-  justify-content: space-between;
+  height: 100%;
+  min-height: 600px;
+  background-color: white;
+  padding-top: 16px;
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 0px;
+  }
 `;
 const BoardContainer = styled.div`
   display: flex;
@@ -41,25 +48,31 @@ const BoardContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-color: white;
+
   .grid-container {
     display: grid;
-    grid-template-columns: repeat(1, 1fr); /* 한 줄에 3개씩 */
+    grid-template-columns: repeat(1, 1fr); /* 한 줄에 1개씩 */
     gap: 16px; /* 카드 간격 */
     width: 60%; /* 내부 그리드 컨테이너 너비 */
     height: auto; /* 높이는 카드 내용에 따라 자동 조절 */
     justify-items: center;
+    @media (max-width: 768px) {
+      flex: 1;
+      width: 90%;
+      height: 100%;
+    }
   }
 `;
 const FilterContainer = styled.div`
   display: flex;
   width: 60%;
   height: auto;
-
   align-self: center;
-`;
-const TitleImg = styled.img`
-  width: 250px;
-  height: 250px;
+  background-color: white;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const PageContainer = styled.div`
   display: flex;
@@ -76,7 +89,8 @@ const HeaderFrame = styled.div`
   margin-bottom: 30px;
 
   @media (max-width: 768px) {
-    padding: 20px 0;
+    margin-top: 40px;
+    padding: 20px 0px;
   }
 
   h1 {
@@ -106,7 +120,6 @@ const HeaderFrame = styled.div`
 export const CommunityPage = () => {
   const user = useUserStore((state) => state.user);
 
-  const [page, setPage] = useState(0);
   const { getStudyBoardList } = communityApi();
   const {
     projects,
@@ -134,7 +147,7 @@ export const CommunityPage = () => {
   };
   return (
     <Container>
-      <FloatingMenuBar />
+      {/* <FloatingMenuBar /> */}
       {user.authority === 0 || user.authority === 1 ? (
         <UploadButton path={"/community/study/upload"} />
       ) : null}
@@ -149,43 +162,47 @@ export const CommunityPage = () => {
         <TitleImg src="src/assets/images/community_test.png" />
       </BoardTitleContainer> */}
       <HeaderFrame>
-        <h1>IT 스터디 둘러보기</h1>
+        <h1>
+          <ComputerIcon fontSize="large" color="primary" />
+          IT 스터디 둘러보기
+        </h1>
         <p>IT의 다양한 지식을 공유하고, 지식을 얻어가세요.</p>
       </HeaderFrame>
-      <FilterContainer>
-        <CommunityFilter
-          title={"스터디"}
-          searchText={searchText}
-          categoryList={categoryList}
-          selectedPlatform={selectedPlatform}
-          selectedItemList={selectedItemList}
-          onChangeSearchText={onChangeSearchText}
-          addSelectedItemList={addSelectedItemList}
-          removeSelectedItemList={removeSelectedItemList}
-          handleSelectedPlatform={handleSelectedPlatform}
-        />
-      </FilterContainer>
-      <BoardContainer>
-        <div className="grid-container">
-          {paginationList?.map((v, index) => {
-            if (index < 6) {
-              return (
-                <CardBoardItem
-                  isLoading={isLoading}
-                  item={v}
-                  key={`${v.serial_number}card`}
-                />
-              );
-            }
-          })}
-        </div>
-      </BoardContainer>
-      <PageContainer>
-        <Pagination
-          count={Math.round(projects?.length / 6) + 1}
-          onChange={handlePageNation}
-        />
-      </PageContainer>
+      <BodyContainer>
+        <FilterContainer>
+          <CommunityFilter
+            title={"스터디"}
+            searchText={searchText}
+            categoryList={categoryList}
+            selectedPlatform={selectedPlatform}
+            selectedItemList={selectedItemList}
+            onChangeSearchText={onChangeSearchText}
+            addSelectedItemList={addSelectedItemList}
+            removeSelectedItemList={removeSelectedItemList}
+            handleSelectedPlatform={handleSelectedPlatform}
+          />
+        </FilterContainer>
+        <BoardContainer>
+          <div className="grid-container">
+            {isLoading
+              ? [...new Array(6)].map(() => <CardBoardSkeleton />)
+              : paginationList?.map((v, index) => {
+                  if (index < 6) {
+                    return (
+                      <CardBoardItem item={v} key={`${v.serial_number}card`} />
+                    );
+                  }
+                })}
+            {}
+          </div>
+        </BoardContainer>
+        <PageContainer>
+          <Pagination
+            count={Math.round(projects?.length / 6) + 1}
+            onChange={handlePageNation}
+          />
+        </PageContainer>
+      </BodyContainer>
     </Container>
   );
 };

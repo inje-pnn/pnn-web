@@ -1,4 +1,3 @@
-// Header.jsx
 import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -23,7 +22,7 @@ export default function Header() {
     <Box
       sx={{
         width: "101%",
-        height: { xs: "7dvh", sm: "5vh" },
+        height: { xs: "7dvh", sm: "6vh" },
         position: "fixed",
         top: "0",
         zIndex: "9999",
@@ -52,8 +51,8 @@ export default function Header() {
               <Box
                 component="img"
                 sx={{
-                  height: "70px",
-                  width: "100px",
+                  height: "80px", // 로고 크기 증가
+                  width: "120px", // 로고 크기 증가
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -71,33 +70,57 @@ export default function Header() {
               width: "60%",
               display: { xs: "none", md: "flex" },
               alignItems: "center",
-              justifyContent: "space-around",
-              gap: "10rem",
+              justifyContent: "flex-end", // 메뉴 아이템들을 우측으로 정렬
+              gap: "3rem", // 버튼 간 간격 조정
             }}
           >
             <Link
               to="/aboutus"
               style={{ textDecoration: "none", color: "black" }}
             >
-              <Button color="inherit">About Us</Button>
+              <Button
+                color="inherit"
+                sx={{ fontSize: "16px", fontWeight: "600" }}
+              >
+                소개
+              </Button>{" "}
+              {/* 폰트 크기 및 굵기 증가 */}
             </Link>
             <Link
               to="/share"
               style={{ textDecoration: "none", color: "black" }}
             >
-              <Button color="inherit">프로젝트</Button>
+              <Button
+                color="inherit"
+                sx={{ fontSize: "16px", fontWeight: "600" }}
+              >
+                프로젝트
+              </Button>{" "}
+              {/* 폰트 크기 및 굵기 증가 */}
             </Link>
             <Link
               to="/community/study"
               style={{ textDecoration: "none", color: "black" }}
             >
-              <Button color="inherit">커뮤니티</Button>
+              <Button
+                color="inherit"
+                sx={{ fontSize: "16px", fontWeight: "600" }}
+              >
+                커뮤니티
+              </Button>{" "}
+              {/* 폰트 크기 및 굵기 증가 */}
             </Link>
             <Link
               to="/recruiting"
               style={{ textDecoration: "none", color: "black" }}
             >
-              <Button color="inherit">지원하기</Button>
+              <Button
+                color="inherit"
+                sx={{ fontSize: "16px", fontWeight: "600" }}
+              >
+                지원하기
+              </Button>{" "}
+              {/* 폰트 크기 및 굵기 증가 */}
             </Link>
           </Box>
 

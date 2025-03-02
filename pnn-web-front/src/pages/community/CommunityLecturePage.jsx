@@ -109,7 +109,7 @@ export const CommunityLecturePage = () => {
       </HeaderFrame>
 
       <BoardContainer>
-        <FloatingMenuBar />
+        {/* <FloatingMenuBar /> */}
         {isLoading ? (
           <CircularProgress style={{ marginTop: 50 }} />
         ) : (

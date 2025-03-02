@@ -14,6 +14,11 @@ const Container = styled.div`
   flex-direction: row;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 140px;
+  }
 `;
 const CardContainer = styled.div`
   width: 40%;
@@ -44,18 +49,20 @@ const CardContent = styled.div`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 `;
-const CustomChip = muiStyled(Chip)(({ color }) => ({
+const CustomChip = muiStyled(Chip)(({ theme, color }) => ({
   display: "relative",
   width: "auto",
   height: 20,
   backgroundColor: `${color}`,
   marginRight: "5px",
   fontSize: "12px",
+  [theme.breakpoints.down("sm")]: {
+    height: 18,
+    fontSize: "10px",
+  },
 }));
-const Text = styled.div`
-  font-size: 15px;
-  font-weight: 300;
-  color: #666;
+const TitleText = styled.div`
+  font-size: 16px;
 `;
 const CardDescription = styled.div`
   display: flex;
@@ -63,6 +70,11 @@ const CardDescription = styled.div`
   height: 60%;
   font-size: 15px;
   color: #444;
+  text-align: start;
+  margin-top: 5px;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 const CardInfoContainer = styled.div`
   display: flex;
@@ -77,11 +89,14 @@ const ChipContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 5px;
-  overflow-x: auto;
   width: 100%;
   height: 25px;
+  @media (max-width: 768px) {
+    margin-bottom: 0px;
+  }
 `;
-export const CardBoardItem = ({ isLoading, item }) => {
+
+export const CardBoardItem = ({ item }) => {
   const onClickCard = () => {
     window.location.href = item.content_link;
   };
@@ -93,63 +108,27 @@ export const CardBoardItem = ({ isLoading, item }) => {
       "0"
     )}.${String(date.getDate()).padStart(2, "0")}`;
   };
-  const SkeletonBoard = () => {
-    return (
-      <Container className="card-item">
-        <CardContainer>
-          <Skeleton
-            animation="wave"
-            height={220}
-            width="90%"
-            style={{ marginTop: -40 }}
-          />
-        </CardContainer>
-        <CardContent>
-          <Skeleton animation="wave" height={30} width="80%" />
-          <Skeleton animation="wave" height={200} width="80%" />
-          <ChipContainer>
-            <Skeleton animation="wave" height={20} width="80%" />
-          </ChipContainer>
 
-          <CardInfoContainer>
-            <Skeleton animation="wave" height={10} width="30%" />
-            <Skeleton
-              animation="wave"
-              height={10}
-              width="30%"
-              style={{ marginRight: 85 }}
-            />
-          </CardInfoContainer>
-        </CardContent>
-      </Container>
-    );
-  };
   return (
-    <>
-      {isLoading ? (
-        <SkeletonBoard />
-      ) : (
-        <Container className="card-item" onClick={onClickCard}>
-          <CardContainer>
-            <CardImage src={item.imgae} />
-          </CardContainer>
-          <CardContent>
-            <h3>{item.title}</h3>
-            <CardDescription>{item.description}</CardDescription>
-            <ChipContainer>
-              {item.project_type.map((v) => {
-                return <CustomChip label={v} />;
-              })}
-            </ChipContainer>
-            <CardInfoContainer>
-              <span>
-                {item.category}WEB {formatDate(item.created_at)}
-              </span>
-              <span>Editor · {item.username}</span>
-            </CardInfoContainer>
-          </CardContent>
-        </Container>
-      )}
-    </>
+    <Container className="card-item" onClick={onClickCard}>
+      <CardContainer>
+        <CardImage src={item.imgae} />
+      </CardContainer>
+      <CardContent>
+        <TitleText>{item.title}</TitleText>
+        <CardDescription>{item.description}</CardDescription>
+        <ChipContainer>
+          {item.project_type.map((v) => {
+            return <CustomChip label={v} />;
+          })}
+        </ChipContainer>
+        <CardInfoContainer>
+          <span>
+            {item.category}WEB {formatDate(item.created_at)}
+          </span>
+          <span>Editor · {item.username}</span>
+        </CardInfoContainer>
+      </CardContent>
+    </Container>
   );
 };
