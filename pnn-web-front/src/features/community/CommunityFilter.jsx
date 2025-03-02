@@ -153,11 +153,11 @@ export const CommunityFilter = ({
           const image = getImage(v);
           return (
             <CustomChip
-              avatar={
-                v !== "All" ? (
-                  <FramworkIcon alt="Natacha" src={image.path} />
-                ) : null
-              }
+              // avatar={
+              //   v !== "All" ? (
+              //     <FramworkIcon alt="Natacha" src={image.path} />
+              //   ) : null
+              // }
               label={v}
               color={v !== "All" ? image.color : ""}
               onDelete={() => onClickDeleteChipItem(v, i)}

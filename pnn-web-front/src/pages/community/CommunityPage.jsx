@@ -22,7 +22,7 @@ const Container = styled.div`
   flex-direction: column;
 
   @media (max-width: 768px) {
-    padding: 8px;
+    padding: 0px 8px;
     height: auto;
   }
 `;
