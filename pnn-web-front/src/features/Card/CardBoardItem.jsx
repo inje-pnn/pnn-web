@@ -112,7 +112,7 @@ export const CardBoardItem = ({ item }) => {
   return (
     <Container className="card-item" onClick={onClickCard}>
       <CardContainer>
-        <CardImage src={item.imgae} />
+        <CardImage src={item.image} />
       </CardContainer>
       <CardContent>
         <TitleText>{item.title}</TitleText>
