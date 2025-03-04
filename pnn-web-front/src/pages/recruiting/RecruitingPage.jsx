@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { FQABox } from "../../shared/components/fqa/FQABox";
 import { Journey } from "../../shared/components/fqa/Journey";
 import { FaClock, FaPhone, FaCalendarCheck } from "react-icons/fa";
+import qrCode from "../../assets/images/qr.png";
 
 const TopInfoContainer = styled.div`
   display: flex;
@@ -145,7 +146,7 @@ export const RecruitingPage = () => {
         <InfoText>
           <InfoItem>
             <FaClock />
-            <span>지원 기간: 2025년 3월 1일 ~ 2025년 3월 9일</span>
+            <span>지원 기간: 2025년 3월 1일 ~ 2025년 3월 8일</span>
           </InfoItem>
           <InfoItem>
             <FaCalendarCheck />
@@ -160,7 +161,7 @@ export const RecruitingPage = () => {
         <QRCodeWrapper>
           <QRTitle>문의사항</QRTitle>
           <QRCodeContainer>
-            <QRImage src="/src/assets/images/QR.png" alt="QR 코드" />
+            <QRImage src={qrCode} alt="QR 코드" />
           </QRCodeContainer>
         </QRCodeWrapper>
       </TopInfoContainer>
