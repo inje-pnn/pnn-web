@@ -199,7 +199,7 @@ export const CommunityPage = () => {
         </BoardContainer>
         <PageContainer>
           <Pagination
-            count={Math.round(projects?.length / 6) + 1}
+            count={Math.round(projects?.length / 6)}
             onChange={handlePageNation}
           />
         </PageContainer>
