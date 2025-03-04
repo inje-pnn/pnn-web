@@ -96,7 +96,6 @@ const QRCodeContainer = styled.div`
 const QRImage = styled.img`
   width: 80%;
   height: 80%;
-  object-fit: contain;
 `;
 
 const Container = styled.div`
@@ -146,7 +145,7 @@ export const RecruitingPage = () => {
         <InfoText>
           <InfoItem>
             <FaClock />
-            <span>지원 기간: 2025년 3월 1일 ~ 2025년 3월 8일</span>
+            <span>지원 기간: 2025년 3월 1일 ~ 2025년 3월 9일</span>
           </InfoItem>
           <InfoItem>
             <FaCalendarCheck />
